@@ -110,7 +110,7 @@ const Post = () => {
               <tr className={`ReviewItem ${post.memberInfo?.userNickname === '운영자' ? 'AdminRow' : ''}`} key={post.id}>
                 <td className="ReviewTitle">
                   <Link
-                    to={`/post/select/${post.id}`}
+                    to={`/post/${post.id}`}
                     className="ReviewLink"
                     onClick={() => increaseViews(post.id)}
                   >

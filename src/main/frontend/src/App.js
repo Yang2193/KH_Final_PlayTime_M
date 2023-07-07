@@ -32,7 +32,7 @@ function App() {
         <Route path="/find" element={<FindAccountPage />} />
         <Route path="/myPage" element={<Mypage />} />
         <Route path="/oneReview" element={<OneReview />} />
-        <Route path="/post/select/:postId" element={<PostDetail />} />
+        <Route path="/post/:postId" element={<PostDetail />} />
         <Route path="/post" element={<PostPage />} />
         <Route path="/postUpload" element={<PostUpload />} />
         <Route path="/postupdate/:postId" element={<PostUpdate />} />
