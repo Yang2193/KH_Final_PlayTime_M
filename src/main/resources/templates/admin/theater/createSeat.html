@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Seats</title>
+</head>
+<body>
+<h1>Create Seats</h1>
+<p>Seat ID: <span th:text="${seatId}"></span></p>
+<p>Theater ID: <span th:text="${theaterId}"></span></p>
+<p>Theater Name: <span th:text="${theaterName}"></span></p>
+
+<!-- 좌석 생성 폼 -->
+<form th:action="@{/admin/createSeatStep2}" method="post">
+  <div id="columnsContainer">
+    <!-- 이 부분은 삭제 -->
+  </div>
+  <input type="hidden" name="seatId" th:value="${seatId}">
+  <input type="hidden" name="theaterId" th:value="${theaterId}">
+  <input type="hidden" name="theaterName" th:value="${theaterName}">
+
+  <button type="button" id="addColumnBtn">Add Column</button>
+  <button type="submit">Create</button>
+</form>
+
+<script>
+    document.getElementById("addColumnBtn").addEventListener("click", function() {
+        let columnLabel = prompt("Enter column label"); // 사용자로부터 열 레이블 입력 받기
+        if (columnLabel) {
+            let columnsContainer = document.getElementById("columnsContainer");
+
+            let columnDiv = document.createElement("div");
+            columnDiv.classList.add("column");
+
+            let label = document.createElement("label");
+            label.textContent = columnLabel + "열 좌석 개수:";
+
+            let input = document.createElement("input");
+            input.type = "number";
+            input.name = "seatNumbers." + columnLabel; // 열 레이블을 키로 사용하여 Map 형태로 만듦
+            input.classList.add("column-input");
+            input.required = true;
+
+            let corridorLabel = document.createElement("label");
+            corridorLabel.textContent = "Corridor Seat Numbers (comma-separated):";
+
+            let corridorInput = document.createElement("input");
+            corridorInput.type = "text";
+            corridorInput.name = "corridorSeat." + columnLabel; // 열 레이블을 키로 사용하여 Map 형태로 만듦
+            corridorInput.classList.add("corridor-input");
+
+            let deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.type = "button";
+            deleteButton.classList.add("delete-column-btn");
+
+            columnDiv.appendChild(label);
+            columnDiv.appendChild(input);
+            columnDiv.appendChild(corridorLabel);
+            columnDiv.appendChild(corridorInput);
+            columnDiv.appendChild(deleteButton);
+
+            columnsContainer.appendChild(columnDiv);
+
+            deleteButton.addEventListener("click", function() {
+                columnsContainer.removeChild(columnDiv); // 열 삭제
+            });
+        }
+    });
+
+    // 폼 제출 시 복도 좌석 값을 배열로 변환
+    document.querySelector("form").addEventListener("submit", function() {
+        let corridorInputs = document.querySelectorAll(".corridor-input");
+        corridorInputs.forEach(function(input) {
+            let columnLabel = input.name.substring(input.name.indexOf("'") + 1, input.name.lastIndexOf("'"));
+            let corridorValue = input.value.trim();
+            let corridorArray = corridorValue.split(",").map(function(seatNumber) {
+                return seatNumber.trim();
+            });
+            input.value = corridorArray.join(",");
+        });
+    });
+</script>
+
+
+</body>
+</html>

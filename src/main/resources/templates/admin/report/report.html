@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Report List</title>
+  <style>
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Report List</h1>
+<table>
+  <tr>
+    <th>Report ID</th>
+    <th>Nickname</th>
+    <th>Report User ID</th>
+    <th>Post ID</th>
+    <th>Comment ID</th>
+    <th>Report Content</th>
+    <th>Report Date</th>
+    <th>Report Status</th>
+    <th>Actions</th> <!-- 추가된 열 -->
+  </tr>
+  <tr th:each="report : ${list}">
+    <td th:text="${report.reportId}"></td>
+    <td th:text="${report.nickname}"></td>
+    <td>
+      <a th:href="@{'/admin/memberDetail?userId=' + ${report.reportUserId}}" th:text="${report.reportUserId}">
+        <!-- 링크를 걸어주는 부분은 <a> 태그로 감싸주면 됩니다 -->
+      </a>
+    </td>
+    <td>
+      <a th:href="@{/admin/postDetail(postId=${report.postId})}" th:text="${report.postId}">
+      </a>
+    </td>
+
+    <td>
+      <a th:href="@{/admin/commentDetail(commentId=${report.commentId})}" th:text="${report.commentId}">
+      </a>
+    </td>
+    <td th:text="${report.reportContent}"></td>
+    <td th:text="${report.reportDate}"></td>
+    <td th:text="${report.reportStatus}"></td>
+    <td>
+      <form th:if="${report.reportStatus == '진행 중'}" th:action="@{/admin/completeReport}" method="post">
+        <input type="hidden" th:name="reportId" th:value="${report.reportId}" />
+        <button type="submit">처리 완료</button>
+      </form>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!-- admin/theater/theaterList.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Theater List</title>
+    <style>
+        /* 예시로 추가한 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+        }
+
+        button[type="submit"] {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Theater List</h1>
+<form th:action="@{/admin/theater}" method="get">
+    <input type="text" name="name" placeholder="Search by theater name">
+    <button type="submit">Search</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Theater ID</th>
+        <th>Theater Name</th>
+        <th>Theater Address</th>
+        <th>Theater Phone</th>
+        <th>Theater Website</th>
+        <th>Theater Seats</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over the theater list and display each theater's information -->
+    <tr th:each="theater : ${list}">
+        <td th:text="${theater.theaterId}"></td>
+        <td th:text="${theater.theaterName}"></td>
+        <td th:text="${theater.theaterAddr}"></td>
+        <td th:text="${theater.theaterCall}"></td>
+        <td>
+            <a th:if="${theater.theaterWeb != null && !theater.theaterWeb.isEmpty()}"
+               th:href="${theater.theaterWeb}" target="_blank" th:text="${theater.theaterWeb}"></a>
+        </td>
+        <td th:text="${theater.theaterSeats}"></td>
+        <td>
+            <form th:action="@{/admin/seatManagement}" method="post">
+                <input type="hidden" name="id" th:value="${theater.theaterId}">
+                <input type="hidden" name="name" th:value="${theater.theaterName}">
+                <button type="submit">좌석 관리</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>

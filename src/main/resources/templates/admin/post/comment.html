@@ -1,0 +1,58 @@
+<!-- admin/post/comment.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Comment</title>
+  <style>
+        .comment-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .comment-container h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .comment-container p {
+            margin-bottom: 5px;
+        }
+
+        .delete-button {
+            padding: 8px 12px;
+            background-color: #ff4c4c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #ff1a1a;
+        }
+    </style>
+</head>
+<body>
+<div class="comment-container" th:if="${dto.commentContent != null && dto.commentContent != ''}">
+  <h2>Comment Details</h2>
+  <p><strong>ID:</strong> <span th:text="${dto.id}"></span></p>
+  <p><strong>User ID:</strong> <span th:text="${dto.userId}"></span></p>
+  <p><strong>Nickname:</strong> <span th:text="${dto.nickname}"></span></p>
+  <p><strong>Date:</strong> <span th:text="${dto.commentDate}"></span></p>
+  <p><strong>Content:</strong> <span th:text="${dto.commentContent}"></span></p>
+
+  <form th:action="@{/admin/deleteComment}" method="get">
+    <input type="hidden" id="commentId" name="commentId" th:value="${dto.id}">
+    <button type="submit" class="delete-button">Delete Comment</button>
+  </form>
+</div>
+<div class="comment-container" th:unless="${dto.commentContent != null && dto.commentContent != ''}">
+  <p>삭제된 댓글입니다.</p>
+</div>
+</body>
+</html>

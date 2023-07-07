@@ -1,0 +1,80 @@
+<!-- 포스트 상세 페이지: post.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>포스트 상세</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #428bca;
+        }
+
+        .post-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .post-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .post-detail {
+            margin-top: 20px;
+        }
+
+        .post-detail h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .post-detail span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <h1>포스트 상세</h1>
+  <div class="post-header">
+    <h2 th:text="${dto.postTitle}"></h2>
+    <p>작성자: <span th:text="${dto.memberInfo.userId}"></span></p>
+    <p>작성일: <span th:text="${dto.postDate}"></span></p>
+  </div>
+  <div class="post-detail">
+    <h3>내용:</h3>
+    <p th:if="${dto.postContent != null && dto.postContent != ''}" th:text="${dto.postContent}"></p>
+    <p th:unless="${dto.postContent != null && dto.postContent != ''}">삭제된 게시글입니다.</p>
+
+    <h3>이미지 URL:</h3>
+    <p th:text="${dto.postImageUrl}"></p>
+    <h3>카테고리:</h3>
+    <p th:text="${dto.postCategory}"></p>
+    <h3>조회수:</h3>
+    <p th:text="${dto.postViews}"></p>
+
+    <form th:if="${dto.postContent != null && dto.postContent != ''}" th:action="@{/admin/deletePost}"
+          method="get">
+      <input type="hidden" name="postId" th:value="${dto.id}"/>
+      <button type="submit">게시글 삭제</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

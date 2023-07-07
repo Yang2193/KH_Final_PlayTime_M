@@ -1,0 +1,33 @@
+
+.SearchBar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .SearchBar input {
+    flex: 1;
+    height: 36px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+  }
+  
+  .SearchButton {
+    height: 36px;
+    padding: 0 16px;
+    margin-left: 10px;
+    background-color: #990A2C;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .SearchButton:hover {
+    background-color: #800634;
+  }
+  
+
+

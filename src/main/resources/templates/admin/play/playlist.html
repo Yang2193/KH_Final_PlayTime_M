@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>플레이리스트</title>
+  <!-- 여기에 CSS 스타일을 추가하세요 -->
+  <style>
+        /* 플레이리스트에 대한 예시 CSS 스타일링 */
+        .playlist {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .play-item {
+            width: 200px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .play-item img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        button[type="submit"] {
+            padding: 6px 12px;
+            background-color: #428bca;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .delete-form {
+            display: inline;
+        }
+
+        .delete-button {
+            padding: 6px 12px;
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>플레이리스트</h1>
+<form action="#" th:action="@{/admin/playlist}" method="get">
+  <input type="text" name="title" placeholder="제목을 입력하세요." />
+  <button type="submit">Search</button>
+</form>
+<div class="playlist">
+  <!-- 플레이 항목 목록을 반복하며 출력합니다 -->
+  <div class="play-item" th:each="play : ${list}">
+    <h2 th:text="${play.title}"></h2>
+    <h3 th:text="${play.playId}"></h3>
+    <img th:src="${play.imageUrl}" alt="플레이 이미지">
+    <p>
+      기간: <span th:text="${play.periodStart}"></span> - <span th:text="${play.periodEnd}"></span>
+    </p>
+    <p th:text="${play.theaterName}"></p>
+    <!-- 삭제 버튼 추가 -->
+    <form class="delete-form" th:action="@{/admin/playlist/delete}" method="get">
+      <input type="hidden" name="playId" th:value="${play.playId}" />
+      <input type="hidden" name="playTitle" th:value="${play.title}" />
+      <button class="delete-button" type="submit" onclick="deletePlay(this)">삭제</button>
+    </form>
+  </div>
+</div>
+<!-- JavaScript 코드 추가 -->
+<script th:inline="javascript">
+    function deletePlay(button) {
+        if (confirm("정말로 " + button.form.playTitle.value + " 연극을 삭제하시겠습니까?")) {
+            button.parentNode.submit();
+            showDeletePopup(button.form.playTitle.value, button.form.playId.value);
+        }
+    }
+
+    function showDeletePopup(title, playId) {
+        alert("삭제가 완료되었습니다. 삭제한 연극: " + title + " 연극 코드: " + playId);
+    }
+    </script>
+</body>
+</html>

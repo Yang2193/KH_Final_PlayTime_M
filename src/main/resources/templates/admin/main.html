@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <style>
+        /* 스타일을 추가하여 페이지를 꾸밀 수 있습니다. */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #428bca;
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<!-- 메뉴 버튼들을 추가합니다. -->
+<div class="menu-container">
+    <a class="menu-button" href="/admin/getAllMember">사용자 관리</a>
+    <a class="menu-button" href="/admin/post">게시판 관리</a>
+    <a class="menu-button" href="/admin/payment">결제 내역 관리</a>
+    <a class="menu-button" href="/admin/report">신고내역 관리</a>
+    <a class="menu-button" href="/admin/theater">공연장 관리</a>
+    <a class="menu-button" href="/admin/playlist">연극 관리</a>
+</div>
+</body>
+</html>
