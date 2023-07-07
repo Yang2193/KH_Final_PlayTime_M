@@ -1,12 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import AccountApi from "../../api/AccountApi";
-import { AccountInfoContext } from "../../context/AccountInfo";
 
-export const MyProfileEditDetail = () => {
-  const navigate = useNavigate();
-  const { userId, userPw, userName } = useContext(AccountInfoContext);
+const MyProfileEditDetail = () => {
   const [userInfo, setUserInfo] = useState([]);
+  const userId = localStorage.getItem("userId");
+  const userPw = localStorage.getItem("userPw");
 
   // 변경할 프로필 변수
   const [password, setPassword] = useState("");
@@ -28,27 +26,31 @@ export const MyProfileEditDetail = () => {
   const [isNickname, setIsNickname] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
-  const [isAll, setIsAll] = useState(false);
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-        try {
-        const response = await AccountApi.getUserInfo(userId);
-        if (response) {
-            setUserInfo([response.data]);
-            setNickname(response.data.userNickname);
-            setPhone(response.data.userPhone);
-            setEmail(response.data.userEmail);
-            setPassword(userPw);
-        } else {
-            console.log("데이터가 없음");
+  const [inputPw, setInputPw] = useState("");
+  const [checkPwMsg, setCheckPwMsg] = useState("");
+  const [isPwd, setIsPwd] = useState(false);
+
+  const fetchUserInfo = async () => {
+    try {
+    const response = await AccountApi.getUserInfo(userId);
+    if (response.status === 200) {
+        setUserInfo(response.data);
+        if(inputPw === userPw) {
+          setIsPwd(true);
         }
-        } catch (error) {
-        console.log(error);
-        }
-    };
-    fetchUserInfo();
-  }, []);
+    } else {
+        console.log("데이터가 없음");
+        setCheckPwMsg("패스워드가 일치하지 않습니다.")
+    }
+    } catch (error) {
+    console.log(error);
+    }
+  };
+
+  const onChageCheckInputPw = (e) => {
+    setInputPw(e.target.value);
+  }
 
   const onChagePw = (e) => {
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
@@ -59,7 +61,7 @@ export const MyProfileEditDetail = () => {
     } else {
         setPasswordMsg("");
         setIsPassword(true);
-        
+
     }
   }
 
@@ -112,63 +114,74 @@ export const MyProfileEditDetail = () => {
 
   const updateInfo = async() => {
       try {
-        const response = await AccountApi.updateUserInfo(userId, password, nickname, userName, phone, email);
+        const response = await AccountApi.updateUserInfo(userInfo.userId, password, nickname, userInfo.userName, phone, email);
         console.log("회원정보 수정", response);
+
       } catch (e) {
         console.log(e);
       }
-    }
+  }
 
   return (
     <>
-    {userInfo.length > 0 ? (
-      <>
-        <p>아이디: {userId}</p>
-        <p>비밀번호: </p>
-        <input style={{ display: 'inline' }} type="password" value={password} onChange={onChagePw} />
-        <p>비밀번호 확인: </p>
-        <input style={{ display: 'inline' }} type="password" value={conPassword} onChange={onChageConPw} />
-        <p>닉네임: </p>
-        <input style={{ display: 'inline' }} type="text" value={nickname} onChange={onChageNickname} />
-        <p>이름: {userName}</p>
-        <p>전화번호: </p>
-        <input style={{ display: 'inline' }} type="text" value={phone} onChange={onChagePhone} />
-        <p>이메일: </p>
-        <input style={{ display: 'inline' }} type="text" value={email} onChange={onChageEmail} />
-        <button onClick={updateInfo}>수정</button>
-      </>
-    ) : (
-      <p>Loading...</p>
-    )}
-  </>
-  )
-};
-
-export const PwCheck = () => {
-    const { userPw, setIsPwd } = useContext(AccountInfoContext);
-    const [inputPw, setInputPw] = useState("");
-    const [checkPwMsg, setCheckPwMsg] = useState("");
-  
-    const onChageCheckPw = (e) => {
-      setInputPw(e.target.value);
-    }
-    
-    const checkPw = () => {
-      if(inputPw === userPw){
-        setIsPwd(true);
-        setCheckPwMsg("");
-      } 
-      else {
-        setCheckPwMsg("메세지가 일치하지 않습니다.")
-        setIsPwd(false);
-      }
-    }
-
-    return (
+    <div>
+      {isPwd? (userInfo !== null ? (
+          <div>
+            <p>아이디: {userId}</p>
+            <p>비밀번호: </p>
+            <input
+              style={{ display: "inline" }}
+              type="password"
+              onChange={onChagePw}
+            />
+            <p>비밀번호 확인: </p>
+            <input
+              style={{ display: "inline" }}
+              type="password"
+              onChange={onChageConPw}
+            />
+            <p>닉네임: </p>
+            <input
+              style={{ display: "inline" }}
+              type="text"
+              value={userInfo.userNickname}
+              onChange={onChageNickname}
+            />
+            <p>이름: {userInfo.userName}</p>
+            <p>전화번호: </p>
+            <input
+              style={{ display: "inline" }}
+              type="text"
+              value={userInfo.userPhone}
+              onChange={onChagePhone}
+            />
+            <p>이메일: </p>
+            <input
+              style={{ display: "inline" }}
+              type="text"
+              value={userInfo.userEmail}
+              onChange={onChageEmail}
+            />
+            <button onClick={updateInfo}>수정</button>
+          </div>
+        ) : (
+          <p>Loading...</p>
+        )
+      ) : (
         <>
-        <input type="password" value={inputPw} onChange={onChageCheckPw} placeholder="패스워드"/>
-        <button onClick={checkPw}>확인</button>
-        <p>{checkPwMsg}</p>
+          <input
+            type="password"
+            value={inputPw}
+            onChange={onChageCheckInputPw}
+            placeholder="패스워드"
+          />
+          <button onClick={fetchUserInfo}>확인</button>
+          <p>{checkPwMsg}</p>
         </>
-    );
+      )}
+      </div>
+    </>
+  );
 };
+
+export default MyProfileEditDetail;
