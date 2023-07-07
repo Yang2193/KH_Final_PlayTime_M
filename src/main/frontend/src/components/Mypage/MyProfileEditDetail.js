@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import AccountApi from "../../api/AccountApi";
+import { useNavigate } from "react-router-dom";
 
 const MyProfileEditDetail = () => {
+  const nav = useNavigate();
   const [userInfo, setUserInfo] = useState([]);
   const userId = localStorage.getItem("userId");
-  const userPw = localStorage.getItem("userPw");
 
   // 변경할 프로필 변수
   const [password, setPassword] = useState("");
@@ -33,12 +34,11 @@ const MyProfileEditDetail = () => {
 
   const fetchUserInfo = async () => {
     try {
-    const response = await AccountApi.getUserInfo(userId);
-    if (response.status === 200) {
-        setUserInfo(response.data);
-        if(inputPw === userPw) {
-          setIsPwd(true);
-        }
+    const response = await AccountApi.checkMemberPw(userId, inputPw);
+    if (response) {
+      console.log(response.data);
+        setUserInfo(response.data[0]);
+        setIsPwd(true);
     } else {
         console.log("데이터가 없음");
         setCheckPwMsg("패스워드가 일치하지 않습니다.")
@@ -116,11 +116,14 @@ const MyProfileEditDetail = () => {
       try {
         const response = await AccountApi.updateUserInfo(userInfo.userId, password, nickname, userInfo.userName, phone, email);
         console.log("회원정보 수정", response);
-
+        nav("/mypage")
       } catch (e) {
         console.log(e);
       }
   }
+  const userNickname = userInfo.userNickname;
+  const userPhone = userInfo.userPhone;
+  const userEmail = userInfo.userEmail;
 
   return (
     <>
@@ -129,39 +132,16 @@ const MyProfileEditDetail = () => {
           <div>
             <p>아이디: {userId}</p>
             <p>비밀번호: </p>
-            <input
-              style={{ display: "inline" }}
-              type="password"
-              onChange={onChagePw}
-            />
+            <input style={{ display: "inline" }} type="password" value={password} onChange={onChagePw}/>
             <p>비밀번호 확인: </p>
-            <input
-              style={{ display: "inline" }}
-              type="password"
-              onChange={onChageConPw}
-            />
+            <input style={{ display: "inline" }} type="password" value={conPassword} onChange={onChageConPw}/>
             <p>닉네임: </p>
-            <input
-              style={{ display: "inline" }}
-              type="text"
-              value={userInfo.userNickname}
-              onChange={onChageNickname}
-            />
+            <input style={{ display: "inline" }} type="text" value={userNickname} onChange={onChageNickname}/>
             <p>이름: {userInfo.userName}</p>
             <p>전화번호: </p>
-            <input
-              style={{ display: "inline" }}
-              type="text"
-              value={userInfo.userPhone}
-              onChange={onChagePhone}
-            />
+            <input style={{ display: "inline" }} type="text" value={userPhone} onChange={onChagePhone}/>
             <p>이메일: </p>
-            <input
-              style={{ display: "inline" }}
-              type="text"
-              value={userInfo.userEmail}
-              onChange={onChageEmail}
-            />
+            <input style={{ display: "inline" }} type="text" value={userEmail} onChange={onChageEmail}/>
             <button onClick={updateInfo}>수정</button>
           </div>
         ) : (

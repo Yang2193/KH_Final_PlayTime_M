@@ -86,12 +86,13 @@ const AccountApi = {
         return await axios.post(Domain + "/mypage/comment", getMemberCommentcmd);
     },
 
-    checkMemberPw: async(userPw) => {
+    checkMemberPw: async(userId, inputPw) => {
         Functions.setAuthorizationHeader();
         const checkMemberPwcmd = {
-            userPw: userPw
+            userId: userId,
+            userPw: inputPw
         };
-        return await axios.post(Domain + "/mypage/checkmemberPw", checkMemberPwcmd);
+        return await axios.post(Domain + "/mypage/checkmemberpw", checkMemberPwcmd);
     },
 
     updateUserInfo: async(userId, userPw, userNickname, userName, userPhone, userEmail) => {

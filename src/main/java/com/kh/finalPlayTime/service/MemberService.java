@@ -70,6 +70,18 @@ public class MemberService {
         return list;
     }
 
+    public List<MemberInfo> checkMemberPw(String userId, String userPw) {
+        Optional<MemberInfo> optionalMemberInfo = memberInfoRepository.findByUserId(userId);
+        List<MemberInfo> matchingMembers = new ArrayList<>();
+        if (optionalMemberInfo.isPresent()) {
+            MemberInfo memberInfo = optionalMemberInfo.get();
+            if (passwordEncoder.matches(userPw, memberInfo.getUserPw())) {
+                matchingMembers.add(memberInfo);
+            }
+        }
+        return matchingMembers;
+    }
+
     public boolean updateMemberInfo(String userId, String userPw, String userNickname, String userName, String userPhone, String userEmail) {
         System.out.println(userId + userPw + userNickname + userName + userPhone + userEmail);
         return memberInfoRepository.findByUserId(userId)
