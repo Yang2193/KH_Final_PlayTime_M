@@ -72,7 +72,7 @@ const PlayList = ({playList}) => {
     const nav = useNavigate();
     const movePage =(playId)=>{
         localStorage.setItem("playId",playId);
-        nav("play");
+        nav("info");
     }
 
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호

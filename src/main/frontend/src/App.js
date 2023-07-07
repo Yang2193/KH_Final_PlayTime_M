@@ -26,7 +26,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/play" element={<PlayPage />} />
+        <Route path="/info" element={<PlayPage />} />
         <Route path="/join/*" element={<JoinPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/find" element={<FindAccountPage />} />
