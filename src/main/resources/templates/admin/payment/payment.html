@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment List</title>
+  <style>
+        /* 스타일 예시 */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            width: 200px;
+        }
+
+        .search-form input[type="submit"] {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Payment List</h1>
+
+<div class="search-form">
+  <form th:action="@{/admin/payment}" method="get">
+    <label for="userId">Search by User ID:</label>
+    <input type="text" id="userId" name="userId" placeholder="Enter User ID">
+    <input type="submit" value="Search">
+  </form>
+</div>
+
+<div class="search-form">
+  <form th:action="@{/admin/payment}" method="get">
+    <label for="playId">Search by Play ID:</label>
+    <input type="text" id="playId" name="playId" placeholder="Enter Play ID">
+    <input type="submit" value="Search">
+  </form>
+</div>
+
+<div class="search-form">
+  <form th:action="@{/admin/payment}" method="get">
+    <label for="playId">Search by Play Title:</label>
+    <input type="text" id="title" name="title" placeholder="Enter Play Title">
+    <input type="submit" value="Search">
+  </form>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Reserve ID</th>
+    <th>Seat Info</th>
+    <th>Reserve Time</th>
+    <th>Reserve Date</th>
+    <th>See Date</th>
+    <th>Play ID</th>
+    <th>Title</th>
+    <th>User ID</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="reserve : ${list}">
+    <td th:text="${reserve.reserveId}"></td>
+    <td th:text="${reserve.seatInfo}"></td>
+    <td th:text="${reserve.reserveTime}"></td>
+    <td th:text="${reserve.reserveDate}"></td>
+    <td th:text="${reserve.seeDate}"></td>
+    <td th:text="${reserve.playId}"></td>
+    <td th:text="${reserve.playTitle}"></td>
+    <td th:text="${reserve.userId}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

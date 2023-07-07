@@ -234,4 +234,32 @@ public class AdminController {
         return "redirect:/admin/report/";
     }
 
+    //결제 내역 컨트롤러
+    @GetMapping("/payment")
+    public String paymentList(@RequestParam(required = false) String userId,
+                              @RequestParam(required = false) String playId,
+                              @RequestParam(required = false) String title, Model model){
+        List<ReserveDto> list;
+        if (userId != null) {
+            // User ID가 제공된 경우
+            list = adminService.getReserveAll().stream()
+                    .filter(reserveDto -> reserveDto.getUserId().contains(userId))
+                    .collect(Collectors.toList());
+        } else if (playId != null) {
+            // Play ID가 제공된 경우
+            list = adminService.getReserveAll().stream()
+                    .filter(reserveDto -> reserveDto.getPlayId().contains(playId))
+                    .collect(Collectors.toList());
+        } else if(title != null){
+            list = adminService.getReserveAll().stream()
+                    .filter(reserveDto -> reserveDto.getPlayTitle().contains(title))
+                    .collect(Collectors.toList());
+        }
+        else {
+            list = adminService.getReserveAll();
+        }
+        model.addAttribute("list", list);
+        return "admin/payment/payment";
+    }
+
 }

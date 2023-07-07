@@ -14,4 +14,5 @@ public class ReserveDto {
     private String reserveTime;// 공연 관람 시간
     private String seeDate; // 공연 관람일
     private String seatInfo; // 좌석 정보
+    private String playTitle;
 }

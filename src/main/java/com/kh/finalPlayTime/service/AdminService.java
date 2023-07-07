@@ -37,6 +37,7 @@ public class AdminService { // Admin에서만 필요한 Service는 AdminService�
     private final SeatNumbersRepository seatNumbersRepository;
     private final EntityManager entityManager;
     private final ReportRepository reportRepository;
+    private final ReserveRepository reserveRepository;
 
     // 전체 회원 조회
     public List<MemberDto> getMemberList() {
@@ -314,6 +315,25 @@ public class AdminService { // Admin에서만 필요한 Service는 AdminService�
         post.setMemberInfo(memberInfo);
         post.setPostDate(LocalDateTime.now());
         postRepository.save(post);
+    }
+
+    // 전체 결제내역 확인
+    public List<ReserveDto> getReserveAll(){
+        List<Reserve> reserveList = reserveRepository.findAll();
+        List<ReserveDto> list = new ArrayList<>();
+        for(Reserve e : reserveList){
+            ReserveDto dto = new ReserveDto();
+            dto.setReserveId(e.getId());
+            dto.setSeatInfo(e.getSeatInfo());
+            dto.setReserveTime(e.getTime());
+            dto.setReserveDate(e.getReserveDate());
+            dto.setSeeDate(e.getSeeDate());
+            dto.setPlayId(e.getPlayInfo().getPlayId());
+            dto.setPlayTitle(e.getPlayInfo().getTitle());
+            dto.setUserId(e.getMemberInfo().getUserId());
+            list.add(dto);
+        }
+        return list;
     }
 
 

@@ -13,5 +13,6 @@ import java.util.List;
 public interface ReserveRepository extends JpaRepository<Reserve,Long> {
     List<Reserve> findByMemberInfoUserId(String userId );
     List<Reserve> findByPlayInfoPlayId(String playId );
+    List<Reserve> findAll();
 
 }
