@@ -393,7 +393,7 @@
                 <img src={post.postImageUrl} alt="" />
               </PostImage>
 
-              <PostContent>{post.postContent}</PostContent>
+              <PostContent className="Explaination2" dangerouslySetInnerHTML={{ __html: post.postContent }}></PostContent>
 
               <CommentSection id="commentSection" height={commentSectionHeight}>
                 <CommentInputWrapper>

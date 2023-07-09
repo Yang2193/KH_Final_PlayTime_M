@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import ImageUploader from '../components/Post/ImageUploader';
 import PostAPI from '../api/PostApi';
+import MyEditor from '../components/Post/TextQuill';
 
 const Container = styled.div`
   max-width: 600px;
@@ -29,14 +30,6 @@ const Input = styled.input`
   border: 1px solid #ccc;
 `;
 
-const Textarea = styled.textarea`
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  height: 300px;
-`;
-
 const Button = styled.button`
   padding: 10px 20px;
   font-size: 16px;
@@ -51,8 +44,8 @@ const PostUpload = () => {
   const [postData, setPostData] = useState({
     postTitle: '',
     postImage: '',
-    postContent: '',
   });
+  const [postContent, setPostContent] = useState('');
 
   const navigate = useNavigate();
 
@@ -75,13 +68,12 @@ const PostUpload = () => {
     try {
       const response = await PostAPI.addPost(
         postData.postTitle,
-        postData.postContent,
+        postContent,
         postData.postImage,
         '1',
-        localStorage.getItem("userId")
-        
+        localStorage.getItem('userId')
       );
-  
+
       if (response.id) {
         toast.success('게시물 등록 성공');
         navigate(-1);
@@ -92,11 +84,11 @@ const PostUpload = () => {
       console.error('게시물 등록 에러:', error);
     }
   };
-  
 
   return (
     <>
       <ToastContainer />
+
       <Container>
         <Heading>게시물 등록</Heading>
         <div>
@@ -118,13 +110,8 @@ const PostUpload = () => {
         </div>
         <div>
           <Label>
-            내용
-            <Textarea
-              name="postContent"
-              value={postData.postContent}
-              onChange={handleInputChange}
-              className="myTextarea"
-            ></Textarea>
+            내용 입력
+            <MyEditor value={postContent} onChange={setPostContent} />
           </Label>
         </div>
         <Button onClick={handleUpload}>등록하기</Button>

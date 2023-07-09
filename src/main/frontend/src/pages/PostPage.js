@@ -125,7 +125,8 @@ const Post = () => {
                     {post.postTitle}
                   </Link>
                 </td>
-                <td className="Explaination2">{post.postContent}</td>
+                <td className="Explaination2" dangerouslySetInnerHTML={{ __html: post.postContent }}></td>
+
                 <td className="WriteDate">{formatWriteDate(post.postDate)}</td>
                 <td className="Id">{post.memberInfo ? post.memberInfo.userNickname : ''}</td>
                 <td className="Views">{post.postViews}</td>

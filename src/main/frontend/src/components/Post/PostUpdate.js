@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import ImageUploader from './ImageUploader';
 import PostAPI from '../../api/PostApi';
-
+import MyEditor from './TextQuill';
 const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
@@ -60,7 +60,7 @@ const PostUpdate = () => {
     const fetchPost = async () => {
       try {
         const post = await PostAPI.getPostById(postId);
-        
+
 
         if (post) {
           setPostData({
@@ -78,9 +78,9 @@ const PostUpdate = () => {
 
     fetchPost();
   }, [postId]);
-  
-  
-  
+
+
+
 
   const handleImageChange = (image) => {
     setPostData((prevData) => ({
@@ -135,13 +135,10 @@ const PostUpdate = () => {
         </div>
         <div>
           <Label>
-            내용
-            <Textarea
-              name="postContent"
+             <MyEditor  name="postContent"
               value={postData.postContent}
               onChange={handleInputChange}
-              className="myTextarea"
-            ></Textarea>
+              className="myTextarea"></MyEditor>
           </Label>
         </div>
         <Button onClick={handleUpdate}>수정하기</Button>
