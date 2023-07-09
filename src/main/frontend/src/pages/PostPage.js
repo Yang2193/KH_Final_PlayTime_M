@@ -7,14 +7,11 @@ import PageNation from '../utils/PageNation';
 import '../pages/ReviewBoard.css';
 import SearchBar from '../components/Post/SearchBar';
 
-
-
-
 const Post = () => {
   const [posts, setPosts] = useState([]);
   const [sortedPosts, setSortedPosts] = useState([]);
-  // const [isDataFetched, setIsDataFetched] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const ITEMS_PAGE = 10;
 
   useEffect(() => {
@@ -26,7 +23,7 @@ const Post = () => {
           setPosts(rsp.data);
           setSortedPosts(rsp.data);
         } else {
-          console.log("데이터가 없거나 불러오기를 실패함");
+          console.log('데이터가 없거나 불러오기를 실패함');
         }
       } catch (error) {
         console.log(error);
@@ -38,7 +35,6 @@ const Post = () => {
   const sortViews = () => {
     setSortedPosts([...posts].sort((a, b) => b.postViews - a.postViews));
   };
-
 
   const increaseViews = async (postId) => {
     try {
@@ -78,22 +74,29 @@ const Post = () => {
   const offset = currentPage * ITEMS_PAGE;
   const currentPageData = sortedPosts.slice(offset, offset + ITEMS_PAGE);
 
+  const handleSearch = (searchedPosts) => {
+    if (searchedPosts.length === 0) {
+      setIsSearchEmpty(true);
+    } else {
+      setIsSearchEmpty(false);
+    }
+    setSortedPosts(searchedPosts);
+    setCurrentPage(0);
+  };
 
   return (
     <>
       <Header />
       <div className="ReviewBoardWrapper">
         <h2>리뷰 게시판</h2>
-        <SearchBar></SearchBar>
+        <SearchBar handleSearch={handleSearch} />
         <div className="ButtonWrapper">
-
           <Link to="/postUpload">
             <button className="insert1">등록하기</button>
           </Link>
           <button className="insert2" onClick={sortViews}>
             조회순
           </button>
-
         </div>
         <table className="ReviewTable">
           <thead>
@@ -107,7 +110,12 @@ const Post = () => {
           </thead>
           <tbody>
             {currentPageData.map((post) => (
-              <tr className={`ReviewItem ${post.memberInfo?.userNickname === '운영자' ? 'AdminRow' : ''}`} key={post.id}>
+              <tr
+                className={`ReviewItem ${
+                  post.memberInfo?.userNickname === '운영자' ? 'AdminRow' : ''
+                }`}
+                key={post.id}
+              >
                 <td className="ReviewTitle">
                   <Link
                     to={`/post/${post.id}`}
@@ -124,8 +132,10 @@ const Post = () => {
               </tr>
             ))}
           </tbody>
-
         </table>
+        <div className="SearchEmptyMessage">
+        {isSearchEmpty && <p>검색 결과가 없습니다.</p>}
+        </div>
         {pageCount > 1 && <PageNation pageCount={pageCount} onPageChange={handlePageClick} />}
       </div>
       <Footer />

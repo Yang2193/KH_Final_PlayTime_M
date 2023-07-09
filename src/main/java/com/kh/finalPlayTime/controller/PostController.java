@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//변경
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -41,12 +42,13 @@ public class PostController {
         PostDto savedPost = postService.addPost(postDto);
         return ResponseEntity.ok(savedPost);
     }
+
     @PostMapping("/delete/{postId}")
     public ResponseEntity<String> deletePostById(@PathVariable Long postId) {
         postService.deletePostById(postId);
         return ResponseEntity.ok("게시물 삭제 성공");
     }
-    //게시글 수정
+
     @PostMapping("/update/{postId}")
     public ResponseEntity<PostDto> updatePost(@PathVariable Long postId, @RequestBody PostDto postDto) {
         PostDto updatedPost = postService.updatePost(postId, postDto);
@@ -56,4 +58,11 @@ public class PostController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<PostDto>> searchPostsByKeyword(@RequestParam String keyword) {
+        List<PostDto> searchResults = postService.searchPostsByKeyword(keyword);
+        return ResponseEntity.ok(searchResults);
+    }
+
 }

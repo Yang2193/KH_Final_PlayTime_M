@@ -53,13 +53,10 @@ public class PostService {
             MemberInfo memberInfo = new MemberInfo();
             memberInfo.setUserId(userId);
             post.setMemberInfo(memberInfo);
-
-
         }
         Post savedPost = postRepository.save(post);
         return convertToDto(savedPost);
     }
-
 
     // 게시물 목록을 Dto 리스트로 변환하는 기능
     private List<PostDto> convertToDtoList(List<Post> posts) {
@@ -114,23 +111,29 @@ public class PostService {
         }
         return postDtos;
     }
+
     // 게시물 삭제 기능
     public void deletePostById(Long postId) {
         postRepository.deleteById(postId);
     }
 
-    //게시물 수정
+    // 게시물 수정 기능
     public PostDto updatePost(Long postId, PostDto postDto) {
         Post existingPost = postRepository.findById(postId).orElse(null);
         if (existingPost != null) {
             existingPost.setPostTitle(postDto.getPostTitle());
             existingPost.setPostContent(postDto.getPostContent());
             existingPost.setPostImageUrl(postDto.getPostImageUrl());
-
             Post updatedPost = postRepository.save(existingPost);
             return convertToDto(updatedPost);
         }
         return null;
     }
 
+    // 특정 키워드를 포함하는 게시물 목록 조회 기능
+    public List<PostDto> searchPostsByKeyword(String keyword) {
+        List<Post> posts = postRepository.findByPostTitleContainingIgnoreCase(keyword);
+        List<PostDto> postDtoList = convertToDtoList(posts);
+        return postDtoList;
+    }
 }
