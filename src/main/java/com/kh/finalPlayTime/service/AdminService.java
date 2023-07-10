@@ -38,6 +38,8 @@ public class AdminService { // Admin에서만 필요한 Service는 AdminService�
     private final EntityManager entityManager;
     private final ReportRepository reportRepository;
     private final ReserveRepository reserveRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final PlayLikeRepository playLikeRepository;
 
     // 전체 회원 조회
     public List<MemberDto> getMemberList() {
@@ -82,6 +84,15 @@ public class AdminService { // Admin에서만 필요한 Service는 AdminService�
             else memberInfo.setWithdraw(Withdraw.Y);
             memberInfoRepository.save(memberInfo);
         }
+    }
+    public void deleteMember(String userId){
+        commentRepository.deleteByMemberInfoUserId(userId);
+        postRepository.deleteByMemberInfoUserId(userId);
+        refreshTokenRepository.deleteByUserId(userId);
+        reportRepository.deleteByUserId(userId);
+        reserveRepository.deleteByMemberInfoUserId(userId);
+        playLikeRepository.deleteByMemberInfoUserId(userId);
+        memberInfoRepository.deleteByUserId(userId);
     }
 
     //공연 관련

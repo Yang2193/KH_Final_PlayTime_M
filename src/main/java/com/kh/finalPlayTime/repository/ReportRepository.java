@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
     Optional<Report> findByReportId(Long id);
+    void deleteByUserId(String userId);
+
 }
 

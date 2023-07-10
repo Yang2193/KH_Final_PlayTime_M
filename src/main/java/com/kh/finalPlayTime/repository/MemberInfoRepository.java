@@ -21,4 +21,6 @@ public interface MemberInfoRepository extends JpaRepository<MemberInfo, String> 
 
     boolean existsByUserEmail(String email);
     boolean existsByUserId(String userId);
+    void deleteByUserId(String userId);
+
 }

@@ -11,6 +11,7 @@ import java.util.List;
 public interface PlayLikeRepository extends JpaRepository<PlayLike,Long> {
         List<PlayLike> findByMemberInfoUserId(String userId);
         PlayLike findByMemberInfoUserIdAndPlayInfoPlayId(String userId, String playId);
+        void deleteByMemberInfoUserId(String userId);
 
 
 }

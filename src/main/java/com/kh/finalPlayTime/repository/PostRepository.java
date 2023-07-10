@@ -10,4 +10,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByMemberInfoUserId(String userId);
     void deleteById(Long id);
     List<Post> findByPostTitleContainingIgnoreCase(String keyword);
+    void deleteByMemberInfoUserId(String userId);
+
 }

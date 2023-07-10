@@ -52,6 +52,10 @@
         <input type="hidden" name="userId" th:value="${dto.userId}" />
         <button type="submit" th:text="${dto.message != 'BLOCK' ? '차단' : '차단/탈퇴 해제'}"></button>
     </form>
+    <form th:action="@{/admin/deleteMember}" method="post">
+        <input type="hidden" name="userId" th:value="${dto.userId}" />
+        <button type="submit">회원 탈퇴</button>
+    </form>
 </div>
 </body>
 </html>

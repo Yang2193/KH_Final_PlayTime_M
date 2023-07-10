@@ -66,6 +66,12 @@ public class AdminController {
         return "admin/member/memberDetail";
     }
 
+    @PostMapping("/deleteMember")
+    public String adminDeleteMember(@RequestParam String userId, Model model){
+        adminService.deleteMember(userId);
+        return "redirect:/admin/getAllMember";
+    }
+
     // 게시판 관리 컨트롤러 시작
 
     @GetMapping("/post")
