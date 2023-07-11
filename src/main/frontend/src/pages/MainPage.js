@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Footer from "../components/Footer";
 import styled from "styled-components";
 import Header from "../components/Header";
@@ -7,67 +7,68 @@ import MainApi from "../api/MainApi";
 import PlayList from "../components/main/PlayList";
 
 const Container = styled.div`
-    height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-`
+  height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+`;
 
 const MainPage = () => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    const [playList, setPlayList] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [playList, setPlayList] = useState([]);
 
-    useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth <= 768);
-      };
-  
-      window.addEventListener("resize", handleResize);
-  
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-    useEffect(() => {
-        const fetchData = async() =>{
-            try{
-                const rsp = await MainApi.getPlayList();
-                if(rsp.status === 200){
-                    setPlayList(rsp.data);
-                    console.log(rsp.data);
-                }
-            } catch(error){
-                console.error(error);
-            }
-        };
-        fetchData();
-    }, [])
+    window.addEventListener("resize", handleResize);
 
-    useEffect(() => {
-        console.log(playList);
-    }, [playList])
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
- 
-    const handlePlayList = (playlist) => {
-        setPlayList(playlist);
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const rsp = await MainApi.getPlayList();
+        if (rsp.status === 200) {
+          setPlayList(rsp.data);
+          console.log(rsp.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
+  useEffect(() => {
+    console.log(playList);
+  }, [playList]);
 
-    return(
-        <Container> 
-             {isMobile ? (
-            <Header>
-                <SearchBox handlePlayList={handlePlayList}/>
-            </Header>) : (
-                <>
-                    <Header></Header>
-                    <SearchBox handlePlayList={handlePlayList}/>
-                </>
-            )}
-            <PlayList playList={playList}/>
-            <Footer/>
-        </Container>
-    )
-}
+  const handlePlayList = useCallback((playlist) => {
+    setPlayList(playlist);
+  }, []);
 
-export default MainPage
+  const memoizedPlayList = useMemo(() => <PlayList playList={playList} />, [playList]);
+
+  return (
+    <Container>
+      {isMobile ? (
+        <Header>
+          <SearchBox handlePlayList={handlePlayList} />
+        </Header>
+      ) : (
+        <>
+          <Header></Header>
+          <SearchBox handlePlayList={handlePlayList} />
+        </>
+      )}
+      {memoizedPlayList}
+      <Footer />
+    </Container>
+  );
+};
+
+export default MainPage;

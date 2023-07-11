@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import PageNation from "../../utils/PageNation";
 import { useNavigate } from "react-router-dom";
 
@@ -33,12 +33,12 @@ const ListBox = styled.div`
     thead, tbody{
         width : 100%
     }
-    
+
     thead th{
         background-color: #990A2C;
         color: #fff;
     }
-    
+
     tbody td{
         border-bottom: 1px dotted #999;
     }
@@ -61,23 +61,27 @@ const ListBox = styled.div`
             border: 1px solid #b9b9b9;
             vertical-align: middle;
         }
-                    
+
     .menu p{
         margin: 0 20px;
     }
 `
 
 const PlayList = ({playList}) => {
-    
+
     const nav = useNavigate();
-    const movePage =(playId)=>{
-        localStorage.setItem("playId",playId);
-        nav("info");
-    }
+    const movePage = useCallback(
+        (playId) => {
+          localStorage.setItem("playId", playId);
+          nav("Info");
+        },
+        [nav]
+      );
+
 
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호
 
-    useEffect(() => {  
+    useEffect(() => {
         setCurrentPage(0);
     }, [playList])
 
@@ -86,29 +90,34 @@ const PlayList = ({playList}) => {
     const handlePageClick = (selectedPage) => {
         setCurrentPage(selectedPage.selected);
       };
-    
+
     const pageCount = Math.ceil(playList.length / ITEMS_PAGE); // 페이지 수 계산
     const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
     const currentPageData = playList.slice(offset, offset + ITEMS_PAGE);
 
-    const playListMap = 
-        currentPageData && 
-        currentPageData.map(pl => (
+    const playListMap = useMemo(() => {
+        if (currentPageData && currentPageData.length > 0) {
+          return currentPageData.map((pl) => (
             <tr key={pl.playId} onClick={() => movePage(pl.playId)}>
-                    <td className="image">
-                        <img src={pl.imageUrl} alt="image1" className="img-thumb"/>
-                    </td>
-                    <td className="title">
-                        {pl.title}
-                    </td>
-                    <td className="location">
-                        {pl.theaterName}
-                    </td>
-                    <td className="period">
-                        {pl.periodStart} ~ {pl.periodEnd}
-                    </td>
-                </tr>
-        ));
+              <td className="image">
+                <img src={pl.imageUrl} alt="image1" className="img-thumb" />
+              </td>
+              <td className="title">{pl.title}</td>
+              <td className="location">{pl.theaterName}</td>
+              <td className="period">
+                {pl.periodStart} ~ {pl.periodEnd}
+              </td>
+            </tr>
+          ));
+        } else {
+          return (
+            <tr>
+              <td colSpan={4}>검색 결과가 존재하지 않습니다.</td>
+            </tr>
+          );
+        }
+      }, [currentPageData]);
+
 
     return(
         <>

@@ -46,7 +46,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/playList/**", "/admin/**").permitAll()
-                .antMatchers("/static/**","/", "/index.html").permitAll()
+                .antMatchers("/static/**","/", "/index.html", "/manifest.json", "/favicon.ico").permitAll()
                 .antMatchers("/play/**").permitAll()
                 .antMatchers("/post/**").permitAll()
                 .antMatchers("/login").permitAll()

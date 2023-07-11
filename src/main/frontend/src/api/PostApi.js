@@ -8,13 +8,13 @@ const PostAPI = {
   // 게시물 목록 조회
   getAllPosts: async () => {
     Functions.setAuthorizationHeader();
-    return await axios.get(`${Posts}/post/select`);
+    return await axios.get(`/post/select`);
   },
 
   // 게시물 상세 정보 조회
   getPostById: async (postId) => {
     Functions.setAuthorizationHeader();
-    const response = await axios.get(`${Posts}/post/select/${postId}`);
+    const response = await axios.get(`/post/select/${postId}`);
     return response.data;
   },
 
@@ -32,22 +32,22 @@ const PostAPI = {
 
       Functions.setAuthorizationHeader();
 
-      const response = await axios.post(`${Posts}/post/postUpload`, postData);
+      const response = await axios.post(`/post/postUpload`, postData);
       return response.data;
     } catch (error) {
       await Functions.handleApiError(error);
-      const response1 = await axios.post(`${Posts}/post/postUpload`);
+      const response1 = await axios.post(`/post/postUpload`);
       return response1.data;
     }
   },
     // 게시물 삭제
     deletePost: async (postId) => {
-      return await axios.post(`${Posts}/post/delete/${postId}`);
+      return await axios.post(`/post/delete/${postId}`);
     },
 
   // 조회수 증가
   increasePostViews: async (postId) => {
-    const response = await axios.post(`${Posts}/post/${postId}/increase-views`);
+    const response = await axios.post(`/post/${postId}/increase-views`);
     return response.data;
   },
 
@@ -56,7 +56,7 @@ const PostAPI = {
 
   // 게시물 ID로 댓글 리스트 조회
   getCommentsByPostId: async (postId) => {
-    const response = await axios.get(`${Posts}/comments/detail/${postId}`);
+    const response = await axios.get(`/comments/detail/${postId}`);
     return response.data;
   },
 
@@ -64,19 +64,19 @@ const PostAPI = {
   createComment: async (newComment) => {
     Functions.setAuthorizationHeader();
     console.log(newComment);
-    return await axios.post(`${Posts}/comments/createComment`, newComment);
+    return await axios.post(`/comments/createComment`, newComment);
   },
 
   // 댓글 삭제
   deleteComment: async (commentId) => {
 
-    return await axios.post(`${Posts}/comments/delete/${commentId}`);
+    return await axios.post(`/comments/delete/${commentId}`);
 
   },
 
   // 댓글 수정
   updateComment: async (commentId, updatedComment) => {
-    return await axios.post(`${Posts}/comments/${commentId}`, updatedComment);
+    return await axios.post(`/comments/${commentId}`, updatedComment);
   },
 //ㅅㅈ
 // 댓글 신고
@@ -90,23 +90,23 @@ reportComment: async (commentId, reportReason, nickname, postId,userId) => {
   };
   console.log(reportData);
 
-  return await axios.post(`${Posts}/reports/report`, reportData);
+  return await axios.post(`/reports/report`, reportData);
 
 },
 
   // 카테고리에 해당하는 게시물 목록 조회
    getPostsByCategory: async (categoryId) => {
-    return await axios.get(`${Posts}/post/category/${categoryId}`);
+    return await axios.get(`/post/category/${categoryId}`);
   },
     // 게시물 수정
     updatePost: async (postId, updatedPost) => {
       try {
         Functions.setAuthorizationHeader();
-        const response = await axios.post(`${Posts}/post/update/${postId}`, updatedPost);
+        const response = await axios.post(`/post/update/${postId}`, updatedPost);
         return response.data;
       } catch (error) {
         await Functions.handleApiError(error);
-        const response1 = await axios.post(`${Posts}/post/update/${postId}`);
+        const response1 = await axios.post(`/post/update/${postId}`);
         return response1.data;
       }
 

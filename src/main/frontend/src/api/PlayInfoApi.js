@@ -8,23 +8,23 @@ const PlayInfoApi = {
         const playId = {
             playId : mt20id
         }
-        return await axios.get(KH_DOMAIN + `/play/${mt20id}`,playId);
+        return await axios.get(`/play/${mt20id}`,playId);
     },
     // 선택된 극장 상세정보 불러오기
     theaterDetail: async (mt10id) => {
         const theaterId = {
             theaterId : mt10id
         }
-        return await axios.get(KH_DOMAIN + `/play/theater/${mt10id}`, theaterId);
+        return await axios.get(`/play/theater/${mt10id}`, theaterId);
     },
     // 찜 조회
     selectPlayLike : async(userId)=>{
         try{
             Functions.setAuthorizationHeader();
-            return await axios.get(KH_DOMAIN + `/play/playLikeList2?id=${userId}`)
+            return await axios.get(`/play/playLikeList2?id=${userId}`)
         } catch(error){
             await Functions.handleApiError(error);
-            return await axios.get(KH_DOMAIN + `/play/playLikeList2?id=${userId}`)
+            return await axios.get(`/play/playLikeList2?id=${userId}`)
         }
     },
     // 찜추가
@@ -35,11 +35,11 @@ const PlayInfoApi = {
         }
         try{
             Functions.setAuthorizationHeader();
-            return await axios.post(KH_DOMAIN + `/play/addPlayLike`,id)
+            return await axios.post(`/play/addPlayLike`,id)
 
         }catch(error){
             await Functions.handleApiError(error);
-            return await axios.post(KH_DOMAIN + `/play/addPlayLike`,id)
+            return await axios.post(`/play/addPlayLike`,id)
         }
     },
     // 찜삭제
@@ -50,22 +50,22 @@ const PlayInfoApi = {
         }
         try{
             Functions.setAuthorizationHeader();
-            return await axios.post(KH_DOMAIN + `/play/deletePlayLike`,id)
+            return await axios.post(`/play/deletePlayLike`,id)
 
         }catch(error){
             await Functions.handleApiError(error);
-            return await axios.post(KH_DOMAIN + `/play/deletePlayLike`,id)
+            return await axios.post(`/play/deletePlayLike`,id)
         }
     },
     // 마이페이지 용 찜조회
     myPagePlayLike : async(userId)=>{
         try{
             Functions.setAuthorizationHeader();
-            return await axios.get(KH_DOMAIN + `/play/playLikeList?id=${userId}`)
+            return await axios.get(`/play/playLikeList?id=${userId}`)
 
         }catch(error){
             await Functions.handleApiError(error);
-            return await axios.get(KH_DOMAIN + `/play/playLikeList?id=${userId}`)
+            return await axios.get(`/play/playLikeList?id=${userId}`)
         }
     },
 }
