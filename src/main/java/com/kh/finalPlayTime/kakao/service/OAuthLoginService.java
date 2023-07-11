@@ -7,10 +7,15 @@ import com.kh.finalPlayTime.kakao.params.OAuthLoginParams;
 import com.kh.finalPlayTime.kakao.repository.SocialMemberRepository;
 import com.kh.finalPlayTime.kakao.response.OAuthInfoResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class OAuthLoginService {
     private final SocialMemberRepository socialMemberRepository;
     private final AuthTokensGenerator authTokensGenerator;

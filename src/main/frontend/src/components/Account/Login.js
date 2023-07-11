@@ -92,13 +92,13 @@ const Login = () => {
     };
   
     const Rest_api_key='088a7b267c39d0a11ec3904372ed9d33' //REST API KEY
-    const redirect_uri = 'http://localhost:3000/kakao-login' //Redirect URI
+    const redirect_uri = 'http://localhost:8111/auth/kakao/callback' //Redirect URI
     // oauth 요청 URL
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
     const onClickKakaoLogin = ()=>{
         window.location.href = kakaoURL
     }
-
+    
     return (
       <div className="wrapper">
         <div className="loginWrapper">

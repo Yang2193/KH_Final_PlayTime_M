@@ -1,10 +1,13 @@
 package com.kh.finalPlayTime.kakao.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class KakaoTokens {
     @JsonProperty("access_token")
@@ -24,4 +27,7 @@ public class KakaoTokens {
 
     @JsonProperty("scope")
     private String scope;
+
+    @JsonProperty("id_token")
+    private String idToken;
 }

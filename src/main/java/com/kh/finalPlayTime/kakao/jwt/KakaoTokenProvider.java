@@ -17,9 +17,8 @@ public class KakaoTokenProvider {
 
     private final Key key;
 
-    public KakaoTokenProvider(@Value("${jwt.secret-key}") String secretKey) {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+    public KakaoTokenProvider(@Value("${springboot.jwt.secret}") String secretKey) {
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public String generate(String subject, Date expiredAt) {
