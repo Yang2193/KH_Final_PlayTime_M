@@ -24,7 +24,7 @@ public class OneLineReview {
     private double olrRating;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "user_id")
     private MemberInfo memberInfo;
     @ManyToOne
     @JoinColumn(name = "play_id")

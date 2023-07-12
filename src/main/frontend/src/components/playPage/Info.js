@@ -19,12 +19,6 @@ const FixData = styled.div`
         padding-bottom: 2%;
         margin-bottom: 4%;
         border-bottom: 3px solid;
-        /* @media (max-width:768px) {
-             width : 100%;
-             border: 1px solid;
-              
-            } */
-
     }
     .content{
         display: flex;
@@ -44,57 +38,53 @@ const FixData = styled.div`
             margin-right:5%;
             @media (max-width:768px) {
                 margin: 0;
-                width: 70%;
+                width: 80%;
                 height: 30%;
                 margin-top: 5%;
             }
         }
-        .like{
-            position: relative;
-            right:38%;
-            top:40%;
-            background-color: white;
-            border: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 8%;
-            cursor: pointer;
-            p{
-                margin-left: 10%;
-            }
-            @media (max-width:768px) {
-             display: none;
-            }
-        }
+
         .textBox{
             width: 60%;
             height: 65%;
-
             @media (max-width:768px) {
                 width: 100%;
                 height: 100%;
                 display: flex;
                 justify-content: center;
-                margin: 3% 0%;
-                /* border: 1px solid; */
+                align-items: center;
+                margin-top: 5%;
+                flex-direction: column;
+
+            }
+        }
+        .like{
+            text-align: end;
+            @media (max-width:768px) {
+                width: 80%;
             }
         }
         .infoBox{
+            position: relative;
+            bottom: 40px;
+            z-index: -1;
             width: 100%;
             height: 100%;
             font-size: 1em;
             @media (max-width:768px) {
                 width: 80%;
                 height: 80%;
-                /* border: 1px solid; */
                 font-size: 1em;
+                bottom:40px;
+            }
+            @media (max-width:412px) {
+                width: 90%;
+                height: 90%;
             }
             ul{
                 list-style: none;
                 padding: 0;
                 margin: 0;
-           
             }
             li{
                 display: flex;
@@ -112,21 +102,20 @@ const FixData = styled.div`
         height:10%;
         width: 100%;
         display: flex;
-        justify-content:end ;
-        align-items:end;
+        justify-content:center ;
+        align-items:center;
         @media (max-width:768px) {
             position: fixed;
             bottom: 0;
             width: 100%;
             height: 50px;
-            z-index: 1;
+            z-index: 2;
             }
         button{
-            width: 30%;
+            width: 100%;
             height: 100%;
-            font-size: 1.3em;
+            font-size: 1.2em;
             border: none;
-            border-radius: 15px;
             cursor: pointer;    
             @media (max-width:768px) {
                 border-radius: 0%;
@@ -232,74 +221,70 @@ const Info = () =>{
         navigate("/login");
         }
     return(
-        <>
-          {playInfo && playInfo.map(play =>(
-            <FixData key = {play.playId}>
-                    <div className="content">
-                        <img src={play.playPoster} alt="" />
-                        <button className="like" onClick={()=>onClickLiked()}>
-                            <FaHeart style={{fontSize: '200%', color: isLiked ? "red" : "#999999" }}/> <p>찜하기</p>
-                        </button>
-                        <div className="textBox">
-                            <div className="infoBox">
-                                <h1>{play.title}</h1>
-                                <ul>
-                                    <li>
-                                        <span>장소</span>
-                                        <div>
-                                            {play.theaterName}
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>공연기간</span>
-                                        <div>
-                                            {play.periodStart} ~ {play.periodEnd}
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>공연시간</span>
-                                        <div>
-                                            {play.playTime}
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>관람연령</span>
-                                        <div>
-                                            {play.playAge}
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>가격</span>
-                                        <div>
-                                            {play.playPrice}
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>공연 스케줄</span>
-                                        <div>
-                                            {play.playPlan}
-                                        </div>
-                                    </li>
-                                    {play.playCast==="" ? null : 
+      <>
+              {playInfo && playInfo.map(play =>(
+                <FixData key = {play.playId}>
+                        <div className="content">
+                            <img src={play.playPoster} alt="" />
+                            <div className="textBox">
+                            <div className="like"><FaHeart onClick={()=>onClickLiked()} style={{fontSize: '200%', cursor:"pointer", color: isLiked ? "red" : "#999999" }}/></div>
+                                <div className="infoBox">
+                                    <h1>{play.title}</h1>
+                                    <ul>
                                         <li>
-                                            <span> 배우진 </span>
+                                            <span>장소</span>
                                             <div>
-                                                {play.playCast}
+                                                {play.theaterName}
                                             </div>
                                         </li>
-                                    }
-                                </ul>
-                            </div>
-                            <div className="btnBox">
+                                        <li>
+                                            <span>공연기간</span>
+                                            <div>
+                                                {play.periodStart} ~ {play.periodEnd}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span>공연시간</span>
+                                            <div>
+                                                {play.playTime}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span>관람연령</span>
+                                            <div>
+                                                {play.playAge}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span>가격</span>
+                                            <div>
+                                                {play.playPrice}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span>공연 스케줄</span>
+                                            <div>
+                                                {play.playPlan}
+                                            </div>
+                                        </li>
+                                        {play.playCast==="" ? null :
+                                            <li>
+                                                <span> 배우진 </span>
+                                                <div>
+                                                    {play.playCast}
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div className="btnBox">
                                     <Button onClick={()=>reserve(play.playPlan,play.playPrice,play.title,play.theaterId)}>예매 하기</Button>
-                            </div>
+                                </div>
+                        </div>
                     </div>
-                </div>
-                </FixData>
-            ))}
-        <MessageModal open={modalOpen} close={onClickClose} confirm={onClickLogin} header="로그인">로그인이 필요한 페이지입니다.</MessageModal>
-        </>
-          
-    )
+                    </FixData>
+                ))}
+            </>
+    );
 }
 export default Info;

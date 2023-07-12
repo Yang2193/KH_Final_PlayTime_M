@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 import ReserveApi from "../api/ReserveApi";
 const ReserveStyle = styled.div`
+width: 100%;
+.conteiner{
     margin-top: 2%;
     width: 50%;
     height: 100vh;
@@ -19,8 +21,21 @@ const ReserveStyle = styled.div`
     position: relative;
     left: 25%;
     @media (max-width:768px) {
-        width: 100%;
-        position: static;
+        margin: 0;
+        width: 80%;
+        left: 0;
+        height: 76vh;
+    }
+}
+.seatInfo{
+    @media (max-width:768px) {
+        height: 100vh;
+    }
+}
+@media (max-width:768px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     }
     .reserved{
         background-color: #eee;
@@ -43,9 +58,14 @@ const ReserveStyle = styled.div`
             height: 50%;
         }
     }
-    .container{
+    .box{
         width: 100%;
         height: 60%;
+        @media (max-width:768px) {
+            width: 110%;
+            height: 55%;
+            margin-bottom: 10%;
+            }
     }
     .seat{
         display: flex;
@@ -53,6 +73,7 @@ const ReserveStyle = styled.div`
         height: 50%;
         /* border: 1px solid; */
         flex-direction: column;
+
     }
     .seat-row{
         display: flex;
@@ -63,7 +84,9 @@ const ReserveStyle = styled.div`
         margin-bottom: 1%;
         p{
             width: 4%;
-
+        @media (max-width:768px) {
+            width: 13%;
+        }
         }
         span{
             border: 1px solid;
@@ -73,23 +96,29 @@ const ReserveStyle = styled.div`
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            margin-left: 1%;  
+            margin-left: 1%;
+            @media (max-width:768px) {
+                font-size: 0.8em;
+                width: 10%;
+                height: 40%;
+            }
         }
         .empty{
             border: none;
+            cursor: default;
         }
     .selected{
             background-color: #990a2c;
             color: #fff;
-        }      
+        }
     }
     .time{
         width: 100%;
         height: 20%;
         display: flex;
         p{
-            width: 20%;
-            height: 40%;
+            width: 15%;
+            height: 30%;
             border: 1px solid;
             border-radius: 10px;
             margin-top:10%;
@@ -100,8 +129,11 @@ const ReserveStyle = styled.div`
             justify-content: center;
             align-items: center;
             cursor: pointer;
-        /* 선택된 버튼에 대한 스타일 변경 */
-    
+            @media (max-width:768px) {
+                width: 20%;
+                font-size: 1em;
+                height: 40%;
+            }
         }
         .selected{
             background-color: #990a2c;
@@ -110,8 +142,7 @@ const ReserveStyle = styled.div`
     }
     .cal{
         width: 100%;
-        height:50%;
-
+        height:45%;
     }
     .btn{
         margin-top: 10%;
@@ -127,8 +158,8 @@ const ReserveStyle = styled.div`
         padding-left: 2%;
         background-color: #eee;
         border-radius: 15px;
-        p{
-            /* border: 1px solid; */
+        @media (max-width:768px) {
+            width: 80%;
         }
     }
     .react-calendar {
@@ -139,17 +170,21 @@ const ReserveStyle = styled.div`
             background-color: #fff;
             color: #222;
             border-radius: 8px;
-            /* box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); */
             line-height: 1.125em;
+
             }
             .react-calendar__navigation button {
             color: #990A2C;
-            
+
             min-width: 44px;
             background: none;
             font-size: 1.5em;
             margin-top: 8px;
             font-weight:bold;
+            @media (max-width:768px) {
+            font-size: 1em;
+            min-width: 30px;
+        }
             }
             .react-calendar__navigation button:enabled:hover,
             .react-calendar__navigation button:enabled:focus {
@@ -165,14 +200,19 @@ const ReserveStyle = styled.div`
                 background-color: #fff;
                 font-size: 1em;
                 height: 55px;
+                @media (max-width:768px) {
+                font-size: 0.8em;
+                height: 30px;
+                max-width: 100%;
+        }
             }
             .react-calendar__tile:enabled:hover,
             .react-calendar__tile:enabled:focus {
             background: #990A2C;
             color: #fff;
-            border-radius: 50%;
+            border-radius: 5px;
             }
-            
+
             .react-calendar__tile--now {
             background: white;
             border-radius: 6px;
@@ -180,7 +220,7 @@ const ReserveStyle = styled.div`
             }
             .react-calendar__tile--active {
             background: #990A2C;
-            border-radius: 50%;
+            border-radius: 5px;
             font-weight: bold;
             color: white;
             }
@@ -374,124 +414,124 @@ const ReservePage = () =>{
     }
 
     return(
-        <>
-        <Header/>
-        {type === "default" && (
-            <ReserveStyle>
-                <h1>날짜 및 시간 선택</h1>
-                <div className="cal">
-                    <Calendar
-                    onChange={dateData} 
-                    value={value}
-                    calendarType="US"
-                    minDate={new(Date)}
-                    />  
-                </div>
-                    {timeOptions === null ? 
-                    <div className="time">
-                        <h3>회차가 존재하지 않습니다.</h3>
-                    </div>
-                    : 
-                    <div className="time">
-                        <h3>회차 선택</h3>
-                        {timeOptions.map((time, index) => (
-                            <p 
-                            className={selTime === time ? "selected" : ""}
-                            onClick={()=>timeData(time)} 
-                            key={index}
-                            >
-                                {time.trim()}
-                            </p>
-                        ))}        
-                    </div>  
-                    }
-                    <Button className="btn" onClick={()=>nextPage()}>좌석 선택</Button>
-            </ReserveStyle>
-        )}
-        {type === "seat" &&(
-        <ReserveStyle>
-        <h1>좌석 선택</h1>
-        <div className="container">
-            <div className="stage">
-                <h2>STAGE</h2>
-            </div>
-            <div className="seat">
-                {Object.entries(groupedSeats).map(([row, seats]) => (
-                <div className="seat-row">
-                    <p>{row}열</p>
-                    {seats.map((seat) => {
-                        const seatNumber = seat.seatNumber.toString();
-                        const isSeatTaken = findSeat.some( s =>
-                            (s.seatInfo.includes(`${row}열 ${seatNumber}번`) ||
-                            (seatNumber.includes("C") && s.seatInfo.includes(`${row}열 ${seatNumber.replace("C", "")}번`))) && 
-                            s.seeDate === moment(value).format("YYYY-MM-DD") && 
-                            s.time === selTime
-                        );
-                        if (isSeatTaken) {
-                            if (seatNumber.includes("C")) {
-                                return(
-                                    <>
-                                        <span className="reserved">{seatNumber.replace("C", "")}</span>
-                                        <span className="empty"> </span>
-                                    </>
-                                )
-                            }else{
-                                return (
-                                    <span className="reserved">{seatNumber.replace("C", "")}</span>
-                                );
-                            }
-                        } else {
-                            if (seatNumber.includes("C")) {
-                                const seatNumberWithoutC = seatNumber.replace("C", "");
-                            return (
-                                <>
-                                    <span
-                                        className={selSeat.includes(row + seatNumberWithoutC) ? "selected" : ""}
-                                        onClick={() => clickSeat(row + seatNumberWithoutC)}>
-                                        {seatNumberWithoutC}
-                                    </span>
-                                    <span className="empty"> </span>
-                                </>
-                            );
-                            } else {
-                            return (
-                                <span
-                                className={selSeat.includes(row + seatNumber) ? "selected" : ""}
-                                onClick={() => clickSeat(row + seatNumber)}>
-                                    {seatNumber}
-                                </span>
-                            );
-                        }
-                    }
-                })}
-                </div>
-            ))}
-            </div>
-        </div>
-        <div className="priceInfo">
-            {priceInfo.includes("전석")&&( <p>{priceInfo}</p>)}
-            {priceInfo.includes("R") && priceInfo.includes("S") && !priceInfo.includes("A") && (
-                <>
-                    <p>1 ~ 3열 R석</p>
-                    <p>4 ~ 6열 S석</p>
-                    <p>{priceInfo}</p>
-                </>
-            )}
-            {priceInfo.includes("R") && priceInfo.includes("S") && priceInfo.includes("A") && (
-                <>
-                    <p>1 ~ 2열 R석</p>
-                    <p>3 ~ 4열 S석</p>
-                    <p>5 ~ 6열 A석</p>
-                    <p>{priceInfo}</p>
-                </>
-            )}
-        </div>
-        <Button className="btn" onClick={() => payReady()}>결제 하기</Button>
-        </ReserveStyle>
-        )}
-        <Footer/>
-        </>
-        )
+         <ReserveStyle>
+               <Header children={<h1 style={{color:"white"}}>예매하기</h1>}/>
+               {type === "default" && (
+                   <div className="conteiner">
+                       <h1>날짜 및 시간 선택</h1>
+                       <div className="cal">
+                           <Calendar
+                           onChange={dateData}
+                           value={value}
+                           calendarType="US"
+                           minDate={new(Date)}
+                           />
+                       </div>
+                           {timeOptions === null ?
+                           <div className="time">
+                               <h3>회차가 존재하지 않습니다.</h3>
+                           </div>
+                           :
+                           <div className="time">
+                               <h3>회차 선택</h3>
+                               {timeOptions.map((time, index) => (
+                                   <p
+                                   className={selTime === time ? "selected" : ""}
+                                   onClick={()=>timeData(time)}
+                                   key={index}
+                                   >
+                                       {time.trim()}
+                                   </p>
+                               ))}
+                           </div>
+                           }
+                           <Button className="btn" onClick={()=>nextPage()}>좌석 선택</Button>
+                   </div>
+               )}
+               {type === "seat" &&(
+               <div className="conteiner seatInfo">
+               {/* <h1>좌석 선택</h1> */}
+               <div className="box">
+                   <div className="stage">
+                       <h2>STAGE</h2>
+                   </div>
+                   <div className="seat">
+                       {Object.entries(groupedSeats).map(([row, seats]) => (
+                       <div className="seat-row">
+                           <p>{row}열</p>
+                           {seats.map((seat) => {
+                               const seatNumber = seat.seatNumber.toString();
+                               const isSeatTaken = findSeat.some( s =>
+                                   (s.seatInfo.includes(`${row}열 ${seatNumber}번`) ||
+                                   (seatNumber.includes("C") && s.seatInfo.includes(`${row}열 ${seatNumber.replace("C", "")}번`))) &&
+                                   s.seeDate === moment(value).format("YYYY-MM-DD") &&
+                                   s.time === selTime
+                               );
+                               if (isSeatTaken) {
+                                   if (seatNumber.includes("C")) {
+                                       return(
+                                           <>
+                                               <span className="reserved">{seatNumber.replace("C", "")}</span>
+                                               <span className="empty"> </span>
+                                           </>
+                                       )
+                                   }else{
+                                       return (
+                                           <span className="reserved">{seatNumber.replace("C", "")}</span>
+                                       );
+                                   }
+                               } else {
+                                   if (seatNumber.includes("C")) {
+                                       const seatNumberWithoutC = seatNumber.replace("C", "");
+                                   return (
+                                       <>
+                                           <span
+                                               className={selSeat.includes(row + seatNumberWithoutC) ? "selected" : ""}
+                                               onClick={() => clickSeat(row + seatNumberWithoutC)}>
+                                               {seatNumberWithoutC}
+                                           </span>
+                                           <span className="empty"> </span>
+                                       </>
+                                   );
+                                   } else {
+                                   return (
+                                       <span
+                                       className={selSeat.includes(row + seatNumber) ? "selected" : ""}
+                                       onClick={() => clickSeat(row + seatNumber)}>
+                                           {seatNumber}
+                                       </span>
+                                   );
+                               }
+                           }
+                       })}
+                       </div>
+                   ))}
+                   </div>
+               </div>
+               <div className="priceInfo">
+                   {priceInfo.includes("전석")&&( <p>{priceInfo}</p>)}
+                   {priceInfo.includes("R") && priceInfo.includes("S") && !priceInfo.includes("A") && (
+                       <>
+                           <p>1 ~ 3열 R석</p>
+                           <p>4 ~ 6열 S석</p>
+                           <p>{priceInfo}</p>
+                       </>
+                   )}
+                   {priceInfo.includes("R") && priceInfo.includes("S") && priceInfo.includes("A") && (
+                       <>
+                           <p>1 ~ 2열 R석</p>
+                           <p>3 ~ 4열 S석</p>
+                           <p>5 ~ 6열 A석</p>
+                           <p>{priceInfo}</p>
+                       </>
+                   )}
+               </div>
+               <Button className="btn" onClick={() => payReady()}>결제 하기</Button>
+               </div>
+               )}
+               <Footer/>
+               </ReserveStyle>
+               )
 }
 
 export default ReservePage;

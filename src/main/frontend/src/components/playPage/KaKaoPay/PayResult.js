@@ -8,20 +8,24 @@ import styled from "styled-components";
 import { Button } from "../../../utils/GlobalStyle";
 const PayInfo = styled.div`
     width: 100%;
-    height: 78vh;
+    height: 76vh;
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
     div{
-      margin-top: 7%;
       background-color: #eee;
       border-radius: 15px;
-      width: 40%;
+      width: 50%;
       height: 70%;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      @media (max-width:768px) {
+          width: 80%;
+          height: 50%;
+      }
     }
     button{
       margin-top: 10%;
@@ -31,6 +35,10 @@ const PayInfo = styled.div`
       border-radius: 15px;
       height: 10%;
       cursor: pointer;
+      @media (max-width:768px) {
+        height: 15%;
+        width: 30%;
+      }
     }
 
 `

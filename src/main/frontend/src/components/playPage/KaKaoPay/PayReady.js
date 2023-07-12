@@ -7,7 +7,7 @@ import Footer from "../../Footer";
 
 const PayInfo = styled.div`
     width: 100%;
-    height: 78vh;
+    height: 76vh;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -23,12 +23,15 @@ const PayInfo = styled.div`
         width: 40%;
         height: 60%;
         @media (max-width:768px) {
-            width: 100%;
-            }
+            width: 80%;
+            padding-left: 2%;
+            margin-bottom: 10%;            }
         p{
             font-size: 1.3em;
+            @media (max-width:768px) {
+                font-size: 1em;
+            }
         }
-      
     }
     a{
         text-decoration: none;
@@ -103,7 +106,7 @@ const PayReady = () => {
   const payUrl = window.localStorage.getItem('url');
     return (
         <>
-        <Header/>
+        <Header children={<h1 style={{color:"white"}}>예매하기</h1>}/>
         <PayInfo>
             <h1> 결제 정보 </h1>
             <div>

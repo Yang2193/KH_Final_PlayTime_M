@@ -16,17 +16,12 @@ const NavBar = styled.div`
     li{
       display: flex;
       justify-content: center;
-      width: 10%;
-      /* border: 1px solid; */
+      width: 100%;
       height: 100%;
       background-color: white;
-      font-size: 1.5em;
+      font-size: 1em;
       font-weight: bold;
       cursor: pointer;
-      margin-right: 1%;
-      @media (max-width:768px) {
-            font-size:1em;
-          }
     }
     .nav-item {
     position: relative;
@@ -36,12 +31,15 @@ const NavBar = styled.div`
 .nav-item::before {
   content: "";
   position: absolute;
-  bottom: -10px;
+  bottom: -12px;
   left: 0;
   width: 100%;
   height: 5px;
   background-color: black;
   display: none;
+  @media (max-width:768px) {
+    bottom: -10px;
+  }
 }
 
 .nav-item.active::before {
@@ -60,6 +58,10 @@ const PlayNav = ({ handleType }) => {
     handleType("map");
     setActiveIndex(1);
   };
+  const onClickReview = () => {
+      handleType("review");
+      setActiveIndex(2);
+    };
     return (
       <NavBar>
         <ul>
@@ -68,6 +70,9 @@ const PlayNav = ({ handleType }) => {
           </li>
           <li onClick={onClickMap} className={activeIndex === 1 ? "nav-item active" : "nav-item"}>
             장소 정보
+          </li>
+          <li onClick={onClickReview} className={activeIndex === 2 ? "nav-item active" : "nav-item"}>
+            한줄평
           </li>
         </ul>
       </NavBar>

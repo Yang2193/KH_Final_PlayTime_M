@@ -13,14 +13,12 @@ import MyComment from './components/Mypage/MyComment';
 import MyPlayLike from './components/Mypage/MyPlayLike';
 import MyReview from './components/Mypage/MyReview';
 import MyTicketInfo from './components/Mypage/MyTicketInfo';
-import OneReview from './pages/OneReviewPage';
 import PostDetail from './pages/PostDetailPage';
 import PostPage from './pages/PostPage';
 import PostUpload from './pages/PostUpload';
 import ReservePage from './pages/ReservePage';
 import AccountProvider from './context/AccountInfo';
 import PayResult from './components/playPage/KaKaoPay/PayResult';
-import PayCancel from './components/playPage/KaKaoPay/PayCancel';
 import PayReady from './components/playPage/KaKaoPay/PayReady';
 import PostUpdate from './components/Post/PostUpdate';
 
@@ -40,14 +38,12 @@ function App() {
         <Route path="/myPage/playlike" element={<MyPlayLike />} />
         <Route path="/myPage/buylist" element={<MyTicketInfo />} />
         <Route path="/myPage/review" element={<MyReview />} />
-        <Route path="/oneReview" element={<OneReview />} />
         <Route path="/post/:postId" element={<PostDetail />} />
         <Route path="/post" element={<PostPage />} />
         <Route path="/postUpload" element={<PostUpload />} />
         <Route path="/postupdate/:postId" element={<PostUpdate />} />
         <Route path="/reserve" element={<ReservePage />} />
         <Route path="/payResult" element={<PayResult />} />
-        <Route path="/payCancel" element={<PayCancel />} />
         <Route path="/payReady" element={<PayReady />} />
       </Routes>
     </Router>
