@@ -8,12 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReserveRepository extends JpaRepository<Reserve,Long> {
     List<Reserve> findByMemberInfoUserId(String userId );
     List<Reserve> findByPlayInfoPlayId(String playId );
     List<Reserve> findAll();
+    Optional<Reserve> findById(Long id);
     void deleteByMemberInfoUserId(String userId);
 
 }

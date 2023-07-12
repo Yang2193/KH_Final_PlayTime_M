@@ -133,7 +133,7 @@ const PlayList = ({playList}) => {
                         <tbody>
                             {playList.length > 0 ? playListMap : 
                                 <tr>
-                                <td colSpan={4}>검색 결과가 존재하지 않습니다.</td>
+                                    <td colSpan={4}>로딩 중입니다.</td>
                                 </tr>
                             }     
                         </tbody>

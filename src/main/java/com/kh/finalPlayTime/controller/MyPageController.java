@@ -99,4 +99,10 @@ public class MyPageController {
         List<MemberInfo> list = memberService.checkMemberPw(userId, userPw);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @GetMapping("/ticket/{reserveId}")
+    public ResponseEntity<ReserveDto> getReserveDetail(@PathVariable Long reserveId){
+        ReserveDto reserveDto = reserveService.getReserveDetail(reserveId);
+        return new ResponseEntity<>(reserveDto, HttpStatus.OK);
+    }
 }

@@ -21,6 +21,7 @@ import AccountProvider from './context/AccountInfo';
 import PayResult from './components/playPage/KaKaoPay/PayResult';
 import PayReady from './components/playPage/KaKaoPay/PayReady';
 import PostUpdate from './components/Post/PostUpdate';
+import Ticket from './components/Mypage/MyTicketInfoDetail';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/reserve" element={<ReservePage />} />
         <Route path="/payResult" element={<PayResult />} />
         <Route path="/payReady" element={<PayReady />} />
+        <Route path="/ticket/:reserveId" element={<Ticket/>}/>
       </Routes>
     </Router>
     </AccountProvider>

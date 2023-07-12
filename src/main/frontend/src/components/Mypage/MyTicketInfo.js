@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AccountApi from "../../api/AccountApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const ListBox = styled.div`
@@ -102,7 +102,7 @@ const MyTicketInfo = () => {
           </thead>
           <tbody>
             {buyList.map((bl) => (
-              <tr className="buyItem" key={bl.id} onClick={() => movePage(bl.playInfo.playId)}>
+              <tr className="buyItem" key={bl.id}>
                 <td className="image"><img src={bl.playInfo.imageUrl} alt="image1" className="img-thumb"/></td>
                 <td className="title">{bl.playInfo.title}</td>
                 <td className="location">{bl.playInfo.theaterName}</td>
@@ -110,6 +110,9 @@ const MyTicketInfo = () => {
                 <td className="time">{bl.time}</td>
                 <td className="seeDate">{bl.seeDate}</td>
                 <td className="seatInfo">{bl.seatInfo}</td>
+                <td className="ticket">
+                                    <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
+                </td>
               </tr>
             ))}
           </tbody>

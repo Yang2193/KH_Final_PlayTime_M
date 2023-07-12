@@ -78,6 +78,20 @@ public class ReserveService {
         }
         return seatNumberDtoList;
     }
+    // 티켓 발급용 정보 불러오기
+    public ReserveDto getReserveDetail(Long reserveId){
+        Optional<Reserve> reserveOptional = reserveRepository.findById(reserveId);
+        ReserveDto reserveDto = new ReserveDto();
+        if(reserveOptional.isPresent()){
+            Reserve reserve = reserveOptional.get();
+            reserveDto.setPlayTitle(reserve.getPlayInfo().getTitle());
+            reserveDto.setSeatInfo(reserve.getSeatInfo());
+            reserveDto.setSeeDate(reserve.getSeeDate());
+            reserveDto.setReserveTime(reserve.getTime());
+        }
+        return reserveDto;
+    }
+
 
 
 }
