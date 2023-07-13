@@ -134,8 +134,8 @@ const AccountApi = {
         }
     },
 
-    kakaoLogin: async() => {
-        return await axios.get("/auth/kakaologin");
+    kakaoLogin: async (code) => {
+        return await axios.get(`/auth/kakao/callback?code=${code}`);
     }
 }
 

@@ -1,6 +1,7 @@
 package com.kh.finalPlayTime.kakao.dto;
 
-import com.kh.finalPlayTime.kakao.constant.OAuth;
+import com.kh.finalPlayTime.constant.Authority;
+import com.kh.finalPlayTime.kakao.constant.SocialOAuth;
 import com.kh.finalPlayTime.kakao.entity.SocialMember;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,7 +44,8 @@ public class KakaoProfile {
                 .id(id)
                 .email(kakao_account.email)
                 .nickname(properties.nickname)
-                .oAuth(OAuth.KAKAO)
+                .socialOauth(SocialOAuth.KAKAO)
+                .authority(Authority.ROLE_USER)
                 .build();
     }
 }

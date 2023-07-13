@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.a4a3b1f8.css",
-    "main.js": "/static/js/main.9256c77e.js",
+    "main.js": "/static/js/main.0604ce22.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
     "static/media/mypageicon2.png": "/static/media/mypageicon2.94b010bc26f3d6c89cef.png",
     "static/media/Cog.png": "/static/media/Cog.ad2704af32b649ee3cf4.png",
@@ -9,11 +9,11 @@
     "static/media/ReortIcon.png": "/static/media/ReortIcon.83c8c718efce27324df7.png",
     "index.html": "/index.html",
     "main.a4a3b1f8.css.map": "/static/css/main.a4a3b1f8.css.map",
-    "main.9256c77e.js.map": "/static/js/main.9256c77e.js.map",
+    "main.0604ce22.js.map": "/static/js/main.0604ce22.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a4a3b1f8.css",
-    "static/js/main.9256c77e.js"
+    "static/js/main.0604ce22.js"
   ]
 }
