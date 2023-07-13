@@ -1,38 +1,26 @@
 package com.kh.finalPlayTime.kakao.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kh.finalPlayTime.kakao.constant.OAuth;
-import com.kh.finalPlayTime.kakao.dto.KakakoProfile;
-import com.kh.finalPlayTime.kakao.dto.KakaoTokens;
-import com.kh.finalPlayTime.kakao.jwt.AuthTokens;
-import com.kh.finalPlayTime.kakao.params.KakaoLoginParams;
-import com.kh.finalPlayTime.kakao.service.OAuthLoginService;
+import com.kh.finalPlayTime.kakao.dto.KakaoProfile;
+import com.kh.finalPlayTime.kakao.service.KakaoAuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Transactional
 public class KakaoController {
-    private final OAuthLoginService oAuthLoginService;
+    private final KakaoAuthService kakaoAuthService;
 
-    @GetMapping("/kakao/callback")
-    public ResponseEntity<AuthTokens> loginKakao(@RequestBody KakaoLoginParams params) {
-        return ResponseEntity.ok(oAuthLoginService.login(params));
-    }
+//    @PostMapping("/kakao/callback")
+//    public ResponseEntity<AuthTokens> loginKakao(@RequestBody KakaoLoginParams params) {
+//        return ResponseEntity.ok(oAuthLoginService.login(params));
+//    }
 //    @GetMapping("/kakao/callback")
 //    public @ResponseBody String kakaoCallback(String code) {
 //        RestTemplate rt = new RestTemplate();
@@ -109,7 +97,22 @@ public class KakaoController {
 //        UUID onetimePassword = UUID.randomUUID();
 //        System.out.println("블로그서버 패스워드: " + onetimePassword);
 //
-//        oAuthLoginService.login();
+////        oAuthLoginService.login();
 //        return response2.getBody();
 //    }
+    @PostMapping("/kakao/callback")
+    public ResponseEntity<String> kakaoCallback(@RequestBody String code) {
+        KakaoProfile kakaoProfile = kakaoAuthService.processKakaoCallback(code);
+        // KakaoProfile 객체를 JSON 형식으로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonProfile;
+        try {
+            jsonProfile = objectMapper.writeValueAsString(kakaoProfile);
+        } catch (JsonProcessingException e) {
+            // JSON 변환 실패 시 에러 처리
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to convert KakaoProfile to JSON");
+        }
+        // JSON 형식의 응답을 ResponseEntity로 반환
+        return ResponseEntity.status(HttpStatus.OK).body(jsonProfile);
+    }
 }

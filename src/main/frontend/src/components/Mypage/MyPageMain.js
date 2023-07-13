@@ -110,7 +110,6 @@ const MyPageMain = () => {
                 <Link to="/myPage/playlike"><div>찜 목록</div></Link>
                 <Link to="/myPage/buylist"><div>구매한 티켓</div></Link>
             </div>
-            
         </MenuBlock>
     );
 }

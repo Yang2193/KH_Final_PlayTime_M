@@ -91,12 +91,20 @@ const Login = () => {
       }
     };
   
-    const Rest_api_key='088a7b267c39d0a11ec3904372ed9d33' //REST API KEY
-    const redirect_uri = 'http://localhost:8111/auth/kakao/callback' //Redirect URI
-    // oauth 요청 URL
-    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
-    const onClickKakaoLogin = ()=>{
-        window.location.href = kakaoURL
+    const onClickKakaoLogin = async() => {
+      const Rest_api_key='088a7b267c39d0a11ec3904372ed9d33' //REST API KEY
+      const redirect_uri = 'http://localhost:8111/auth/kakao/callback' //Redirect URI
+      // oauth 요청 URL
+      const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
+      window.location.href=kakaoURL;
+      try {
+        const response = await AccountApi.kakaoLogin(kakaoURL);
+        if(response === 200) {
+          console.log(response);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
     
     return (
