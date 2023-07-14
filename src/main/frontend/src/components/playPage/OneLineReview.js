@@ -4,116 +4,121 @@ import styled from 'styled-components';
 import { Rating } from 'react-simple-star-rating';
 import { Button } from "../../utils/GlobalStyle";
 import MessageModal from '../../utils/MessageModal';
+import PageNation from '../../utils/PageNation';
 
 const OneCss=styled.div`
+width: 100%;
+height: 100%;
+@media (max-width:768px) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  }
+.empty{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 300px;
+}
+h2{
+  width: 100%;
+}
+.addReview{
+  @media (max-width:768px) {
+    width: 80%;
+  }
+  @media (max-width:412px) {
+    width: 90%;
+    height: 150px;
+  }
+  .ratingBox{
     width: 100%;
-    height: 100%;
-    @media (max-width:768px) {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-    }
-    .empty{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 300px;
-    }
-    h2{
-      width: 100%;
-    }
-    .addReview{
-      @media (max-width:768px) {
-        width: 80%;
-      }
-      @media (max-width:412px) {
-        width: 90%;
-        height: 150px;
-      }
-      .ratingBox{
-        width: 100%;
-      }
-      border: 1px solid;
-      border-radius: 10px;
-      border-color: #eee;
-      padding: 1%;
-      width: 100%;
-      height: 30%;
-      textarea{
-        margin: 0;
-        border: none;
-        outline: none;
-        resize: none;
-        height: 150px;
-            @media (max-width:412px) {
-              height: 85px;
-            }
-      }
-      .add{
-         height:25px;
-         margin: 0 5px;
-      }
-    }
-    .selectReview{
-      @media (max-width:768px) {
-        width: 80%;
-      }
-      .btns{
-        position: relative;
-        top:45px;
-          width: 100%;
-          text-align: end;
-          button{
-            margin-left: 2%;
-          }
-        }
-      border-bottom: 1px solid;
-      border-color: #eee;
-      padding: 1%;
-      .read{
-        height:20px;
-      }
-      p{
-        span{
-          font-size: 0.8em;
-          color:#ccc;
-        }
-      }
-    }
-    .btn{
+  }
+  border: 1px solid;
+  border-radius: 10px;
+  border-color: #eee;
+  padding: 1%;
+  width: 100%;
+  height: 30%;
+  textarea{
+    margin: 0;
+    border: none;
+    outline: none;
+    resize: none;
+    height: 150px;
+
+@media (max-width:412px) {
+  height: 85px;
+}
+  }
+.add{
+  height:25px;
+  margin: 0 5px;
+
+}
+
+}
+.selectReview{
+  @media (max-width:768px) {
+    width: 80%;
+  }
+
+  .btns{
+    position: relative;
+    top:45px;
       width: 100%;
       text-align: end;
-      @media (max-width:412px) {
-        height: 15%;
-        display: flex;
-        justify-content: end;
-      }
       button{
-        font-size: 1em;
-        border-radius: 5px;
-        width: 10%;
-        height: 100%;
-        border: none;
-        cursor: pointer;
-        @media (max-width:412px) {
-          width: 12%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 0.8em;
-      }
+        margin-left: 2%;
       }
     }
-    .updateText{
-      margin: 0;
-        outline: none;
-        resize: none;
-        height: 10%;
+  border-bottom: 1px solid;
+  border-color: #eee;
+  padding: 1%;
+  .read{
+    height:20px;
+  }
+  p{
+    span{
+      font-size: 0.8em;
+      color:#ccc;
     }
+  }
+}
+.btn{
+  width: 100%;
+  text-align: end;
+  @media (max-width:412px) {
+    height: 15%;
+    display: flex;
+    justify-content: end;
+  }
+  button{
+    font-size: 1em;
+    border-radius: 5px;
+    width: 10%;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    @media (max-width:412px) {
+      width: 12%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.8em;
+  }
+  }
+}
+.updateText{
+  margin: 0;
+    outline: none;
+    resize: none;
+    height: 10%;
+}
 `
 
 const OneReview = () => {
@@ -216,7 +221,21 @@ const updateReview = async (id) =>{
     setUpMo(false)
     setLogMo(false)
     }
+// 페이지 네이션
+    const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호
 
+    useEffect(() => {
+        setCurrentPage(0);
+    }, [reviews])
+
+    const ITEMS_PAGE = 5; // 보여질 아이템 개수
+
+    const handlePageClick = (selectedPage) => {
+        setCurrentPage(selectedPage.selected);
+      };
+    const pageCount = Math.ceil(reviews.length / ITEMS_PAGE); // 페이지 수 계산
+    const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
+    const currentPageData = reviews.slice(offset, offset + ITEMS_PAGE);
   return (
     <OneCss>
       <div className='addReview'>
@@ -234,7 +253,8 @@ const updateReview = async (id) =>{
         </div>
       </div>
 
-      {reviews.length > 0 ? reviews.map(review => (
+
+      {currentPageData && currentPageData.length > 0 ? currentPageData.map(review => (
         <div className='selectReview' key={review.id}>
           {userId ===review.memberInfo.userId ?
             <div className='btns'>
@@ -256,10 +276,12 @@ const updateReview = async (id) =>{
         </div>
       ))
       : <div className='empty'>관람후기를 등록해주세요</div>}
+
       <MessageModal open={modalOpen} close={onClickClose} header="등록 완료">리뷰가 등록 되었습니다.</MessageModal>
       <MessageModal open={delMo} close={onClickClose} header="삭제 완료">리뷰가 삭제 되었습니다.</MessageModal>
       <MessageModal open={upMo} close={onClickClose} header="수정 완료">리뷰가 수정 되었습니다.</MessageModal>
       <MessageModal open={logMo} close={onClickClose} header="로그인 알림">로그인이 필요 합니다.</MessageModal>
+      {pageCount > 1 && <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>}
 
     </OneCss>
   );
