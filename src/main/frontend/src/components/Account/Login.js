@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AccountApi from "../../api/AccountApi";
 import '../../styles/Account.css';
 import { AccountInfoContext } from "../../context/AccountInfo";
-import { getCookie, setCookie } from "../../utils/Cookie";
 
-const Login = () => {
+  const Login = () => {
     const navigate = useNavigate();
+    const [tokenDto, setTokenDto] = useState("");
     const context = useContext(AccountInfoContext);
     const {setUserId, setUserPw, setUserName, setUserNickname, setUserPhone, setUserEmail, isLogin, setIsLogin} = context;
 
@@ -90,24 +90,39 @@ const Login = () => {
         console.log(e);
       }
     };
-  
-    const onClickKakaoLogin = async () => {
-      const Rest_api_key = '088a7b267c39d0a11ec3904372ed9d33'; // REST API KEY
-      const redirect_uri = 'http://localhost:8111/auth/kakao/callback'; // Redirect URI
-      // oauth 요청 URL
+
+    const onClickKakaoLogin = () => {
+      const Rest_api_key = '088a7b267c39d0a11ec3904372ed9d33';
+      const redirect_uri = 'http://localhost:8111/auth/kakao/callback';
       const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
       window.location.href = kakaoURL;
+    };
+    
+    const handleKakaoCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
       try {
-          const urlParams = new URLSearchParams(window.location.search);
-          const code = urlParams.get('code');
-          const response = await AccountApi.kakaoLogin(code);
-          if (response.status === 200) {
-              navigate("/");
-          }
+        const response = await fetch(`/auth/kakao/callback?code=${code}`);
+        if (response) {
+          const tokenDto = await response.json();
+          console.log("백엔드에서 반환된 데이터:");
+          console.log(tokenDto);
+          window.location.replace('/'); // 메인 페이지로 이동
+        } else {
+          console.log("요청 실패:", response.status);
+          window.location.href = '/main'; // 메인 페이지로 이동 (실패 시)
+        }
       } catch (e) {
-          console.log(e);
+        console.log("오류 발생:", e);
+        window.location.href = '/main'; // 메인 페이지로 이동 (오류 발생 시)
       }
-  };
+    };
+    
+    // 리다이렉트 후에 실행될 코드
+    if (window.location.pathname === '/auth/kakao/callback') {
+      handleKakaoCallback();
+    }
+      
     
     return (
       <div className="wrapper">
@@ -142,4 +157,4 @@ const Login = () => {
     );
   };
   
-  export default Login;
+export default Login;

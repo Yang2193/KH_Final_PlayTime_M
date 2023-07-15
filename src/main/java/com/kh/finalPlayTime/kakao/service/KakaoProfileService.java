@@ -26,7 +26,6 @@ public class KakaoProfileService {
                 kakaoProfileRequest,
                 KakaoProfile.class
         );
-        System.out.println("카카오 유저 정보 : " + response.getBody());
         return response.getBody();
     }
 }

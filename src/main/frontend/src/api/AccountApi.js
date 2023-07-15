@@ -133,10 +133,6 @@ const AccountApi = {
             return await axios.get(Domain + `/mypage/ticket/${reserveId}`);
         }
     },
-
-    kakaoLogin: async (code) => {
-        return await axios.get(`/auth/kakao/callback?code=${code}`);
-    }
 }
 
 export default AccountApi;
