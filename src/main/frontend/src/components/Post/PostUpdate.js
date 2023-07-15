@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ImageUploader from './ImageUploader';
 import PostAPI from '../../api/PostApi';
 import MyEditor from './TextQuill';
+
 const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
@@ -29,14 +30,6 @@ const Input = styled.input`
   border: 1px solid #ccc;
 `;
 
-const Textarea = styled.textarea`
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  height: 300px;
-`;
-
 const Button = styled.button`
   padding: 10px 20px;
   font-size: 16px;
@@ -54,6 +47,7 @@ const PostUpdate = () => {
     postImage: '',
     postContent: '',
   });
+  const [previousImage, setPreviousImage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -63,12 +57,12 @@ const PostUpdate = () => {
         const post = await PostAPI.getPostById(postId);
 
         if (post) {
-          setPostData((prevData) => ({
-            ...prevData,
+          setPostData({
             postTitle: post.postTitle || '',
-            postImage: post.postImage || '',
+            postImage: post.postImageUrl || '',
             postContent: post.postContent || '',
-          }));
+          });
+          setPreviousImage(post.postImageUrl || '');
         } else {
           console.error('게시물을 찾을 수 없습니다.');
         }
@@ -85,6 +79,13 @@ const PostUpdate = () => {
       ...prevData,
       postImage: image,
     }));
+
+    // 이미지가 변경되면 이전 이미지 초기화
+    if (image) {
+      setPreviousImage(null);
+    } else {
+      setPreviousImage(postData.postImage);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -104,7 +105,13 @@ const PostUpdate = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await PostAPI.updatePost(postId, postData);
+      // 이미지 URL을 포함한 게시물 데이터를 생성
+      const updatedPostData = {
+        ...postData,
+        postImageUrl: postData.postImage,
+      };
+
+      const response = await PostAPI.updatePost(postId, updatedPostData);
       if (response) {
         toast.success('게시물 수정 성공');
         navigate(-1);
@@ -121,6 +128,7 @@ const PostUpdate = () => {
       <ToastContainer />
       <Container>
         <Heading>게시물 수정</Heading>
+
         <div>
           <Label>
             제목
@@ -132,26 +140,33 @@ const PostUpdate = () => {
             />
           </Label>
         </div>
+
         <div>
-          <Label>
-            이미지
-            <ImageUploader onChange={handleImageChange} />
-          </Label>
+          이미지
+          <ImageUploader onChange={handleImageChange} />
+          {previousImage && (
+            <div className='Img1'>
+              <img src={previousImage} alt="기존 이미지" />
+            </div>
+          )}
         </div>
+
         <div>
           <Label>
-             <MyEditor
+            내용
+            <MyEditor
+              name="postContent"
               value={postData.postContent}
               onChange={handleEditorChange}
               className="myTextarea"
             />
           </Label>
         </div>
+
         <Button onClick={handleUpdate}>수정하기</Button>
       </Container>
     </>
   );
 };
-
 
 export default PostUpdate;

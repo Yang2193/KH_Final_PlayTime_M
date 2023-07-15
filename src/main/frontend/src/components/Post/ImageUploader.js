@@ -15,7 +15,8 @@
   `;
   const UploadImg=styled.div`
   img{
-    width: 100%;
+    width: 50%;
+
   }
   `
 

@@ -14,7 +14,7 @@ import PostReport from '../components/Post/PostReport ';
 
 
 const Background = styled.div`
-min-width: 861px;
+
   background-color: #E2E2E2;
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@ min-width: 861px;
 
 
 const PostDetailWrapper = styled.div`
-  
+
   width: 65%;
   height: auto;
   min-height: 890px;
@@ -68,7 +68,7 @@ const PostImage = styled.div`
   margin-bottom: 20px;
 img{
   width: 50%;
-  
+
 }
 
 
@@ -187,19 +187,19 @@ const CommentMenuItem = styled.div`
   }
 `;
 const C1 = styled.div`
-  
+
 margin-top: 10px;
 `;
 const PostD = styled.div`
-  
+
   display: ${props => (props.isAuthor ? 'block' : 'none')};
   margin-right: auto;
   button {
-    
+
     background-color: white;
     color: #f34336 ;
     position: relative;
-    left: 76%;
+    left: 70%;
     border: none;
     border-radius: 5px;
     cursor: pointer;

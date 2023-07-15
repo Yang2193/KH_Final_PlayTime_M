@@ -2,7 +2,7 @@
 
 .ReviewBoardWrapper {
   min-width: 551px;
-  max-width: 800px;
+  max-width: 780px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -11,7 +11,14 @@
   font-weight: bold;
   white-space: nowrap;
 }
-
+.SearchEmptyMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin-top: 20px;
+  color: red;
+}
 .Id{
   font-size: 13px;
 }
