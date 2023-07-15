@@ -1,5 +1,5 @@
 package com.kh.finalPlayTime.kakao.constant;
 
-public enum OAuth {
+public enum SocialOAuth {
     KAKAO, NAVER
 }

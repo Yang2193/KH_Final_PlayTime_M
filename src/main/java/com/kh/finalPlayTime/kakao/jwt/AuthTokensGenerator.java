@@ -12,7 +12,7 @@ public class AuthTokensGenerator {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
 
-    private final KakaoTokenProvider jwtTokenProvider;
+    private final KakaoTokenProvider kakaoTokenProvider;
 
     public AuthTokens generate(Long memberId) {
         long now = (new Date()).getTime();
@@ -20,13 +20,13 @@ public class AuthTokensGenerator {
         Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
         String subject = memberId.toString();
-        String accessToken = jwtTokenProvider.generate(subject, accessTokenExpiredAt);
-        String refreshToken = jwtTokenProvider.generate(subject, refreshTokenExpiredAt);
+        String accessToken = kakaoTokenProvider.generate(subject, accessTokenExpiredAt);
+        String refreshToken = kakaoTokenProvider.generate(subject, refreshTokenExpiredAt);
 
         return AuthTokens.of(accessToken, refreshToken, BEARER_TYPE, ACCESS_TOKEN_EXPIRE_TIME / 1000L);
     }
 
     public Long extractMemberId(String accessToken) {
-        return Long.valueOf(jwtTokenProvider.extractSubject(accessToken));
+        return Long.valueOf(kakaoTokenProvider.extractSubject(accessToken));
     }
 }

@@ -1,32 +1,36 @@
 package com.kh.finalPlayTime.kakao.entity;
 
-import com.kh.finalPlayTime.kakao.constant.OAuth;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.kh.finalPlayTime.constant.Authority;
+import com.kh.finalPlayTime.kakao.constant.SocialOAuth;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class SocialMember {
     @Id
+    @Column
     private Long id;
     @Column
     private String email;
     @Column
     private String nickname;
+    @Column(name = "o_auth")
     @Enumerated(EnumType.STRING)
-    private OAuth oAuth;
+    private SocialOAuth socialOauth;
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
     @Builder
-    public SocialMember(String email, String nickname, OAuth oAuth) {
+    public SocialMember(Long id, String email, String nickname, SocialOAuth socialOauth, Authority authority) {
+        this.id = id;
         this.email = email;
         this.nickname = nickname;
-        this.oAuth = oAuth;
+        this.socialOauth = socialOauth;
+        this.authority = authority;
     }
-
 }

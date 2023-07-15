@@ -30,7 +30,7 @@ const MyComment = () => {
           <tbody>
             {commentList.map((cl) => (
               <tr className="commentItem" key={cl.id}>
-                <td className="postId">{cl.postId}</td>
+                <td className="postId">{cl.postTitle}</td>
                 <td className="">{cl.commentContent}</td>
                 <td className="period">{cl.commentDate}</td>
               </tr>

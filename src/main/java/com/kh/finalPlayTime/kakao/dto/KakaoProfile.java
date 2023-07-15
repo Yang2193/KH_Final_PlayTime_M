@@ -1,11 +1,15 @@
 package com.kh.finalPlayTime.kakao.dto;
 
+import com.kh.finalPlayTime.constant.Authority;
+import com.kh.finalPlayTime.kakao.constant.SocialOAuth;
+import com.kh.finalPlayTime.kakao.entity.SocialMember;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class KakakoProfile {
+
+public class KakaoProfile {
     public Long id;
     public String connected_at;
     public Properties properties;
@@ -35,9 +39,13 @@ public class KakakoProfile {
 
         }
     }
+    public SocialMember toSocialMember() {
+        return SocialMember.builder()
+                .id(id)
+                .email(kakao_account.email)
+                .nickname(properties.nickname)
+                .socialOauth(SocialOAuth.KAKAO)
+                .authority(Authority.ROLE_USER)
+                .build();
+    }
 }
-
-
-
-
-

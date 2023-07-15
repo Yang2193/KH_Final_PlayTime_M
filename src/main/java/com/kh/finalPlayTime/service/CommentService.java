@@ -117,6 +117,10 @@
                 commentDto.setCommentDate(comment.getCommentDate());
                 commentDto.setUserId(comment.getMemberInfo().getUserId());
                 commentDto.setNickname(comment.getMemberInfo().getUserNickname());
+
+                Post post = comment.getPost();
+                String postTitle = post.getPostTitle();
+                commentDto.setPostTitle(postTitle);
                 commentDtoList.add(commentDto);
             }
             return commentDtoList;

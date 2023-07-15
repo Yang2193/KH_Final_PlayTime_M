@@ -136,32 +136,32 @@ reportComment: async (commentId, reportReason, nickname, postId,userId) => {
           }
           try{
               Functions.setAuthorizationHeader();
-              return await axios.post(Posts + `/post/insert/oneLineReview`,data)
+              return await axios.post(`/post/insert/oneLineReview`,data)
           }catch(error){
               await Functions.handleApiError(error);
-              return await axios.post(Posts + `/post/insert/oneLineReview`,data)
+              return await axios.post(`/post/insert/oneLineReview`,data)
           }
       },
         // 한줄평 조회
         getOLR : async(id)=>{
           try{
               Functions.setAuthorizationHeader();
-              return await axios.get(Posts + `/post/select/oneLineReview?playId=${id}`)
+              return await axios.get(`/post/select/oneLineReview?playId=${id}`)
 
           }catch(error){
               await Functions.handleApiError(error);
-              return await axios.get(Posts + `/post/select/oneLineReview?playId=${id}`)
+              return await axios.get(`/post/select/oneLineReview?playId=${id}`)
           }
       },
         // 한줄평 삭제
         deleteOLR : async(id)=>{
           try{
               Functions.setAuthorizationHeader();
-              return await axios.post(Posts + `/post/delete/oneLineReview?olrId=${id}`)
+              return await axios.post(`/post/delete/oneLineReview?olrId=${id}`)
 
           }catch(error){
               await Functions.handleApiError(error);
-              return await axios.post(Posts + `/post/delete/oneLineReview?olrId=${id}`)
+              return await axios.post(`/post/delete/oneLineReview?olrId=${id}`)
           }
       },
       // 한줄평 수정
@@ -173,11 +173,11 @@ reportComment: async (commentId, reportReason, nickname, postId,userId) => {
             }
             try{
                 Functions.setAuthorizationHeader();
-                return await axios.post(Posts + `/post/update/oneLineReview`,data)
+                return await axios.post(`/post/update/oneLineReview`,data)
 
             }catch(error){
                 await Functions.handleApiError(error);
-                return await axios.post(Posts + `/post/update/oneLineReview`,data)
+                return await axios.post(`/post/update/oneLineReview`,data)
             }
         },
     

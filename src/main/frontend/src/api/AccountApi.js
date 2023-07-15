@@ -132,7 +132,7 @@ const AccountApi = {
             await Functions.handleApiError(error);
             return await axios.get(Domain + `/mypage/ticket/${reserveId}`);
         }
-    }
+    },
 }
 
 export default AccountApi;
