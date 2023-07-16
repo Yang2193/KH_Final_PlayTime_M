@@ -3,17 +3,23 @@ import styled from "styled-components";
 import PlayInfoApi from "../../api/PlayInfoApi";
 
 const DetailBox = styled.div`
-    width: 100%;
+    width: 1140px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    @media (max-width:1364px) {
+        width:818px;
+    }
+    @media (max-width:768px) {
+        width:100%;
+    }
     div{
         width: 100%;
         display: flex;
         flex-direction: column;
-  
+
     }
     .more{
         border: none;
@@ -26,9 +32,13 @@ const DetailBox = styled.div`
         align-items: center;
         flex-direction: column;
         img{
-            width: 50%;
+            width: 700px;
+            @media (max-width:1364px) {
+                width: 500px;
+            }
             @media (max-width:768px) {
                 width: 100%;
+                z-index: -2;
             }
         }
     }

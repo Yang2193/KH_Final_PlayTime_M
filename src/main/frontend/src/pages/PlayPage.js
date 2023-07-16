@@ -15,12 +15,11 @@ const Contents = styled.div`
     position: relative;
     left: 20%;
     @media (max-width: 768px) {
-        position: static;
         width: 100%;
+        position: unset;
+        overflow: hidden;
+        left: 0;
     }
-`
-const All = styled.div`
-    width: 100%;
 `
 const LogoBox = styled.div`
   width: 300px;
@@ -30,11 +29,16 @@ const LogoBox = styled.div`
   justify-content: center;
   align-items: center;
 `
-
 const LogoImage = styled.img`
   width: 90%;
   height: 70%;
 `;
+const All = styled.div`
+    width: 100%;
+    @media (max-width:412px) {
+        width: 412px;
+}
+`
 
 const PlayPage = () => {
     const[type,setType] = useState("default");
