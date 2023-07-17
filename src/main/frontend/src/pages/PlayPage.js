@@ -15,24 +15,11 @@ const Contents = styled.div`
     position: relative;
     left: 20%;
     @media (max-width: 768px) {
+        position: static;
         width: 100%;
-        position: unset;
-        overflow: hidden;
-        left: 0;
     }
+    
 `
-const LogoBox = styled.div`
-  width: 300px;
-  height: 100px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-const LogoImage = styled.img`
-  width: 90%;
-  height: 70%;
-`;
 const All = styled.div`
     width: 100%;
     @media (max-width:412px) {
@@ -60,9 +47,7 @@ const PlayPage = () => {
 
     return(
       <All>
-            <Header children={<LogoBox>
-            <LogoImage src={logo} alt="Logo" />
-          </LogoBox>}/>
+            <Header/>
             {playInfo && playInfo.map(play =>(
             <Contents key = {play.playId}>
                 <Info/>
