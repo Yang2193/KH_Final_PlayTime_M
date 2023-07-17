@@ -17,7 +17,10 @@ const NavBar = styled.div`
     }
     @media (max-width:412px) {
         margin-top: 20px;
-      }
+    }
+    @media (max-width:360px) {
+        margin-top: 0px;
+    }
     ul{
       width: 100%;
       list-style: none;

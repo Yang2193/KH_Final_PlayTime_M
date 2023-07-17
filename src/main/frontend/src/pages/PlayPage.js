@@ -8,17 +8,17 @@ import Info from "../components/playPage/Info";
 import styled from "styled-components";
 import PlayInfoApi from "../api/PlayInfoApi";
 import OneReview from "../components/playPage/OneLineReview";
-import logo from "../images/logo-no-background.png";
 
 const Contents = styled.div`
     width: 60%;
     position: relative;
     left: 20%;
     @media (max-width: 768px) {
-        position: static;
+        position: unset;
         width: 100%;
+        overflow: hidden;
+        left: 0;
     }
-    
 `
 const All = styled.div`
     width: 100%;

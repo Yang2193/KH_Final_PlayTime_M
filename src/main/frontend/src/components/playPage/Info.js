@@ -5,11 +5,24 @@ import PlayInfoApi from "../../api/PlayInfoApi";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from 'react-icons/fa';
 import MessageModal from "../../utils/MessageModal";
+const All = styled.div`
+@media (max-width:768px) {
+        width: 100%;
+        height: 1000px;
+    }
+    @media (max-width:412px) {
+        height: 800px;
+    }
+    @media (max-width:360px) {
+        height: 720px;
+    }
+`
 const FixData = styled.div`
     width: 1140px;
     height: 750px;
     @media (max-width:768px) {
-        width:100%;
+        width: 100%;
+        height: 700px;
     }
     @media (max-width:1364px) {
         width:818px;
@@ -17,6 +30,10 @@ const FixData = styled.div`
     }
     @media (max-width:412px) {
         height: 800px;
+    }
+    @media (max-width:360px) {
+        height: 720px;
+        width:360px;
     }
     h1{
         font-size: 1.5em;
@@ -38,12 +55,15 @@ const FixData = styled.div`
     }
         @media (max-width:768px) {
             width:768px;
-            height: 600px;
+            height: 1000px;
             flex-direction: column;
     }
     @media (max-width:412px) {
             width:412px;
             height: 600px;
+    }
+    @media (max-width:360px) {
+            width:360px;
     }
         img {
             border-radius: 15px;
@@ -51,22 +71,30 @@ const FixData = styled.div`
             height: 480px;
             margin-right:50px;
             @media (max-width:768px) {
+                bottom: 250px;
                 position: absolute;
                 margin: 0;
-                z-index: -2;
-                top: 100px;
+                z-index: -1;
                 width: 100%;
+                height: 520px;
                 border-radius: 0;
             }
+            @media (max-width:412px) {
+                bottom: 480px;
+                height: 375px;
         }
-
+            @media (max-width:360px) {
+                bottom: 360px;
+                height: 320px;
+        }
+    }
         .textBox{
             width: 700px;
             height: 480px;
             @media (max-width:768px) {
-                margin-top: 50%;
+                border-radius: 15px;
+                margin-top: 480px;
                 width: 100%;
-                height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -76,6 +104,10 @@ const FixData = styled.div`
             }
             @media (max-width:412px) {
                 margin-top: 550px;
+            }
+            @media (max-width:360px) {
+                margin-top: 400px;
+                font-size: 0.8em;
             }
         }
         .like{
@@ -134,8 +166,16 @@ const FixData = styled.div`
         justify-content:center ;
         align-items:center;
         @media (max-width:768px) {
+            position: absolute;
+            bottom:-220px;
             width: 100%;
             height: 50px;
+        }
+        @media (max-width:412px) {
+            bottom: 35px;
+        }
+        @media (max-width:360px) {
+            bottom: -40px;
         }
         button{
             width: 100%;
@@ -244,7 +284,7 @@ const Info = () =>{
         }
     }
     return(
-        <>
+        <All>
           {playInfo && playInfo.map(play =>(
             <FixData key = {play.playId}>
                     <div className="content">
@@ -309,7 +349,7 @@ const Info = () =>{
                 </FixData>
             ))}
 
-        </>
+        </All>
 
     )
 }
