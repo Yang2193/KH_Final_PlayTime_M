@@ -17,7 +17,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
        height : 80px;
     }
-  @media (max-width: 420px) {
+  @media (max-width: 412px) {
        height : 60px;
     }
   `
@@ -33,7 +33,7 @@ const LogoBox = styled.div`
         width: 200px;
         height: 80px;
     }
-  @media (max-width: 420px) {
+  @media (max-width: 412px) {
         width: 160px;
         height: 60px;
     }
@@ -53,7 +53,7 @@ const HomeImg = styled(MdHome)`
         width: 60px;
         height: 60px;
     }
-  @media (max-width: 420px) {
+  @media (max-width: 412px) {
         width: 40px;
         height: 40px;
   }
@@ -70,7 +70,7 @@ const MenuBurger = styled(MdMenu)`
         right: 0px;
         
     }
-  @media (max-width: 420px) {
+  @media (max-width: 412px) {
         width: 40px;
         height: 40px;
   }    
@@ -87,7 +87,7 @@ const OutLineClose = styled(MdOutlineClose)`
         right: 0px;
         
     }
-    @media (max-width: 420px) {
+    @media (max-width: 412px) {
         width: 40px;
         height: 40px;
   }  
@@ -103,7 +103,7 @@ const HighlightCircle = styled.div`
         width: 60px;
         height: 60px;
     }
-  @media (max-width: 420px) {
+  @media (max-width: 412px) {
         width: 40px;
         height: 40px;
   }
@@ -124,7 +124,7 @@ const HomeImgWrapper = styled.div`
         height: 60px;
         left: 4px;
     }
-    @media (max-width: 420px) {
+    @media (max-width: 412px) {
         width: 40px;
         height: 40px;
   }  
@@ -145,7 +145,7 @@ const MenuBurgerWrapper = styled.div`
         height: 60px;
         right: 4px;
     }
-    @media (max-width: 420px) {
+    @media (max-width: 412px) {
         width: 40px;
         height: 40px;
   }  

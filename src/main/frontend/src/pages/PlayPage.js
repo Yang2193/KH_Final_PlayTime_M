@@ -22,9 +22,7 @@ const Contents = styled.div`
 `
 const All = styled.div`
     width: 100%;
-    @media (max-width:412px) {
-        width: 412px;
-}
+
 `
 
 const PlayPage = () => {

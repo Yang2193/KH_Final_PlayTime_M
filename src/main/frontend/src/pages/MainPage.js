@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import SearchBox from "../components/SearchBox";
 import MainApi from "../api/MainApi";
 import PlayList from "../components/main/PlayList";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   height: 100vh;
@@ -15,6 +16,8 @@ const Container = styled.div`
 const MainPage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [playList, setPlayList] = useState([]);
+
+  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => {
