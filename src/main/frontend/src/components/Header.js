@@ -14,6 +14,12 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+       height : 80px;
+    }
+  @media (max-width: 412px) {
+       height : 60px;
+    }
   `
 
 const LogoBox = styled.div`
@@ -23,6 +29,14 @@ const LogoBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+        width: 200px;
+        height: 80px;
+    }
+  @media (max-width: 412px) {
+        width: 160px;
+        height: 60px;
+    }
 `
 
 const LogoImage = styled.img`
@@ -39,6 +53,10 @@ const HomeImg = styled(MdHome)`
         width: 60px;
         height: 60px;
     }
+  @media (max-width: 412px) {
+        width: 40px;
+        height: 40px;
+  }
 `
 const MenuBurger = styled(MdMenu)`
   width: 80px;
@@ -49,9 +67,13 @@ const MenuBurger = styled(MdMenu)`
   @media (max-width: 768px) {
         width: 60px;
         height: 60px;
-        right: 8px;
+        right: 0px;
         
     }
+  @media (max-width: 412px) {
+        width: 40px;
+        height: 40px;
+  }    
 `
 const OutLineClose = styled(MdOutlineClose)`
  width: 80px;
@@ -62,9 +84,13 @@ const OutLineClose = styled(MdOutlineClose)`
   @media (max-width: 768px) {
         width: 60px;
         height: 60px;
-        right: 8px;
+        right: 0px;
         
     }
+    @media (max-width: 412px) {
+        width: 40px;
+        height: 40px;
+  }  
 `
 const HighlightCircle = styled.div`
   position: absolute;
@@ -77,6 +103,10 @@ const HighlightCircle = styled.div`
         width: 60px;
         height: 60px;
     }
+  @media (max-width: 412px) {
+        width: 40px;
+        height: 40px;
+  }
 `;
 
 const HomeImgWrapper = styled.div`
@@ -92,7 +122,12 @@ const HomeImgWrapper = styled.div`
   @media (max-width: 768px) {
         width: 60px;
         height: 60px;
+        left: 4px;
     }
+    @media (max-width: 412px) {
+        width: 40px;
+        height: 40px;
+  }  
 `;
 
 const MenuBurgerWrapper = styled.div`
@@ -108,7 +143,12 @@ const MenuBurgerWrapper = styled.div`
   @media (max-width: 768px) {
         width: 60px;
         height: 60px;
+        right: 4px;
     }
+    @media (max-width: 412px) {
+        width: 40px;
+        height: 40px;
+  }  
 `;
 
 
@@ -140,10 +180,19 @@ const Header = ({children}) => {
             <HomeImg/>
             <HighlightCircle/>
           </HomeImgWrapper>
-          {isMobile ? <>{children}</> : 
-          <LogoBox>
-            <LogoImage src={logo} alt="Logo" />
-          </LogoBox>}   
+          {children ? (
+              isMobile ? (
+                <>{children}</>
+              ) : (
+                <LogoBox>
+                  <LogoImage src={logo} alt="Logo" />
+                </LogoBox>
+              )
+            ) : (
+              <LogoBox>
+                <LogoImage src={logo} alt="Logo" />
+              </LogoBox>
+            )} 
           <MenuBurgerWrapper>
             {!isOpen ? <MenuBurger/> : <OutLineClose/>}
             <HighlightCircle/>

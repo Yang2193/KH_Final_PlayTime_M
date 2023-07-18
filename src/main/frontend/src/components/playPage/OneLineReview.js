@@ -7,14 +7,20 @@ import MessageModal from '../../utils/MessageModal';
 import PageNation from '../../utils/PageNation';
 
 const OneCss=styled.div`
-width: 100%;
-height: 100%;
-@media (max-width:768px) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  width: 1140px;
+  height: 100%;
+  @media (max-width:1364px) {
+      width:818px;
+  }
+  @media (max-width:768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  @media (max-width:412px) {
+    overflow: hidden;
   }
 .empty{
   display: flex;
@@ -49,23 +55,19 @@ h2{
     outline: none;
     resize: none;
     height: 150px;
-
-@media (max-width:412px) {
-  height: 85px;
-}
+  @media (max-width:412px) {
+    height: 85px;
   }
-.add{
-  height:25px;
-  margin: 0 5px;
-
-}
-
+  }
+  .add{
+    height:25px;
+    margin: 0 5px;
+  }
 }
 .selectReview{
   @media (max-width:768px) {
     width: 80%;
   }
-
   .btns{
     position: relative;
     top:45px;

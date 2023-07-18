@@ -8,33 +8,29 @@ import Info from "../components/playPage/Info";
 import styled from "styled-components";
 import PlayInfoApi from "../api/PlayInfoApi";
 import OneReview from "../components/playPage/OneLineReview";
-import logo from "../images/logo-no-background.png";
 
 const Contents = styled.div`
     width: 60%;
     position: relative;
     left: 20%;
-    @media (max-width: 768px) {
-        position: static;
-        width: 100%;
-    }
+        @media (max-width:2560px) {
+            left: 27.5%;
+
+        }
+        @media (max-width:1920px) {
+            left: 20%;
+        }
+        @media (max-width: 768px) {
+            position: unset;
+            width: 100%;
+            overflow: hidden;
+            left: 0;
+        }
 `
 const All = styled.div`
     width: 100%;
-`
-const LogoBox = styled.div`
-  width: 300px;
-  height: 100px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
 
-const LogoImage = styled.img`
-  width: 90%;
-  height: 70%;
-`;
+`
 
 const PlayPage = () => {
     const[type,setType] = useState("default");
@@ -56,9 +52,7 @@ const PlayPage = () => {
 
     return(
       <All>
-            <Header children={<LogoBox>
-            <LogoImage src={logo} alt="Logo" />
-          </LogoBox>}/>
+            <Header/>
             {playInfo && playInfo.map(play =>(
             <Contents key = {play.playId}>
                 <Info/>

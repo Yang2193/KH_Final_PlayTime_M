@@ -17,9 +17,13 @@ const SearchContainer = styled.div`
     z-index: 1;
     background-color: white;
     @media (max-width: 768px) {
-        width: 60%;
+        width: 70%;
         top: 0%;  
     }
+    @media (max-width: 420px) {
+        
+        height: 30px;
+  }
 `;
 const Input = styled.input`
     width: 80%;
@@ -32,7 +36,7 @@ const Input = styled.input`
     font-size: 20px;
     @media (max-width: 768px) {
         font-size: 14px;
-        width: 70%;
+      
     }
 `;
 
@@ -41,6 +45,11 @@ const SearchButton = styled(MdSearch)`
     height: 30px;
     position: absolute;
     right: 10px;
+    cursor: pointer;
+    @media (max-width: 420px) {
+        width: 20px;
+        height: 20px;
+    }
 `
 
 const SearchBox = ({handlePlayList}) => {
