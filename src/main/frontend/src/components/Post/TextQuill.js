@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 
 const EditorContainer = styled.div`
-  width: 600px;
+  width: 560px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;

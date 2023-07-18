@@ -1,47 +1,38 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 import PostAPI from '../../api/PostApi';
+import React, { useState } from 'react';
 
 const SearchContainer = styled.div`
   position: relative;
-  top: 5%;
-  border: 0.2rem solid #990a2c;
-  margin: 0 auto;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
-  margin-bottom: 40px;
-  height: 40px;
-  text-align: center;
+  top: 0px;
   display: flex;
-  z-index: 1;
-  background-color: white;
-  @media (max-width: 768px) {
-    width: 60%;
-    top: 0%;
-  }
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 `;
 
 const Input = styled.input`
-  width: 80%;
-  height: 90%;
+  width: 100%;
+  padding: 0 10px;
+  font-size: 16px;
   border: none;
-  border-style: none;
   outline: none;
-  position: absolute;
-  left: 20px;
-  font-size: 20px;
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
 `;
 
-const SearchButton = styled(MdSearch)`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 10px;
+const SearchButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 100%;
+  color: #990A2C;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: white;
 `;
 
 const SearchBar = ({ handleSearch }) => {
@@ -75,15 +66,17 @@ const SearchBar = ({ handleSearch }) => {
     }
   };
 
-  return(
+  return (
     <SearchContainer>
       <Input
-        placeholder="제목을 검색하세요!"
+        placeholder="검색하세요!"
         value={keyword}
         onChange={onChangeKeyword}
         onKeyDown={handleKeyPress}
       />
-      <SearchButton onClick={onClickSearch} />
+      <SearchButton onClick={onClickSearch}>
+        <MdSearch />
+      </SearchButton>
       {isSearchEmpty && <p>검색 결과가 없습니다.</p>}
     </SearchContainer>
   );

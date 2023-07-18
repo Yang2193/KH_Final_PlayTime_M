@@ -1,3 +1,5 @@
+// PostUpdate 컴포넌트 수정
+
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { toast, ToastContainer } from 'react-toastify';
@@ -12,6 +14,14 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
 `;
+
+const ImageUploaderImg = styled.div`
+  img {
+    width: 40%;
+  }
+`;
+
+
 
 const Heading = styled.h2`
   font-size: 24px;
@@ -47,7 +57,8 @@ const PostUpdate = () => {
     postImage: '',
     postContent: '',
   });
-  const [previousImage, setPreviousImage] = useState(null);
+  const [previousImages, setPreviousImages] = useState([]);
+
 
   const navigate = useNavigate();
 
@@ -62,7 +73,10 @@ const PostUpdate = () => {
             postImage: post.postImageUrl || '',
             postContent: post.postContent || '',
           });
-          setPreviousImage(post.postImageUrl || '');
+
+          // 기존 이미지들을 배열로 변환하여 저장
+          const imageUrls = post.postImageUrl ? post.postImageUrl.split(',') : [];
+          setPreviousImages(imageUrls);
         } else {
           console.error('게시물을 찾을 수 없습니다.');
         }
@@ -74,17 +88,17 @@ const PostUpdate = () => {
     fetchPost();
   }, [postId]);
 
-  const handleImageChange = (image) => {
+  const handleImageChange = (images) => {
     setPostData((prevData) => ({
       ...prevData,
-      postImage: image,
+      postImage: images.join(','), // 여러 이미지 URL을 쉼표로 구분하여 문자열로 만듦
     }));
 
-    // 이미지가 변경되면 이전 이미지 초기화
-    if (image) {
-      setPreviousImage(null);
+    // 이미지가 변경되면 이전 이미지들 초기화
+    if (images.length > 0) {
+      setPreviousImages([]);
     } else {
-      setPreviousImage(postData.postImage);
+      setPreviousImages(previousImages);
     }
   };
 
@@ -141,15 +155,15 @@ const PostUpdate = () => {
           </Label>
         </div>
 
-        <div>
-          이미지
+        <ImageUploaderImg>
+        이미지
           <ImageUploader onChange={handleImageChange} />
-          {previousImage && (
-            <div className='Img1'>
-              <img src={previousImage} alt="기존 이미지" />
+          {previousImages.map((imageUrl, index) => (
+            <div key={index} className="Img1">
+              <img src={imageUrl} alt={`기존 이미지 ${index + 1}`} />
             </div>
-          )}
-        </div>
+          ))}
+        </ImageUploaderImg>
 
         <div>
           <Label>

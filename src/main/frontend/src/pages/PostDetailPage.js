@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PostAPI from '../api/PostApi';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import cogIcon from '../images/Cog.png';
+import cogIcon from '../images/free-icon-menu-2.png';
 import RtMenu from '../components/Post/Report';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -12,19 +12,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import PostReport from '../components/Post/PostReport ';
 
 
-
 const Background = styled.div`
-
-  background-color: #E2E2E2;
+  background-color: #e2e2e2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 `;
 
-
 const PostDetailWrapper = styled.div`
-
   width: 65%;
   height: auto;
   min-height: 890px;
@@ -32,7 +28,7 @@ const PostDetailWrapper = styled.div`
   padding: 20px;
   background-color: white;
   border-radius: 20px;
-  flex-grow: 1;
+  position: relative;
 `;
 
 const PostHeader = styled.div`
@@ -52,7 +48,7 @@ const PostInfo = styled.div`
   color: #888;
   font-size: 14px;
   height: 48px;
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   padding: 0 20px;
   border-radius: 5px;
 `;
@@ -60,18 +56,15 @@ const PostInfo = styled.div`
 const PostInfoItem = styled.span`
   display: inline-block;
   margin-right: 10px;
-  color: ${props => props.userId ? '#000' : '#888'};
-  font-weight: ${props => props.userId ? 'bold' : 'normal'};
+  color: ${(props) => (props.userId ? '#000' : '#888')};
+  font-weight: ${(props) => (props.userId ? 'bold' : 'normal')};
 `;
 
 const PostImage = styled.div`
   margin-bottom: 20px;
-img{
-  width: 50%;
-
-}
-
-
+  img {
+    width: 50%;
+  }
 `;
 
 const PostContent = styled.div`
@@ -88,7 +81,7 @@ const LoadingMessage = styled.div`
 
 const CommentSection = styled.div`
   margin-top: 30px;
-  height: ${props => props.height};
+  height: ${(props) => props.height};
   transition: height 0.3s;
 `;
 
@@ -107,7 +100,7 @@ const CommentInput = styled.input`
 const CommentButton = styled.button`
   margin-left: 10px;
   padding: 10px 20px;
-  background-color: #990A2C;
+  background-color: #990a2c;
   color: white;
   border: none;
   border-radius: 5px;
@@ -123,43 +116,56 @@ const CommentList = styled.ul`
   margin-top: 20px;
 `;
 
-  const CommentItem = styled.li`
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    flex-direction: ${props => props.isAuthor ? 'row-reverse' : 'row'};
-  `;
+const CommentItem = styled.li`
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  flex-direction: ${(props) => (props.isAuthor ? 'row-reverse' : 'row')};
+`;
 
 const CommentContent = styled.div`
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 10px;
   background-color: white;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  height: 80%;
-  flex-direction: ${props => props.isAuthor ? 'row-reverse' : 'row'};
 `;
+const CommentBox =styled.div`
+display: flex;
+position: relative;
+align-items: center;
+justify-content:start;
 
 
-
+`;
 const CommentDate = styled.span`
-  margin-left: auto;
   color: #888;
-
+  position: relative;
   font-size: 11px;
+  margin-right: 19px;
+  left: 1%;
+  margin-top: 2px;
 `;
-const CogImg = styled.div`
 
-  display: ${props => (props.isAuthor ? 'block' : 'none')};
+
+const CogImg = styled.div`
+  display: ${(props) => (props.isAuthor ? 'block' : 'none')};
+  position: absolute;
+  right: 0;
+
+
+  img {
+
+    height: 13px;
+    cursor: pointer;
+  }
 `;
+
 const CommentAuthor = styled.span`
   font-weight: bold;
   margin-right: 10px;
-
   color: #365899;
 `;
 
@@ -170,12 +176,13 @@ const CommentMenu = styled.div`
   width: 120px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  display: ${props => (props.show ? 'block' : 'none')};
+  display: ${(props) => (props.show ? 'block' : 'none')};
   flex-direction: column;
   padding: 5px;
   border-radius: 5px;
   z-index: 999;
 `;
+
 const CommentMenuItem = styled.div`
   padding: 5px;
   cursor: pointer;
@@ -186,29 +193,27 @@ const CommentMenuItem = styled.div`
     background-color: #f6f6f6;
   }
 `;
+
 const C1 = styled.div`
-
-margin-top: 10px;
+  margin-top: 18px;
 `;
+
 const PostD = styled.div`
-
-  display: ${props => (props.isAuthor ? 'block' : 'none')};
-  margin-right: auto;
+  display:${(props) => (props.isAuthor ? 'block' : 'none')};
+  position: absolute;
+  right: 10px;
   button {
-
     background-color: white;
-    color: #f34336 ;
+    color: black;
     position: relative;
-    left: 70%;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 13px;
-  
-  
+
+
   }
 `;
-
 
 const formatWriteDate = (date) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
@@ -226,9 +231,6 @@ const PostDetailPage = () => {
   const [selectedCommentId, setSelectedCommentId] = useState('');
   const [isCommentAuthor, setIsCommentAuthor] = useState(false);
   const [showRtMenu, setShowRtMenu] = useState(false);
-  const isAuthor = comment.userId === localStorage.getItem('userId');
-
-
 
 
   useEffect(() => {
@@ -246,7 +248,7 @@ const PostDetailPage = () => {
       console.log(error);
     }
   };
-
+  const imageUrls = post ? post.postImageUrl.split(',') : [];
   const navigate = useNavigate();
 
   const handleDeletePost = async () => {
@@ -366,7 +368,7 @@ const PostDetailPage = () => {
   if (!post) {
     return <LoadingMessage>Loading...</LoadingMessage>;
   }
-//변경//
+
   return (
     <>
       <ToastContainer />
@@ -375,27 +377,28 @@ const PostDetailPage = () => {
         <PostDetailWrapper>
           <PostHeader>
             <PostTitle>{post.postTitle}</PostTitle>
-            {post.memberInfo.userId!== localStorage.getItem('userId') &&<PostReport postId={post.id} userId={post.userId}  showRtMenu={showRtMenu} nickname={post.nickname} ></PostReport>}
-            <PostD isAuthor={post.memberInfo && post.memberInfo.userId === localStorage.getItem('userId')}>
-            <button onClick={handleDeletePost}>게시물 삭제</button>
-            <button onClick={() => navigate(`/postupdate/${post.id}`)}>게시물 수정</button>
-          </PostD>
+
             <PostInfo>
               <div>
                 <PostInfoItem userId>작성자: {post.memberInfo ? post.memberInfo.userNickname : ''}</PostInfoItem>
                 <PostInfoItem>{formatWriteDate(post.postDate)}</PostInfoItem>
               </div>
-
               <PostInfoItem>조회수: {post.postViews}</PostInfoItem>
             </PostInfo>
           </PostHeader>
-
           <PostImage>
-            <img src={post.postImageUrl} alt="" />
-          </PostImage>
-
+      {imageUrls.map((imageUrl, index) => (
+        <img key={index} src={imageUrl} alt={``} />
+      ))}
+    </PostImage>
           <PostContent className="Explaination2" dangerouslySetInnerHTML={{ __html: post.postContent }}></PostContent>
-
+          <PostD isAuthor={post.memberInfo && post.memberInfo.userId === localStorage.getItem('userId')}>
+            <button onClick={handleDeletePost}>게시물 삭제</button>
+            <button onClick={() => navigate(`/postupdate/${post.id}`)}>게시물 수정</button>
+          </PostD>
+          {post.memberInfo.userId !== localStorage.getItem('userId') && (
+              <PostReport postId={post.id} userId={post.userId} showRtMenu={showRtMenu} nickname={post.nickname} />
+            )}
           <CommentSection id="commentSection" height={commentSectionHeight}>
             <CommentInputWrapper>
               <CommentInput
@@ -406,48 +409,43 @@ const PostDetailPage = () => {
               />
               <CommentButton onClick={handleSubmitComment}>댓글 작성</CommentButton>
             </CommentInputWrapper>
-
-              <CommentList>
+            <CommentList>
               {comments.map((comment) => (
-                <CommentItem key={comment.id} isAuthor={comment.userId === localStorage.getItem('userId')}>
-                  <CommentContent isAuthor={comment.userId === localStorage.getItem('userId')}>
-                    
-                  <CogImg isAuthor={comment.userId === localStorage.getItem('userId')}>
-                      <img
-                        src={cogIcon}
-                        alt="Cog Icon"
-                        onClick={() => handleCommentMenu(comment.id)}
-                        style={{ marginTop: '5px', marginLeft:'3px', cursor: 'pointer', height: '16px' }}
-                      />
-                    </CogImg>
-                    <div>
-                      <CommentAuthor>{comment.nickname}</CommentAuthor>
-                      <CommentDate>{formatWriteDate(comment.commentDate)}</CommentDate>
-                      <C1>{comment.commentContent}</C1>
-                    </div>
+                <CommentItem key={comment.id} isAuthor={comment.userId === post.memberInfo.userId}>
+                  <CommentContent isAuthor={comment.userId === post.memberInfo.userId}>
+        <CommentBox>
+            <CommentAuthor>{comment.nickname}</CommentAuthor>
+            <CommentDate>{formatWriteDate(comment.commentDate)}</CommentDate>
+          <CogImg isAuthor={comment.userId === localStorage.getItem('userId')}>
+            <img
+              src={cogIcon}
+              alt="Cog Icon"
+              onClick={() => handleCommentMenu(comment.id)}
+            />
+          </CogImg>
+          {comment.userId !== localStorage.getItem('userId') && (
+          <RtMenu postId={post.id} userId={comment.userId} commentId={comment.id} showRtMenu={showRtMenu} nickname={comment.nickname} />
+        )}
+        </CommentBox>
 
-                  
-                                          
-                    {comment.userId !== localStorage.getItem('userId') && <RtMenu postId={post.id} userId={comment.userId} commentId={comment.id} showRtMenu={showRtMenu} nickname={comment.nickname} />}
+        <C1>{comment.commentContent}</C1>
 
-
-                    
-                    {comment.id === selectedCommentId && isCommentAuthor && (
-                      <CommentMenu show={showCommentMenu}>
-                        <CommentMenuItem onClick={handleDeleteComment}>삭제</CommentMenuItem>
-                        <CommentMenuItem onClick={handleUpdateComment}>수정</CommentMenuItem>
-                      </CommentMenu>
-                    )}
-                  </CommentContent>
-                </CommentItem>
-              ))}
-            </CommentList>
+        {comment.id === selectedCommentId && isCommentAuthor && (
+          <CommentMenu show={showCommentMenu}>
+            <CommentMenuItem onClick={handleDeleteComment}>삭제</CommentMenuItem>
+            <CommentMenuItem onClick={handleUpdateComment}>수정</CommentMenuItem>
+          </CommentMenu>
+        )}
+      </CommentContent>
+    </CommentItem>
+  ))}
+</CommentList>
           </CommentSection>
         </PostDetailWrapper>
       </Background>
       <Footer />
     </>
-  );  
+  );
 };
 
 export default PostDetailPage;

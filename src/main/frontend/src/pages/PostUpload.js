@@ -43,7 +43,7 @@ const Button = styled.button`
 const PostUpload = () => {
   const [postData, setPostData] = useState({
     postTitle: '',
-    postImage: '',
+    postImages: [], // 이미지 URL을 배열로 관리합니다.
   });
   const [postContent, setPostContent] = useState('');
 
@@ -52,10 +52,9 @@ const PostUpload = () => {
   const handleImageChange = (image) => {
     setPostData((prevData) => ({
       ...prevData,
-      postImage: image,
+      postImages: [...prevData.postImages, image], // 이미지 URL을 배열에 추가합니다.
     }));
   };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPostData((prevData) => ({
@@ -66,14 +65,16 @@ const PostUpload = () => {
 
   const handleUpload = async () => {
     try {
+      // 이미지 URL 배열을 하나의 스트링으로 합칩니다. 각 이미지 URL을 쉼표로 구분합니다.
+      const postImageStr = postData.postImages.join(',');
+
       const response = await PostAPI.addPost(
         postData.postTitle,
         postContent,
-        postData.postImage,
+        postImageStr, // 이미지 URL 스트링을 전달합니다.
         '1',
         localStorage.getItem('userId')
       );
-
       if (response.id) {
         toast.success('게시물 등록 성공');
         navigate(-1);
