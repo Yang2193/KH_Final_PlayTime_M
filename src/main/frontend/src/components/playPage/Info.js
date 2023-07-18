@@ -8,7 +8,7 @@ import MessageModal from "../../utils/MessageModal";
 const All = styled.div`
 @media (max-width:768px) {
         width: 100%;
-        height: 1000px;
+        height: 1050px;
     }
     @media (max-width:412px) {
         height: 800px;
@@ -60,10 +60,11 @@ const FixData = styled.div`
     }
     @media (max-width:412px) {
             width:412px;
-            height: 600px;
+            height: 800px;
     }
     @media (max-width:360px) {
             width:360px;
+            height: 720px;
     }
         img {
             border-radius: 15px;
@@ -71,16 +72,13 @@ const FixData = styled.div`
             height: 480px;
             margin-right:50px;
             @media (max-width:768px) {
-                bottom: 250px;
-                position: absolute;
                 margin: 0;
                 z-index: -1;
+                border-radius: 0px;
                 width: 100%;
-                height: 520px;
-                border-radius: 0;
+                height: 600px;
             }
             @media (max-width:412px) {
-                bottom: 480px;
                 height: 375px;
         }
             @media (max-width:360px) {
@@ -92,8 +90,8 @@ const FixData = styled.div`
             width: 700px;
             height: 480px;
             @media (max-width:768px) {
+                font-size: 0.9em;
                 border-radius: 15px;
-                margin-top: 480px;
                 width: 100%;
                 display: flex;
                 justify-content: center;
@@ -102,11 +100,7 @@ const FixData = styled.div`
                 background-color: white;
                 z-index: 0;
             }
-            @media (max-width:412px) {
-                margin-top: 550px;
-            }
             @media (max-width:360px) {
-                margin-top: 400px;
                 font-size: 0.8em;
             }
         }
@@ -166,12 +160,11 @@ const FixData = styled.div`
         justify-content:center ;
         align-items:center;
         @media (max-width:768px) {
-            position: absolute;
-            bottom:-220px;
             width: 100%;
             height: 50px;
         }
         @media (max-width:412px) {
+            position: absolute;
             bottom: 35px;
         }
         @media (max-width:360px) {

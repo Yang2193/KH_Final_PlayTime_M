@@ -13,12 +13,19 @@ const Contents = styled.div`
     width: 60%;
     position: relative;
     left: 20%;
-    @media (max-width: 768px) {
-        position: unset;
-        width: 100%;
-        overflow: hidden;
-        left: 0;
-    }
+        @media (max-width:2560px) {
+            left: 27.5%;
+
+        }
+        @media (max-width:1920px) {
+            left: 20%;
+        }
+        @media (max-width: 768px) {
+            position: unset;
+            width: 100%;
+            overflow: hidden;
+            left: 0;
+        }
 `
 const All = styled.div`
     width: 100%;
