@@ -18,6 +18,7 @@ const Background = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  white-space: nowrap;
 `;
 
 const PostDetailWrapper = styled.div`
@@ -29,6 +30,11 @@ const PostDetailWrapper = styled.div`
   background-color: white;
   border-radius: 20px;
   position: relative;
+  @media (max-width: 412px) {
+    /* 412x915 해상도에서 보기 좋은 스타일 적용 */
+    width:100%;
+  }
+
 `;
 
 const PostHeader = styled.div`
@@ -38,7 +44,10 @@ const PostHeader = styled.div`
 const PostTitle = styled.h2`
   font-size: 23px;
   margin-bottom: 30px;
-  margin-right: auto;
+  margin-right: auto;  @media (max-width: 412px) {
+    font-size: 50%;
+
+}
 `;
 
 const PostInfo = styled.div`
@@ -51,6 +60,10 @@ const PostInfo = styled.div`
   background-color: #f6f6f6;
   padding: 0 20px;
   border-radius: 5px;
+  @media (max-width: 412px) {
+    font-size: 30%;
+
+}
 `;
 
 const PostInfoItem = styled.span`
@@ -64,6 +77,7 @@ const PostImage = styled.div`
   margin-bottom: 20px;
   img {
     width: 50%;
+
   }
 `;
 
@@ -83,11 +97,13 @@ const CommentSection = styled.div`
   margin-top: 30px;
   height: ${(props) => props.height};
   transition: height 0.3s;
+
 `;
 
 const CommentInputWrapper = styled.div`
   display: flex;
   align-items: center;
+
 `;
 
 const CommentInput = styled.input`
@@ -114,6 +130,7 @@ const CommentList = styled.ul`
   list-style: none;
   padding: 0;
   margin-top: 20px;
+
 `;
 
 const CommentItem = styled.li`
@@ -121,6 +138,10 @@ const CommentItem = styled.li`
   align-items: flex-start;
   margin-bottom: 10px;
   flex-direction: ${(props) => (props.isAuthor ? 'row-reverse' : 'row')};
+  @media (max-width: 412px) {
+    font-size: 30%;
+
+}
 `;
 
 const CommentContent = styled.div`
@@ -131,12 +152,18 @@ const CommentContent = styled.div`
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: 412px) {
+    width: 50%;
+    font-size: 50%;
+
+}
 `;
 const CommentBox =styled.div`
 display: flex;
 position: relative;
 align-items: center;
 justify-content:start;
+
 
 
 `;
@@ -147,6 +174,10 @@ const CommentDate = styled.span`
   margin-right: 19px;
   left: 1%;
   margin-top: 2px;
+  @media (max-width: 412px) {
+    font-size: 30%;
+
+}
 `;
 
 
@@ -196,6 +227,7 @@ const CommentMenuItem = styled.div`
 
 const C1 = styled.div`
   margin-top: 18px;
+
 `;
 
 const PostD = styled.div`
@@ -210,7 +242,10 @@ const PostD = styled.div`
     border-radius: 5px;
     cursor: pointer;
     font-size: 13px;
+    @media (max-width: 412px) {
+    font-size: 30%;
 
+}
 
   }
 `;
