@@ -26,6 +26,11 @@ const PayInfo = styled.div`
         width: 80%;
         height: 50%;
     }
+    @media (max-width:412px) {
+      font-size: 0.8em;
+        width: 90%;
+        height: 50%;
+    }
     }
     button{
       margin-top: 10%;
@@ -39,9 +44,13 @@ const PayInfo = styled.div`
         height: 15%;
         width: 30%;
     }
+    @media (max-width:412px) {
+        width: 50%;
+        height: 10%;
     }
-
+    }
 `
+
 const PayResult = () => {
     const seatInfo = localStorage.getItem("totalSeat");// 선택한 좌석 정보
     const timeInfo = localStorage.getItem("timeInfo");
