@@ -100,7 +100,6 @@ const slideIn = keyframes`
 
 
 const SideMenu = ({handleIsOpen, isOpen}) => {
-    const {resetUser} = useContext(AccountInfoContext);
     const ref = useRef(null);
     const navigate = useNavigate();
     const userId = window.localStorage.getItem("userId");
@@ -154,7 +153,7 @@ const SideMenu = ({handleIsOpen, isOpen}) => {
 
     const logout = () =>{
         localStorage.clear();
-        resetUser();
+
         navigate("/");
         handleIsOpen(!isOpen);
         setModalOpen("logout");
