@@ -3,7 +3,7 @@ import { AccountInfoContext } from "../../context/AccountInfo";
 import { useNavigate } from "react-router-dom";
 import { MyProfileDeleteDetail, WithdrawPwCheck} from "./MyProfileDeleteDetail";
 
-const MyResaleInfo = () => {
+const MyprofileDelete = () => {
     const context = useContext(AccountInfoContext);
     const {withdraw} = context;
 
@@ -16,4 +16,4 @@ const MyResaleInfo = () => {
     );
 }
 
-export default MyResaleInfo;
+export default MyprofileDelete;

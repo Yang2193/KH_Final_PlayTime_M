@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PostAPI from "../../api/PostApi";
 import { Link, useNavigate } from 'react-router-dom';
 import AccountApi from "../../api/AccountApi";
+import { useEffect } from "react";
 
 const MyReview = () => {
   const nav = useNavigate();
@@ -40,26 +41,29 @@ const MyReview = () => {
           date1.getDate() === date2.getDate()
       );
   };
+  
+  useEffect(() => {
+    const memberReviewList = async() => {
+      try {
+        const response = await AccountApi.getMemberReview(userId);
+        if (response.status === 200){
+          setPosts(response.data);
+          console.log(posts);
+        } else {
+          console.log('불러오기 실패');
+        } 
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    memberReviewList();
+  }, [])
 
-  const memberReviewList = async() => {
-    try {
-      const response = await AccountApi.getMemberReview(userId);
-      if (response.status === 200){
-        setPosts(response.data);
-        console.log(posts);
-      } else {
-        console.log('불러오기 실패');
-      } 
-    } catch (e) {
-      console.log(e);
-    }
-  };
   
   console.log(posts);
 
   return (
       <>
-      <button onClick={memberReviewList}><h3>{userId}님의 리뷰</h3></button>
       <table className="ReviewTable">
         <thead>
           <tr>
@@ -81,7 +85,7 @@ const MyReview = () => {
                   {post.postTitle}
                 </Link>
               </td>
-              <td className="Explaination2">{post.postContent}</td>
+              <td className="Explaination2" dangerouslySetInnerHTML={{ __html: post.postContent }}></td>
               <td className="WriteDate">{formatWriteDate(post.postDate)}</td>
               <td className="Views">{post.postViews}</td>
             </tr>

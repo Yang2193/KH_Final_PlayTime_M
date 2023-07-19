@@ -5,6 +5,7 @@ import styled from "styled-components";
 import barcode from "../../images/barcode.gif";
 
 const Container = styled.div`
+
     height : 100vh;
     display : flex;
     position: relative;
@@ -24,7 +25,7 @@ const InfoBox = styled.div`
     @media (max-width: 768px) {
         width: 100%;
     }
-
+    
 `
 
 const BarCode = styled.div`
@@ -58,9 +59,9 @@ const Ticket = () =>{
 
 
     return(
-
+        
           <>
-            {ticketData ?
+            {ticketData ? 
             <Container>
                 <InfoBox>
                     <p>티켓 정보</p>
@@ -73,8 +74,8 @@ const Ticket = () =>{
                         <BarCodeImg src={barcode} alt="barcode"/>
                     </BarCode>
                 </InfoBox>
-
-            </Container>
+             
+            </Container> 
             :
             <Container>
                 <InfoBox>
@@ -83,9 +84,9 @@ const Ticket = () =>{
             </Container>
 
            }
-           </>
-
-
+           </>  
+          
+    
     )
 }
 

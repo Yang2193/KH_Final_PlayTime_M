@@ -80,21 +80,10 @@ const MenuBlock = styled.div`
 `;
 
 const MyPageMain = () => {
-    const userId = localStorage.getItem("userId");
-    const nav = useNavigate();
-    const [nickname, setNickname] = useState("");
-
-    useEffect(() => {
-        const getUserNickname = async() => {
-            try {
-                const getData = await AccountApi.userInfo(userId);
-                setNickname(getData.data[0].userNickname);
-            } catch (e) {
-                console.log(e);
-            }
-        }
-        getUserNickname();
-    }, [])
+    
+    const userInfoString = localStorage.getItem("userInfo");
+    const userInfo = JSON.parse(userInfoString);
+    console.log(userInfo)
 
     return (
         <MenuBlock>
@@ -102,7 +91,7 @@ const MyPageMain = () => {
             <div className="profile">
                 <img className="picture" src={profile} alt="Profile" />
             </div>
-            <div className="name">{nickname}</div>
+            <div className="name">{userInfo.userNickname}</div>
             <div className="selector">
                 <Link to="/mypage/profile_edit"><div>프로필 수정</div></Link>
                 <Link to="/myPage/review"><div>내가 쓴 후기</div></Link>

@@ -76,7 +76,6 @@ const Category = styled.div`
     }
 `;
 const MenuBar = ({onSelect, category}) => {
-    const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
     const handleLinkClick = (path,category) => {
     const queryParams = new URLSearchParams();

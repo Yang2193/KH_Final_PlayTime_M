@@ -4,7 +4,7 @@ import MyTicketInfo from "./MyTicketInfo";
 import styled from "styled-components";
 import React from "react";
 import MyPageMain from "./MyPageMain";
-import MyProfileEditDetail from "./MyProfileEditDetail";
+import MyProfileEdit from "./MyProfileEdit";
 import MyProfileDelete from "./MyProfileDelete";
 
 const SectionBlock = styled.div`
@@ -22,7 +22,7 @@ const SectionBlock = styled.div`
 const menuSelect = (name) => {
     switch(name){
         case "menu1" : 
-        return <MyProfileEditDetail/>;
+        return <MyProfileEdit/>;
        
         case "menu2" : 
         return <MyReview/>;

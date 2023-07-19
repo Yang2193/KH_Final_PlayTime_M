@@ -111,7 +111,7 @@ const MyTicketInfo = () => {
                 <td className="seeDate">{bl.seeDate}</td>
                 <td className="seatInfo">{bl.seatInfo}</td>
                 <td className="ticket">
-                                    <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
+                    <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
                 </td>
               </tr>
             ))}

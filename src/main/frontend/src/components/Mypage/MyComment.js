@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import PostAPI from "../../api/PostApi";
 import AccountApi from "../../api/AccountApi";
+import { useEffect } from "react";
 
 const MyComment = () => {
     const userId = localStorage.getItem('userId');
     const [commentList, setCommentList] = useState([]);
     const [postTitle, setPostTitle] = useState([]);
 
-    const myCommentList = async() => {
+    useEffect(() => {
+      const myCommentList = async() => {
         try {
             const response = await AccountApi.getMemberComment(userId);
             if(response && response.status === 200) {
@@ -16,21 +18,21 @@ const MyComment = () => {
         } catch (e) {
             console.log(e);
         }
-    }
-
-    console.log(commentList);
+      }
+      myCommentList();
+    }, [])
+    
 
 
     return (
         <>
-        <button onClick={myCommentList}><h3>{userId}님의 댓글</h3></button>
         <table className="commentTable">
           <thead>
           </thead>
           <tbody>
             {commentList.map((cl) => (
               <tr className="commentItem" key={cl.id}>
-                <td className="postId">{cl.postTitle}</td>
+                <td className="postId">{cl.postId}</td>
                 <td className="">{cl.commentContent}</td>
                 <td className="period">{cl.commentDate}</td>
               </tr>

@@ -17,26 +17,29 @@ import PostDetail from './pages/PostDetailPage';
 import PostPage from './pages/PostPage';
 import PostUpload from './pages/PostUpload';
 import ReservePage from './pages/ReservePage';
-import AccountProvider from './context/AccountInfo';
 import PayResult from './components/playPage/KaKaoPay/PayResult';
 import PayReady from './components/playPage/KaKaoPay/PayReady';
 import PostUpdate from './components/Post/PostUpdate';
 import Ticket from './components/Mypage/MyTicketInfoDetail';
-// import KakaoLogin from './components/Account/KakaoLogin';
+import MyProfileEditDetail from './components/Mypage/MyProfileEditDetail';
+import KakaoLogin from './components/Account/KakaoLogin';
 
 function App() {
+  const isUserAuthenticated = false;
+
   return (
-    <AccountProvider>
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/info" element={<PlayPage />} />
         <Route path="/join/*" element={<JoinPage />} />
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/kakao/login" element={<KakaoLogin />} /> */}
+        <Route path="/auth/kakao/callback" element={<KakaoLogin />} />
         <Route path="/find" element={<FindAccountPage />} />
         <Route path="/myPage" element={<Mypage />} />
         <Route path="/mypage/profile_edit" element={<MyProfileEdit />} />
+        <Route path="/mypage/profile_edit/info" element={ isUserAuthenticated ?
+         ( <MyProfileEditDetail /> ) : ( <MyProfileEdit to="/mypage/profile_edit" replace />)} />
         <Route path="/myPage/comment" element={<MyComment />} />
         <Route path="/myPage/playlike" element={<MyPlayLike />} />
         <Route path="/myPage/buylist" element={<MyTicketInfo />} />
@@ -51,7 +54,6 @@ function App() {
         <Route path="/ticket/:reserveId" element={<Ticket/>}/>
       </Routes>
     </Router>
-    </AccountProvider>
   );
 }
 

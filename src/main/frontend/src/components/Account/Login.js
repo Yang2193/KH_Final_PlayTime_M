@@ -2,13 +2,10 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AccountApi from "../../api/AccountApi";
 import '../../styles/Account.css';
-import { AccountInfoContext } from "../../context/AccountInfo";
+import MessageModal from "../../utils/MessageModal";
 
   const Login = () => {
     const navigate = useNavigate();
-    const [tokenDto, setTokenDto] = useState("");
-    const context = useContext(AccountInfoContext);
-    const {setUserId, setUserPw, setUserName, setUserNickname, setUserPhone, setUserEmail, isLogin, setIsLogin} = context;
 
     // 키보드 입력 받기
     const [loginId, setLoginId] = useState(""); // 로그인 아이디
@@ -23,6 +20,14 @@ import { AccountInfoContext } from "../../context/AccountInfo";
     // 유효성 검사
     const [isLoginId, setIsLoginId] = useState(false);
     const [isLoginPw, setIsLoginPw] = useState(false);
+
+    //팝업창
+    const [modalOpen, setModalOpen] = useState(false);
+
+    //모달창 닫기
+    const onClickClose = () => {
+        setModalOpen(false);
+    }
 
     // 정규식
     const idRegEx = /^[A-Za-z0-9]{3,15}$/g;
@@ -65,65 +70,33 @@ import { AccountInfoContext } from "../../context/AccountInfo";
         if(response.status === 200) {
           localStorage.setItem("accessToken", response.data.accessToken);
           localStorage.setItem("refreshToken", response.data.refreshToken);
-          localStorage.setItem("isLogin", "TRUE");
           localStorage.setItem("userId", loginId);
           localStorage.setItem("userPw", loginPw);
-          console.log("토큰 발급 완료")
-          console.log(response);
+          localStorage.setItem("isLogin", "TRUE");
+          localStorage.setItem("loginValue", "DEFAULT");
           try {
-            const response2 = await AccountApi.userInfo();
-            const userData = JSON.stringify(response2, null, 2);
-            const userDataObject = JSON.parse(userData);
-            console.log(userDataObject.data[0].userId);
-            setUserId(userDataObject.data[0].userId);
-            setUserPw(loginPw);
-            setUserNickname(userDataObject.data[0].userNickname);
-            setUserName(userDataObject.data[0].userName);
-            setUserPhone(userDataObject.data[0].userPhone);
-            setUserEmail(userDataObject.data[0].userEmail);
+              const userInfo = await AccountApi.getUserInfo(localStorage.getItem("userId"));
+              const userInfoData = JSON.stringify(userInfo.data);
+              localStorage.setItem("userInfo", userInfoData);
+              console.log(userInfo.data);
           } catch(e) {
-            console.log(e);
+          console.log(e);
           }
+          console.log("토큰 발급 완료")
           navigate("/");
         }
       } catch(e) {
-        console.log(e);
+        setModalOpen(true);
       }
     };
 
     const onClickKakaoLogin = () => {
-      const Rest_api_key = '088a7b267c39d0a11ec3904372ed9d33';
-      const redirect_uri = 'http://localhost:8111/auth/kakao/callback';
-      const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
-      window.location.href = kakaoURL;
+      const clientId = "088a7b267c39d0a11ec3904372ed9d33";
+      const redirectUri = "http://localhost:3000/auth/kakao/callback";
+      const authorizeUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+      window.location.href = authorizeUrl;
     };
-    
-    const handleKakaoCallback = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      try {
-        const response = await fetch(`/auth/kakao/callback?code=${code}`);
-        if (response) {
-          const tokenDto = await response.json();
-          console.log("백엔드에서 반환된 데이터:");
-          console.log(tokenDto);
-          window.location.replace('/'); // 메인 페이지로 이동
-        } else {
-          console.log("요청 실패:", response.status);
-          window.location.href = '/main'; // 메인 페이지로 이동 (실패 시)
-        }
-      } catch (e) {
-        console.log("오류 발생:", e);
-        window.location.href = '/main'; // 메인 페이지로 이동 (오류 발생 시)
-      }
-    };
-    
-    // 리다이렉트 후에 실행될 코드
-    if (window.location.pathname === '/auth/kakao/callback') {
-      handleKakaoCallback();
-    }
-      
-    
+
     return (
       <div className="wrapper">
         <div className="loginWrapper">
@@ -153,6 +126,7 @@ import { AccountInfoContext } from "../../context/AccountInfo";
             </div>
           </div>
         </div>
+        {modalOpen && (<MessageModal open={modalOpen} close={onClickClose} type="modalType" header="로그인 오류">아이디 및 패스워드가 틀렸습니다.</MessageModal>)}
       </div>
     );
   };
