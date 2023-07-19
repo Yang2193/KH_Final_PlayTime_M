@@ -50,13 +50,37 @@ const MyProfileEdit = () => {
     }
   }
 
+  const onClickPwCheck = async () => {
+    try {
+      const response = await AccountApi.checkMemberPw(userInfo.userId, inputAuth);
+      if (response.data) {
+        setAuthSuccessModal(true);
+        setIsAuth(true);
+        navigate("/mypage/profile_edit/info");
+      } else {
+        setAuthFailModal(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
-    <button onClick={userAuthSendMail}>인증번호 받기</button>
-    <input type="password" value={inputAuth} onChange={onChangeAuth}/>
-    <button onClick={onClickIsAuth}>인증</button>
-    {authSuccessModal && (<MessageModal open={authSuccessModal} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
-    {authFailModal && (<MessageModal open={authFailModal} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
+    {localStorage.getItem("loginValue") === "KAKAO" ? (
+      <>
+        <button onClick={userAuthSendMail}>인증번호 받기</button>
+        <input type="password" value={inputAuth} onChange={onChangeAuth} />
+        <button onClick={onClickIsAuth}>인증</button>
+        {authSuccessModal && (<MessageModal open={authSuccessModal} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
+        {authFailModal && (<MessageModal open={authFailModal} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
+      </>
+    ) : (
+      <>
+        <input type="password" value={inputAuth} onChange={onChangeAuth}/>
+        <button onClick={onClickPwCheck}>인증</button>
+      </>
+    )}
     </>
   );
 };

@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -62,7 +63,7 @@ public class AuthService {
             try {
                 Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
                 TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-                tokenDto.setAuthority(String.valueOf(Authority.ROLE_ADMIN));
+//                tokenDto.setAuthority(String.valueOf(Authority.ROLE_ADMIN));
                 return tokenDto;
             } catch (AuthenticationException e) {
                 throw e;
@@ -71,7 +72,7 @@ public class AuthService {
             try {
                 Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
                 TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-                tokenDto.setAuthority(String.valueOf(Authority.ROLE_USER));
+//                tokenDto.setAuthority(String.valueOf(Authority.ROLE_USER));
                 return tokenDto;
             } catch (AuthenticationException e) {
                 throw e;
@@ -112,6 +113,12 @@ public class AuthService {
         System.out.println("서비스 ID 찾기 :" + memberDto.getUserId());
         String result = member.getUserId();
         return result;
+    }
+
+    // 회원가입 시 인증메일 발송
+    public String sendEmail(String userEmail) throws Exception {
+        String authCode = emailService.sendAuthMailKey(userEmail);
+        return authCode;
     }
 
     // 패스워드 찾기

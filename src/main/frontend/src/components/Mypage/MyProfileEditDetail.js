@@ -98,11 +98,12 @@ const ErrorMessage = styled.td`
 const MyProfileEditDetail = () => {
   const navigate = useNavigate();
   
-
+  const userInfoString = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoString);
   // 변경할 프로필 변수
   const [password, setPassword] = useState(localStorage.getItem("userPw"));
   const [conPassword, setConPassword] = useState(localStorage.getItem("userPw"));
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(userInfo.userNickname);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
@@ -120,14 +121,9 @@ const MyProfileEditDetail = () => {
   const [isPhone, setIsPhone] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [isAll, setIsAll] = useState(false);
-
-  const userInfoString = localStorage.getItem("userInfo");
-  const userInfo = JSON.parse(userInfoString);
-
   
   useEffect(() => {
     if(userInfo)
-      setNickname(userInfo.userNickname);
       setPhone(userInfo.userPhone);
       setEmail(userInfo.userEmail);
       setPassword(password);
@@ -163,9 +159,11 @@ const MyProfileEditDetail = () => {
   }, [password, conPassword]);
 
   const onChageNickname = (e) => {
-    const nicknameRegex = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,10}$/;
-    setNickname(e.target.value);
-    if (!nicknameRegex.test(nickname)) {
+    const nicknameRegex = /^(?=.*[a-zA-Z0-9ㄱ-ㅎ가-힣])[a-zA-Z0-9ㄱ-ㅎ가-힣]{2,10}$/;
+    const updatedNickname = e.target.value;
+    setNickname(updatedNickname);
+  
+    if (!nicknameRegex.test(updatedNickname)) {
       setNicknameMsg(
         "영문자 대/소 + 숫자 + 한글 조합으로 2~10자의 닉네임을 입력하세요."
       );
@@ -210,8 +208,20 @@ const MyProfileEditDetail = () => {
         phone,
         email
       );
-      navigate(-1);
+      navigate(-2);
       console.log("회원정보 수정", response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const updateKakao = async() => {
+    try {
+      const response = await AccountApi.updateUserInfo2(userInfo.userId, nickname);
+      if(response){
+        console.log("회원정보 수정", response);
+        navigate(-2);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -219,8 +229,9 @@ const MyProfileEditDetail = () => {
 
   return (
     <>
-      <Header />
-      <Container>
+    <Header />
+    <Container>
+      {localStorage.getItem("loginValue") === "DEFAULT" ? (
         <FormContainer>
           {userInfo ? (
             <>
@@ -278,9 +289,32 @@ const MyProfileEditDetail = () => {
             <p>Loading...</p>
           )}
         </FormContainer>
-      </Container>
-      <Footer />
-    </>
+      ) : (
+        <FormContainer>
+          {userInfo ? (
+            <>
+              <Table>
+                <Span>개인정보 변경</Span>
+                <tbody>
+                <tr>
+                    <th>닉네임</th>
+                    <td>
+                      <Input type="text" value={nickname} onChange={onChageNickname} />
+                      {nicknameMsg && <ErrorMessage>{nicknameMsg}</ErrorMessage>}
+                    </td>
+                </tr>
+                </tbody>
+                </Table>
+                <Button onClick={updateKakao}>수정</Button>
+                </>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </FormContainer>
+      )}
+    </Container>
+    <Footer />
+  </>
   );
 };
 

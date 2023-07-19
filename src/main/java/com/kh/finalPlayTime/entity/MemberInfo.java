@@ -2,6 +2,7 @@ package com.kh.finalPlayTime.entity;
 
 import com.kh.finalPlayTime.constant.Authority;
 import com.kh.finalPlayTime.constant.Withdraw;
+import com.kh.finalPlayTime.kakao.constant.SocialOAuth;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,9 +33,11 @@ public class MemberInfo {
     private Withdraw withdraw;
     @Enumerated(EnumType.STRING)
     private Authority authority; // USER인지 ADMIN인지 구분하기 위해 부여.
+    @Enumerated(EnumType.STRING)
+    private SocialOAuth socialOAuth;
     //빌더
     @Builder
-    public MemberInfo(String userId, String userPw, String userName, String userNickname, String userEmail, String userPhone, LocalDateTime joinDate, Withdraw withdraw, Authority authority) {
+    public MemberInfo(String userId, String userPw, String userName, String userNickname, String userEmail, String userPhone, LocalDateTime joinDate, Withdraw withdraw, Authority authority, SocialOAuth socialOAuth) {
         this.userId = userId;
         this.userPw = userPw;
         this.userName = userName;
@@ -44,5 +47,6 @@ public class MemberInfo {
         this.joinDate = joinDate;
         this.withdraw = withdraw;
         this.authority = authority;
+        this.socialOAuth = socialOAuth;
     }
 }

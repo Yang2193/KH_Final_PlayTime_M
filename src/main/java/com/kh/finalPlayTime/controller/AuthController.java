@@ -58,4 +58,11 @@ public class AuthController { // 로그인 회원가입 ID/PW 찾기 여기에�
         TokenDto renewDto = tokenService.createNewAccessToken(requestDto.getRefreshToken());
         return ResponseEntity.ok(renewDto);
     }
+
+    // 회원가입 및 마이페이지정보수정 시 인증코드 발송
+    @PostMapping("/sendAuthEmail")
+    public ResponseEntity<String> sendAuthEmail(@RequestBody Map<String, String> sendData) throws Exception {
+        String userEmail = sendData.get("userEmail");
+        return ResponseEntity.ok(authService.sendEmail(userEmail));
+    }
 }

@@ -41,7 +41,7 @@ const KakaoLogin = () => {
         const getAccessToken = async () => {
         try {
             const response = await AccountApi.kakaoAccessToken(code);
-            localStorage.setItem("userId", response.data.kakaoProfile.id);
+            localStorage.setItem("userId", response.data.kakaoProfile.userId);
             localStorage.setItem("accessToken", response.data.tokenDto.accessToken);
             localStorage.setItem("refreshToken", response.data.tokenDto.refreshToken);
             localStorage.setItem("loginValue", "KAKAO");

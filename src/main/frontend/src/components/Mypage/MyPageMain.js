@@ -80,10 +80,26 @@ const MenuBlock = styled.div`
 `;
 
 const MyPageMain = () => {
-    
+
+    useEffect(()=> {
+        const recentData = async() => {
+            try {
+                const userData = await AccountApi.getUserInfo(localStorage.getItem("userId"));
+                console.log(userData);
+                if(userData.data) {
+                    const userInfoData = JSON.stringify(userData.data);
+                    localStorage.setItem("userInfo", userInfoData);
+                } else {
+                    console.log("불러오기 실패");
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        recentData();
+    }, [])
     const userInfoString = localStorage.getItem("userInfo");
     const userInfo = JSON.parse(userInfoString);
-    console.log(userInfo)
 
     return (
         <MenuBlock>
