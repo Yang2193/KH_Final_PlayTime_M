@@ -68,9 +68,10 @@ const FixData = styled.div`
             height: 720px;
     }
         img {
+            margin-top: 80px;
             border-radius: 15px;
             width: 400px;
-            height: 480px;
+            height: 560px;
             margin-right:50px;
             @media (max-width:768px) {
                 margin: 0;
@@ -179,6 +180,7 @@ const FixData = styled.div`
             height: 100%;
             font-size: 1.2em;
             border: none;
+            border-radius: 6px;
             cursor: pointer;
             @media (max-width:768px) {
                 border-radius: 0%;
