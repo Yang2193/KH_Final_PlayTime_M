@@ -3,6 +3,108 @@ import PostAPI from "../../api/PostApi";
 import { Link, useNavigate } from 'react-router-dom';
 import AccountApi from "../../api/AccountApi";
 import { useEffect } from "react";
+import styled from "styled-components";
+import Header from "../Header";
+import Footer from "../Footer";
+import { toast, ToastContainer } from 'react-toastify';
+const MyReviewContainer = styled.div`
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const MyReviewCloseButton = styled.div`
+  cursor: pointer;
+  color: #495057;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 10px;
+
+  @media (max-width: 412px) {
+    margin-left: auto;
+    margin-bottom: auto;
+  }
+`;
+
+const MyReviewCard = styled.div`
+  display: flex;
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+
+  @media (max-width: 412px) {
+    flex-direction: column;
+  }
+`;
+
+const MyReviewTitle = styled.h3`
+  font-size: 100%;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  text-decoration: none;
+  color: #000;
+  @media (max-width: 412px) {
+    font-size: 18px;
+  }
+`;
+
+
+const MyReviewDescription = styled.p`
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+
+
+`;
+
+const MyReviewDate = styled.p`
+  font-size: 12px;
+  color: black;
+`;
+
+const MyReviewPageTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+
+`;
+
+const MyReviewImage = styled.img`
+  width: 200px;
+  height: 250px;
+  margin-right: 20px;
+  background-color: #f0f0f0;
+
+
+  @media (max-width: 412px) {
+    width: 100%;
+    height: 350px;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+`;
+
+const MyReviewContent = styled.div`
+  flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+
+`;
+
+const MyReviewEmptyMessage = styled.p`
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+
+`;
 
 const MyReview = () => {
   const nav = useNavigate();
@@ -33,6 +135,23 @@ const MyReview = () => {
           return formattedDate;
       }
   };
+  const deletePost = async (postId) => {
+    const confirmDelete = window.confirm('게시물을 삭제하시겠습니까?');
+
+    if (confirmDelete) {
+      try {
+        const response = await PostAPI.deletePost(postId);
+        if (response.status === 200) {
+          toast.error('게시물이 삭제되었습니다.');
+          // 삭제된 게시물을 화면에서 제거
+          setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
 
   const isSameDay = (date1, date2) => {
       return (
@@ -41,7 +160,7 @@ const MyReview = () => {
           date1.getDate() === date2.getDate()
       );
   };
-  
+
   useEffect(() => {
     const memberReviewList = async() => {
       try {
@@ -51,7 +170,7 @@ const MyReview = () => {
           console.log(posts);
         } else {
           console.log('불러오기 실패');
-        } 
+        }
       } catch (e) {
         console.log(e);
       }
@@ -59,40 +178,40 @@ const MyReview = () => {
     memberReviewList();
   }, [])
 
-  
-  console.log(posts);
 
+  console.log(posts);
   return (
-      <>
-      <table className="ReviewTable">
-        <thead>
-          <tr>
-            <th>리뷰 제목</th>
-            <th>설명</th>
-            <th>작성 날짜</th>
-            <th>조회수</th>
-          </tr>
-        </thead>
-        <tbody>
-          {posts.map((post) => (
-            <tr className="ReviewItem" key={post.id}>
-              <td className="ReviewTitle">
-                <Link
-                  to={`/post/select/${post.id}`}
-                  className="ReviewLink"
-                  onClick={() => increaseViews(post.id)}
-                >
-                  {post.postTitle}
+    <>
+      <Header />
+      <MyReviewContainer>
+        <MyReviewPageTitle>나의 게시물</MyReviewPageTitle>
+        {posts.length === 0 ? (
+          <MyReviewEmptyMessage>게시물이 없습니다.</MyReviewEmptyMessage>
+        ) : (
+          posts.map((post) => (
+            <MyReviewCard key={post.id}>
+              <Link to={`/post/${post.id}`} onClick={() => increaseViews(post.id)}>
+                {post.postImageUrl ? (
+                  <MyReviewImage src={post.postImageUrl} alt="게시물 이미지" />
+                ) : (
+                  <MyReviewImage src="" alt="x" />
+                )}
+              </Link>
+              <MyReviewContent>
+
+                <Link to={`/post/${post.id}`} onClick={() => increaseViews(post.id)}>
+                  <MyReviewTitle>{post.postTitle}</MyReviewTitle>
                 </Link>
-              </td>
-              <td className="Explaination2" dangerouslySetInnerHTML={{ __html: post.postContent }}></td>
-              <td className="WriteDate">{formatWriteDate(post.postDate)}</td>
-              <td className="Views">{post.postViews}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </>
+                <MyReviewDescription dangerouslySetInnerHTML={{ __html: post.postContent }}></MyReviewDescription>
+                <MyReviewDate>{formatWriteDate(post.postDate)}</MyReviewDate>
+              </MyReviewContent>
+              <MyReviewCloseButton onClick={() => deletePost(post.id)}>✕</MyReviewCloseButton>
+            </MyReviewCard>
+          ))
+        )}
+      </MyReviewContainer>
+      <Footer />
+    </>
   );
 }
 

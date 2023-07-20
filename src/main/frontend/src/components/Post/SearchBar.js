@@ -5,13 +5,18 @@ import React, { useState } from 'react';
 
 const SearchContainer = styled.div`
   position: relative;
-  top: 0px;
+  top: 40px;
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 240px;
   height: 40px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  @media (max-width: 412px) {
+      width:60%;
+      height: 30px;
+
+  }
 `;
 
 const Input = styled.input`

@@ -8,6 +8,7 @@
   padding: 20px;
   width: 100%; /* 기본적으로 100% 너비로 설정합니다. */
   white-space: nowrap;
+  text-overflow: ellipsis;
   @media (max-width: 412px) {
     min-width: auto;
     max-width: 100%;
@@ -16,12 +17,18 @@
 }
 
 
-.ReviewTitle{
+
+/* 기본 글자 수 */
+.ReviewTitle {
   font-size: 14px;
   font-weight: bold;
-  white-space: nowrap;
+
   width: 95%;
 }
+
+
+
+
 .SearchEmptyMessage {
   display: flex;
   align-items: center;
@@ -84,6 +91,7 @@ h2::after {
 .ButtonContainer {
   display: flex;
   justify-content: flex-end;
+
 }
 
 .insert1 {
@@ -96,7 +104,17 @@ h2::after {
   font-size: 15px;
   height: 40px;
   width: 120px;
+  @media (max-width: 412px) {
+    height: 30px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    width: 90px;
+    }
+
 }
+
+
 .insert:hover {
   background-color:#800634;
 }.insert2:hover {
@@ -123,20 +141,28 @@ h2::after {
 
 .ReviewTable th:first-child,
 .ReviewTable td:first-child {
-  width: 55%;
+  width: 50%;
 }
 
 .ReviewLink {
   color: #51a4fc;
   text-decoration: none;
+
+
+
 }
 
 .ReviewLink:hover {
   text-decoration: underline;
 }
-
+@media (max-width: 412px) {
+  .ReviewTable .WriteDate {
+    display: none;
+  }
+}
 .ReviewTable th.title {
-  text-align: center;
+  /* text-align: center; */
+
 }
 .WriteDate,
 .Views {

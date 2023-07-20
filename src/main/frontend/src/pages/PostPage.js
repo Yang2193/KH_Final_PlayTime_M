@@ -85,14 +85,14 @@ const Post = () => {
     <>
       <Header />
 
-      <div className="ReviewBoardWrapper" >
+      <div className="ReviewBoardWrapper">
         <h2>리뷰 게시판</h2>
         <PopularPosts popularPosts={sortedPosts} />
         <table className="ReviewTable">
           <thead>
             <tr>
               <th className='title alignCenter'>제목</th>
-              <th>작성 날짜</th>
+              <th className='WriteDate'>작성 날짜</th>
               <th className="text_id">닉네임</th>
               <th>조회수</th>
             </tr>
@@ -111,10 +111,18 @@ const Post = () => {
                     className="ReviewLink"
                     onClick={() => increaseViews(post.id)}
                   >
-                     {post.postTitle.length > 30 ? `${post.postTitle.slice(0, 30)}...` : post.postTitle}
+
+                    {window.innerWidth > 412
+                      ? post.postTitle.length > 20
+                        ? `${post.postTitle.slice(0, 25)}...`
+                        : post.postTitle
+                      : post.postTitle.length > 15
+                      ? `${post.postTitle.slice(0, 25)}...`
+                      : post.postTitle}
                   </Link>
                 </td>
-                <td className="WriteDate">{formatWriteDate(post.postDate)}</td>
+                <td className="WriteDate DateContainer">{formatWriteDate(post.postDate)}</td>
+
                 <td className="Id">{post.memberInfo ? post.memberInfo.userNickname : ''}</td>
                 <td className="Views">{post.postViews}</td>
               </tr>
@@ -135,5 +143,5 @@ const Post = () => {
     </>
   );
 };
-//
+
 export default Post;

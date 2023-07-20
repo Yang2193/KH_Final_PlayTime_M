@@ -31,22 +31,22 @@ const PostDetailWrapper = styled.div`
   border-radius: 20px;
   position: relative;
   @media (max-width: 412px) {
-    /* 412x915 해상도에서 보기 좋은 스타일 적용 */
+
     width:100%;
   }
 
 `;
 
 const PostHeader = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 const PostTitle = styled.h2`
   font-size: 23px;
   margin-bottom: 30px;
+  word-break: break-all;
   margin-right: auto;  @media (max-width: 412px) {
     font-size: 50%;
-
 }
 `;
 
@@ -75,10 +75,19 @@ const PostInfoItem = styled.span`
 
 const PostImage = styled.div`
   margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+
+
   img {
     width: 50%;
-
-  }
+    max-width: 30%;
+    margin-right: 40px;
+  } @media (max-width: 412px) {
+    height :50% ;
+    }
 `;
 
 const PostContent = styled.div`
@@ -91,6 +100,7 @@ const LoadingMessage = styled.div`
   font-size: 16px;
   color: #888;
   margin-top: 40px;
+
 `;
 
 const CommentSection = styled.div`
@@ -103,6 +113,7 @@ const CommentSection = styled.div`
 const CommentInputWrapper = styled.div`
   display: flex;
   align-items: center;
+
 
 `;
 
@@ -152,11 +163,13 @@ const CommentContent = styled.div`
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  @media (max-width: 412px) {
-    width: 50%;
-    font-size: 50%;
+  white-space: normal; // 이 부분을 추가해 줍니다.
+  max-width: 500px;
 
-}
+  @media (max-width: 412px) {
+    width: 70%;
+    font-size: 50%;
+  }
 `;
 const CommentBox =styled.div`
 display: flex;
@@ -169,31 +182,31 @@ justify-content:start;
 `;
 const CommentDate = styled.span`
   color: #888;
-  position: relative;
+
   font-size: 11px;
+
+  left: 0;
   margin-right: 19px;
-  left: 1%;
   margin-top: 2px;
   @media (max-width: 412px) {
     font-size: 30%;
-
-}
+  }
 `;
-
 
 const CogImg = styled.div`
   display: ${(props) => (props.isAuthor ? 'block' : 'none')};
   position: absolute;
-  right: 0;
-
-
+  right: 0px;
+  top: 5px;
   img {
-
     height: 13px;
     cursor: pointer;
+    @media (max-width: 412px) {
+    margin-top: 10px;
   }
-`;
+  }
 
+`;
 const CommentAuthor = styled.span`
   font-weight: bold;
   margin-right: 10px;
@@ -202,7 +215,7 @@ const CommentAuthor = styled.span`
 
 const CommentMenu = styled.div`
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: -120px;
   width: 120px;
   background-color: #fff;
@@ -212,6 +225,13 @@ const CommentMenu = styled.div`
   padding: 5px;
   border-radius: 5px;
   z-index: 999;
+  @media (max-width: 412px) {
+      font-size: 30%;
+      right: 30px;
+      margin-top: 20px;
+
+  }
+
 `;
 
 const CommentMenuItem = styled.div`
@@ -220,6 +240,8 @@ const CommentMenuItem = styled.div`
   color: #555;
   transition: background-color 0.3s;
 
+
+
   &:hover {
     background-color: #f6f6f6;
   }
@@ -227,6 +249,7 @@ const CommentMenuItem = styled.div`
 
 const C1 = styled.div`
   margin-top: 18px;
+
 
 `;
 

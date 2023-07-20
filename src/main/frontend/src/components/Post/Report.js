@@ -7,8 +7,8 @@ import RtMenuIcon from '../../images/ReortIcon.png';
 
 const CommentMenu = styled.div`
   position: absolute;
-  top: 10px;
-  right: -220px;
+  top: 20px;
+  right: -200px;
   width: 220px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -17,6 +17,12 @@ const CommentMenu = styled.div`
   padding: 10px;
   border-radius: 5px;
   z-index: 999;
+  @media (max-width: 412px) {
+      font-size: 30%;
+      left: 170px;
+      margin-bottom: 40px;
+
+  }
 `;
 
 const Title = styled.h3`
@@ -57,7 +63,8 @@ const ExampleItem = styled.div`
 `;
 
 const RtMenuImage = styled.img`
-  margin-left: 5px;
+  margin-left: -10px;
+
   cursor: pointer;
 `;
 
@@ -109,7 +116,7 @@ const RtMenu = ({ commentId, nickname, userId,postId }) => {
         src={RtMenuIcon}
         alt="Rt 메뉴"
         onClick={toggleRtMenu}
-        style={{ marginTop: '5px', marginLeft: '', cursor: 'pointer', height: '15px' }}
+        style={{ marginTop: '5px', cursor: 'pointer', height: '15px' }}
       />
 
       <CommentMenu show={showRtMenu}>
