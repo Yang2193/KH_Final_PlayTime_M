@@ -165,10 +165,12 @@ const FixData = styled.div`
         }
         @media (max-width:412px) {
             position: absolute;
+            height: 40px;
             bottom: 35px;
         }
         @media (max-width:360px) {
-            bottom: -40px;
+            height: 40px;
+            bottom: -45px;
         }
         button{
             width: 100%;
