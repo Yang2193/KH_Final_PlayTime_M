@@ -71,7 +71,7 @@ const FixData = styled.div`
             margin-top: 80px;
             border-radius: 15px;
             width: 400px;
-            height: 560px;
+            height: 570px;
             margin-right:50px;
             @media (max-width:768px) {
                 margin: 0;
