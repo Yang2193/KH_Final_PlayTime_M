@@ -57,10 +57,12 @@ public class KakaoProfileService {
             memberInfo.setJoinDate(LocalDateTime.now());
             memberInfo.setAuthority(Authority.ROLE_USER);
             memberInfo.setWithdraw(Withdraw.Y);
+            memberInfo.setImgUrl(response.getBody().getKakao_account().getProfile().getThumbnail_image_url());
             memberInfoRepository.save(memberInfo);
             System.out.println("저장 완료");
             return response.getBody();
         } else {
+            System.out.println(response.getBody());
             MemberInfo existingMemberInfo = memberInfoOptional.get();
             return new MemberDto(
                     existingMemberInfo

@@ -1,0 +1,385 @@
+#mypage-main{
+  padding-top : 50px;
+}
+
+.mypage-container {
+  display: grid;
+  width : 50%;
+  grid-template-columns: 100%;
+  grid-template-rows: 90% 10%;
+  gap: 0px 0px;
+  grid-template-areas:
+    "profile-box"
+    "save-box";
+  margin : 2% auto;
+}
+
+.mypage-container form{
+  display : block;
+  height : 100%;
+}
+
+.mypage-container input{
+  display : block;
+  border : none;
+  border-right : 0px;
+  border-top : 0px;
+  border-left : 0px;
+  border-bottom : 1px solid black;
+  background : #fff;
+  transition : all 0.3s ease;
+  width : 90%;
+}
+.mypage-container input:focus {
+  outline:none;
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.15);
+}
+
+.mypage-container input::placeholder{
+  font-size : smaller;
+}
+label{
+  display : block;
+}
+.mypage-title{
+  width : 80%;
+  height : fit-content;
+  margin-left : 30%;
+  font-weight: 200;
+}
+.mypage-sns-input,
+.mypage-nickname-input {
+  margin-left : 5%;
+  margin-right : 5%;
+}
+.mypage-profile-box {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 100%;
+  gap: 0px 0px;
+  grid-template-areas:
+    "pic-box nickname-sns-box";
+  grid-area: profile-box;
+}
+.mypage-pic-box {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 5% 65% 30%;
+  gap: 0px 0px;
+  grid-template-areas:
+    "pic-delete"
+    "pic"
+    "pic-change";
+  grid-area: pic-box;
+}
+
+.mypage-pic-delete{
+  grid-area: pic-delete;
+  text-align: end;
+  padding-right: 20%;
+}
+
+.mypage-pic-delete img{
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+}
+
+.mypage-pic {
+  grid-area: pic;
+  width : 100%;
+  height: 100%;
+  position:relative;
+}
+
+.mypage-pic-div{
+  height:100px;
+  width:100px;
+  margin:auto;
+}
+
+.mypage-pic-div img{
+  clip-path: circle(40% at center);
+  display:inline-block;
+  width: 100%;
+  height : 100%;
+  overflow: hidden;
+  object-fit: cover;
+  margin:auto;
+  max-width:100%;
+  max-height:100%;
+  vertical-align : middle;
+}
+
+.mypage-pic-change { grid-area: pic-change; }
+
+.mypage-pic-change-btn{
+  color : #981d26;
+  cursor: pointer;
+}
+
+.mypage-pic-change label {
+  text-align: center;
+}
+
+.mypage-nickname-sns-box {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 10% 60% 30%;
+  gap: 0 0;
+  grid-template-areas:
+    "empty-box"
+    "nickname-box"
+    "sns-box";
+  grid-area: nickname-sns-box;
+}
+
+.mypage-empty-box{
+  grid-area : empty-box;
+}
+.mypage-nickname-box {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
+  gap: 0px 0px;
+  grid-template-areas:
+    "nickname-setbox"
+    "nickname-checkbox";
+  grid-area: nickname-box;
+}
+
+.mypage-nickname-setbox {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 100%;
+  gap: 0px 0px;
+  grid-template-areas:
+    "nickname-title nickname-input nickname-checkbtn";
+  grid-area: nickname-setbox;
+}
+
+.mypage-title{
+  width : 100%;
+  height : fit-content;
+  text-align: left;
+}
+
+.mypage-nickname-title {
+  grid-area: nickname-title;
+  height: 32px;
+  line-height: 32px;
+}
+
+.mypage-nickname-input {
+  grid-area: nickname-input;
+}
+
+.mypage-nickname-input input{
+  -webkit-appearance : none;
+  -webkit-border-radius : 0;
+  border-radius : 0;
+  height: 32px;
+  line-height: 32px;
+}
+label{
+  display : block;
+}
+
+.mypage-nickname-checkbtn { grid-area: nickname-checkbtn; }
+
+.mypage-nickname-checkbox { grid-area: nickname-checkbox; }
+
+.mypage-nickname-button{
+  line-height: 0px;
+  cursor: pointer;
+  height : 32px;
+  display: block;
+  padding: 0.2em 0.5em;
+  border-radius: 0;
+  color: #7E7B7B;
+  margin-top: 2rem;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: white;
+  background-position: 1% 50%;
+  background-size: 400% 300%;
+  border: 1.5px solid #7E7B7B;
+  border-radius: 20px;
+  transition: 700ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  margin:0 auto;
+}
+
+.mypage-nickname-check{
+  text-align: center;
+  margin: 10px 0;
+  width : 90%;
+  height : 24px;
+  color : gray;
+  font-size : 13px;
+}
+
+.mypage-sns-box {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 100%;
+  gap: 0px 0px;
+  grid-template-areas:
+    "sns-title sns-input sns-bye";
+  grid-area: sns-box;
+}
+
+.mypage-sns-title { grid-area: sns-title; }
+
+.mypage-sns-input {grid-area: sns-input;}
+
+.mypage-sns-bye {
+  grid-area: sns-bye;
+  text-align:center;
+  }
+
+.mypage-bye-bye {
+  grid-area: sns-bye;
+  text-align:center;
+  }
+.mypage-pop-up {
+  cursor : pointer;
+  color: #7E7B7B;
+  opacity:70%;
+  text-decoration:none;
+}
+
+.mypage-save-box {
+  grid-area: save-box;
+  margin-top: 20px;
+}
+
+.mypage-save-btn {
+  cursor: pointer;
+}
+
+.mypage-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mypage-gradient-btn {
+  width: 100px;
+  grid-area: gradient-btn;
+  display: block;
+  padding: 0.5em 1em;
+  border-radius: 0;
+  color: #7E7B7B;
+  margin-top: 2rem;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: white;
+  background-position: 1% 50%;
+  background-size: 400% 300%;
+  border: 1.5px solid #7E7B7B;
+  border-radius: 20px;
+  transition: 700ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  margin:0 auto;
+}
+.mypage-pic-div2{
+  display: flex;
+  align-items: center;
+}
+/* íŒì—… css ì‹œìž‘ */
+.mypage-pop-up {
+  cursor : pointer;
+  display: block;
+  padding: 0.2em 0.5em;
+  border-radius: 0;
+  color: #7E7B7B;
+  margin-top: 2rem;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: white;
+  background-position: 1% 50%;
+  background-size: 400% 300%;
+  border: none;
+  transition: 700ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  margin: 0 auto;
+}
+
+
+/* ë°˜ì‘í˜• ì‹œìž‘ */
+@media screen and (max-width: 362px){
+  .mypage-container{
+    width : 95%;
+    margin: 5% auto;
+  }
+  .mypage-pic-div{
+    width: 75px;
+    height: 75px;
+  }
+  .mypage-pop-up{
+    padding : 0;
+  }
+  .mypage-nickname-button{
+    padding: 0.05em 0.13em;
+    font-size: 0.7rem;
+  }
+  .mypage-nickname-setbox{
+    grid-template-columns: 25% 55% 20%;
+  }
+  .mypage-sns-box{
+    grid-template-columns: 25% 55% 20%;
+  }
+  .mypage-title{
+    margin-left: 0;
+  }
+}
+
+@media (min-width:363px) and (max-width: 768px){
+  .mypage-container{
+    width : 95%;
+    margin: 5% auto;
+  }
+  .mypage-pic-div{
+    width: 75px;
+    height: 75px;
+  }
+  .mypage-pop-up{
+    padding : 0;
+  }
+  .mypage-nickname-button{
+    padding: 0.3em;
+  }
+  .mypage-nickname-setbox{
+    grid-template-columns: 25% 55% 20%;
+  }
+  .mypage-sns-box{
+    grid-template-columns: 25% 55% 20%;
+  }
+  .mypage-title{
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 999px){
+  .mypage-container{
+    width : 70%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1024px){
+  .mypage-container{
+    width : 50%;
+  }
+}
+
+.mypage-default-profile-box {
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 100%;
+  gap: 0px 0px;
+  grid-template-areas:
+    "pic-box nickname-sns-box";
+  grid-area: profile-box;
+}

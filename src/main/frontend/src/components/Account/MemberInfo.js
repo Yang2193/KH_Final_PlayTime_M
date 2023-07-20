@@ -44,12 +44,16 @@ const MemberInfo = () => {
     const [isAllCheckModalOpen, setIsAllCheckModalOpen] = useState(false);
     const [authSuccessModal, setAuthSuccessModal] = useState(false);
     const [authFailModal, setAuthFailModal] = useState(false);
+    const [idchecksuccess, setIdchecksuccess] = useState(false);
+    const [idcheckfail, setIdcheckfail] = useState(false);
 
     //모달창 닫기
     const onClickClose = () => {
         setIsAllCheckModalOpen(false);
         setAuthSuccessModal(false);
         setAuthFailModal(false);
+        setIdchecksuccess(false);
+        setIdcheckfail(false);
     }
 
     const onChangeUserId = (e) => {
@@ -93,7 +97,7 @@ const MemberInfo = () => {
 
     const onChangeSignUserName = (e) => {
         const nameNow = e.target.value;
-        setInputName(nameNow); 
+        setInputName(nameNow);
 
         if(nameNow.length < 2 || nameNow.length > 10) {
             setIsName(false);
@@ -104,7 +108,7 @@ const MemberInfo = () => {
 
     const onChangeSignUserNickname = (e) => {
         const nicknameNow = e.target.value;
-        setInputNickname(nicknameNow); 
+        setInputNickname(nicknameNow);
 
         if(nicknameNow.length < 2 || nicknameNow.length > 10) {
             setIsNickname(false);
@@ -137,13 +141,33 @@ const MemberInfo = () => {
         } else {
             setEmailError('');
             setIsEmail(true);
-        }        
+        }
     };
 
     const onChangeAuth = (e) => {
         const authNow = e.target.value;
         setInputAuth(authNow);
     }
+
+    const onClickIdCheck = async () => {
+        try {
+          const response = await AccountApi.userIdCheck(inputId);
+          if (response.data === false) {
+            console.log("중복된 아이디 없음.");
+            setIdchecksuccess(true);
+            setIsId(false);
+          } else if (response.data === true) {
+            console.log("아이디가 중복 되었음.");
+            setIdcheckfail(true);
+            setIsId(true);
+            setIdError("중복 아이디가 존재합니다.");
+          } else {
+            console.log("서버 응답 형식이 올바르지 않습니다.");
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
 
     const onClickEmailAuth = async() => {
         if(isEmail) {
@@ -205,6 +229,7 @@ const MemberInfo = () => {
                             <div>
                                 <i></i>
                                 <input type="text" placeholder="User ID" value={inputId} onChange={onChangeUserId} className={isId ? 'focused-id' : ''}/>
+                                <button onClick={onClickIdCheck}>중복확인</button>
                             </div>
                             <div>
                                 {isId.length > 0 && <span className={`message ${isId ? '' : 'error'}`}>{idError}</span>}
@@ -267,7 +292,8 @@ const MemberInfo = () => {
             {isAllCheckModalOpen && (<MessageModal open={isAllCheckModalOpen} close={onClickClose} type="modalType" header="회원가입 오류">회원가입에 필요한 필수 정보를 작성하세요.</MessageModal>)}
             {authSuccessModal && (<MessageModal open={authSuccessModal} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
             {authFailModal && (<MessageModal open={authFailModal} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
-            
+            {idcheckfail && (<MessageModal open={idcheckfail} close={onClickClose} type="modalType" header="중복 확인">중복된 아이디가 있습니다.</MessageModal>)}
+            {idchecksuccess && (<MessageModal open={idchecksuccess} close={onClickClose} type="modalType" header="중복 확인">사용 가능한 아이디 입니다.</MessageModal>)}
         </div>
     );
 }

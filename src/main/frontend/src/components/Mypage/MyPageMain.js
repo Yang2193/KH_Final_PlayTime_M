@@ -80,7 +80,7 @@ const MenuBlock = styled.div`
 `;
 
 const MyPageMain = () => {
-
+    const [userNickname, setUserNickname] = useState("");
     useEffect(()=> {
         const recentData = async() => {
             try {
@@ -89,6 +89,7 @@ const MyPageMain = () => {
                 if(userData.data) {
                     const userInfoData = JSON.stringify(userData.data);
                     localStorage.setItem("userInfo", userInfoData);
+                    setUserNickname(userData.data.userNickname);
                 } else {
                     console.log("불러오기 실패");
                 }
@@ -101,13 +102,14 @@ const MyPageMain = () => {
     const userInfoString = localStorage.getItem("userInfo");
     const userInfo = JSON.parse(userInfoString);
 
+    const imageUrl = userInfo.imgUrl || profile;
     return (
         <MenuBlock>
             <div className="pageheader">마이페이지</div>
             <div className="profile">
-                <img className="picture" src={profile} alt="Profile" />
+                <img className="picture" src={imageUrl} alt="Profile" />
             </div>
-            <div className="name">{userInfo.userNickname}</div>
+            <div className="name">{userNickname}</div>
             <div className="selector">
                 <Link to="/mypage/profile_edit"><div>프로필 수정</div></Link>
                 <Link to="/myPage/review"><div>내가 쓴 후기</div></Link>

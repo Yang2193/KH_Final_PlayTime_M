@@ -21,7 +21,14 @@ const AccountApi = {
         };
         return await axios.post("/member/userinfo", infoData);
     },
-    
+
+    // 중복아이디 체크
+        userIdCheck: async(userId) => {
+            const userIdCheckcmd = {
+                userId: userId
+            };
+            return await axios.post("/auth/userIdCheck", userIdCheckcmd)
+        },
     // 회원가입
     memberReg : async(userId, userPw, userNickname, userName, userEmail, userPhone) => {
         const memberInfo = {
@@ -151,6 +158,13 @@ const AccountApi = {
         }
         return await axios.post("/auth/kakao/callback", kakaoAccessTokencmd)
     },
+
+    kakaologout: async(token) => {
+            const kakaoAccessTokencmd = {
+                token: token
+            };
+            return await axios.post("/auth/kakao/logout", kakaoAccessTokencmd);
+        }
 
 }
 

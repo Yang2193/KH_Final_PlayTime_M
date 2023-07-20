@@ -30,6 +30,7 @@ public class MemberDto {
     private Authority authority;
     private SocialOAuth socialOAuth;
     private Withdraw withdraw;
+    private String imgUrl;
     private String message;
 
     public MemberInfo toMember(PasswordEncoder passwordEncoder) {
@@ -42,6 +43,7 @@ public class MemberDto {
                 .userPhone(userPhone)
                 .authority(Authority.ROLE_USER)
                 .socialOAuth(SocialOAuth.DEFAULT)
+                .imgUrl(imgUrl)
                 .joinDate(LocalDateTime.now())
                 .withdraw(Withdraw.Y)
                 .build();
@@ -97,6 +99,7 @@ public class MemberDto {
         this.joinDate = memberInfo.getJoinDate();
         this.withdraw = memberInfo.getWithdraw();
         this.authority = memberInfo.getAuthority();
+        this.imgUrl = memberInfo.getImgUrl();
         this.socialOAuth = memberInfo.getSocialOAuth();
         // 나머지 필드 초기화
     }

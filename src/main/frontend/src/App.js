@@ -23,9 +23,9 @@ import PostUpdate from './components/Post/PostUpdate';
 import Ticket from './components/Mypage/MyTicketInfoDetail';
 import MyProfileEditDetail from './components/Mypage/MyProfileEditDetail';
 import KakaoLogin from './components/Account/KakaoLogin';
+import KakaoLogout from './components/Account/KakaoLogout';
 
 function App() {
-  // const isUserAuthenticated = false;
 
   return (
     <Router>
@@ -35,12 +35,11 @@ function App() {
         <Route path="/join/*" element={<JoinPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/auth/kakao/callback" element={<KakaoLogin />} />
+        <Route path="/auth/kakao/logout" element={<KakaoLogout />} />
         <Route path="/find" element={<FindAccountPage />} />
         <Route path="/myPage" element={<Mypage />} />
         <Route path="/mypage/profile_edit" element={<MyProfileEdit />} />
         <Route path="/mypage/profile_edit/info" element={<MyProfileEditDetail />} />
-        {/* <Route path="/mypage/profile_edit/info" element={ isUserAuthenticated ?
-         ( <MyProfileEditDetail /> ) : ( <MyProfileEdit to="/mypage/profile_edit" replace />)} /> */}
         <Route path="/myPage/comment" element={<MyComment />} />
         <Route path="/myPage/playlike" element={<MyPlayLike />} />
         <Route path="/myPage/buylist" element={<MyTicketInfo />} />

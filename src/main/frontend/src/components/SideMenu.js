@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import MessageModal from "../utils/MessageModal";
 import styled, {css, keyframes} from "styled-components";
-import { AccountInfoContext } from "../context/AccountInfo";
+import AccountApi from "../api/AccountApi";
 
 
 
@@ -20,7 +20,7 @@ const MenuButton = styled.div`
         width: 60px;
         height: 100px;
         right: 8px;
-        
+
     }
 `;
 
@@ -46,19 +46,19 @@ const Box = styled.div`
       justify-content: space-evenly;
       align-content: center;
       animation: ${slideIn} 0.3s ease-in-out;
-     
+
       .header{
         height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 1.5rem;
-        
+
 
       }
 
 
-    
+
     .box{
         width: 260px;
         display: flex;
@@ -83,10 +83,10 @@ const Box = styled.div`
         }
       }
 
-     
+
     `}
 
-   
+
 `;
 
 const slideIn = keyframes`
@@ -108,9 +108,9 @@ const SideMenu = ({handleIsOpen, isOpen}) => {
     const [modalOpen, setModalOpen] = useState(false);
 
 
-    useEffect(() => {   
+    useEffect(() => {
 
-        
+
         const clickOutside = (event) =>{
             if(ref.current && !ref.current.contains(event.target)){
                 handleIsOpen(false);
@@ -121,7 +121,7 @@ const SideMenu = ({handleIsOpen, isOpen}) => {
         return () => {
             document.removeEventListener("click", clickOutside);
         };
-      
+
     },[ref]);
 
     //모달창 닫기
@@ -135,7 +135,7 @@ const SideMenu = ({handleIsOpen, isOpen}) => {
         navigate("/login");
     }
 
-    
+
     const onClickMenu = () => {
         handleIsOpen(!isOpen);
     }
@@ -147,16 +147,23 @@ const SideMenu = ({handleIsOpen, isOpen}) => {
     const handleLinkClick = (path,category) => {
         const queryParams = new URLSearchParams();
         if(category) queryParams.set("category", category);
-        navigate({ pathname: path, search: queryParams.toString() }); 
+        navigate({ pathname: path, search: queryParams.toString() });
         handleIsOpen(false);
       };
 
-    const logout = () =>{
-        localStorage.clear();
 
+    const logout = () => {
+      if(localStorage.getItem("loginValue") === "DEFAULT"){
+        localStorage.clear();
         navigate("/");
         handleIsOpen(!isOpen);
         setModalOpen("logout");
+      } else if (localStorage.getItem("loginValue") === "KAKAO"){
+        const clientId = "088a7b267c39d0a11ec3904372ed9d33";
+        const redirectUri = "http://ticket-playtime.xyz/auth/kakao/logout";
+        const authorizeUrl = `https://kauth.kakao.com/oauth/logout?client_id=${clientId}&logout_redirect_uri=${redirectUri}`;
+        window.location.href = authorizeUrl;
+        }
     }
     
 
