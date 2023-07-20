@@ -5,6 +5,7 @@ import PlayInfoApi from "../../api/PlayInfoApi";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from 'react-icons/fa';
 import MessageModal from "../../utils/MessageModal";
+import moment from "moment";
 const All = styled.div`
 @media (max-width:768px) {
         width: 100%;
@@ -153,6 +154,7 @@ const FixData = styled.div`
             }
         }
     }
+
     .btnBox{
         height:10%;
         width: 100%;
@@ -172,7 +174,7 @@ const FixData = styled.div`
             height: 40px;
             bottom: -45px;
         }
-        button{
+        .resBtn{
             width: 100%;
             height: 100%;
             font-size: 1.2em;
@@ -183,11 +185,19 @@ const FixData = styled.div`
                 width: 100%;
             }
         }
-       button:hover{
+        .resBtn:hover{
         background-color:#790A2C ;
        }
     }
-
+    .endBtn{
+        background-color:#e4e6e8;
+        width: 100%;
+        height: 100%;
+        font-size: 1.2em;
+        border: none;
+        cursor: default;
+        color: #a7acb6;
+    }
 `
 
 const Info = () =>{
@@ -278,6 +288,8 @@ const Info = () =>{
             navigate("/reserve")
         }
     }
+    const date =new Date();
+    const now =moment(date).format("YYYY-MM-DD");
     return(
         <All>
           {playInfo && playInfo.map(play =>(
@@ -285,7 +297,11 @@ const Info = () =>{
                     <div className="content">
                         <img src={play.playPoster} alt="" />
                         <div className="textBox">
-                            <div className="like"><FaHeart onClick={()=>onClickLiked()} style={{fontSize: '200%', cursor:"pointer", color: isLiked ? "red" : "#999999" }}/></div>
+                            {moment(play.periodEnd).isBefore(now) ?
+                                <div className="like"><FaHeart style={{fontSize: '200%', color:"#eee"}}/></div>
+                            :
+                                <div className="like"><FaHeart onClick={()=>onClickLiked()} style={{fontSize: '200%', cursor:"pointer", color: isLiked ? "red" : "#999999" }}/></div>
+                            }
                             <div className="infoBox">
                                 <h1>{play.title}</h1>
                                 <ul>
@@ -336,7 +352,12 @@ const Info = () =>{
                                 </ul>
                             </div>
                             <div className="btnBox">
-                                <Button onClick={()=>reserve(play.playPlan,play.playPrice,play.title,play.theaterId)}>예매 하기</Button>
+                                {moment(play.periodStart).isAfter(now) ?
+                                    <button className="endBtn">판매 예정</button>
+                                : (moment(play.periodEnd).isBefore(now) ?
+                                    <button className="endBtn">판매 종료</button>
+                                : <Button className="resBtn" onClick={() => reserve(play.playPlan, play.playPrice, play.title, play.theaterId)}>예매 하기</Button>
+                                )}
                             </div>
                     </div>
                 </div>
