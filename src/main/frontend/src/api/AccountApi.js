@@ -10,7 +10,7 @@ const AccountApi = {
             userId: userId,
             userPw: userPw
         };
-        return await axios.post(Domain + "/auth/login", auth);
+        return await axios.post("/auth/login", auth);
     },
 
     // 회원조회
@@ -19,7 +19,7 @@ const AccountApi = {
         const infoData = {
             userId: userId
         };
-        return await axios.post(Domain + "/member/userinfo", infoData);
+        return await axios.post("/member/userinfo", infoData);
     },
     
     // 회원가입
@@ -32,7 +32,7 @@ const AccountApi = {
             userEmail: userEmail,
             userPhone: userPhone
         };
-        return await axios.post(Domain + "/auth/signup", memberInfo);
+        return await axios.post("/auth/signup", memberInfo);
     },
 
     // 회원탈퇴
@@ -40,7 +40,7 @@ const AccountApi = {
         const memberDelCmd = {
             userId: userId
         };
-        return await axios.post(Domain + "/auth/userdelete", memberDelCmd);
+        return await axios.post("/auth/userdelete", memberDelCmd);
     },
 
     // 아이디 / 패스워드 찾기
@@ -49,7 +49,7 @@ const AccountApi = {
             userName: userName,
             userEmail: userEmail
         };
-        return await axios.post(Domain + "/auth/find/id", findId);
+        return await axios.post("/auth/find/id", findId);
     },
 
     findMemberPw: async (userId, userName, email) => {
@@ -58,7 +58,7 @@ const AccountApi = {
             userName: userName,
             userEmail: email
         };
-        return await axios.post(Domain + "/auth/find/pw", findPw);
+        return await axios.post("/auth/find/pw", findPw);
     },
 
     // 회원가입 시 이메일 인증
@@ -66,7 +66,7 @@ const AccountApi = {
         const sendAuthEmailcmd = {
             userEmail: userEmail
         };
-        return await axios.post(Domain + "/auth/sendAuthEmail", sendAuthEmailcmd);
+        return await axios.post("/auth/sendAuthEmail", sendAuthEmailcmd);
     },
 
     // 마이페이지 회원 별 리뷰 가져오기
@@ -75,7 +75,7 @@ const AccountApi = {
         const getReview = {
             userId: userId
         };
-        return await axios.post(Domain + "/mypage/post", getReview);
+        return await axios.post("/mypage/post", getReview);
     },
 
     // 마이페이지 댓글 가져오기
@@ -85,7 +85,7 @@ const AccountApi = {
         const getMemberCommentcmd = {
             userId: userId
         };
-        return await axios.post(Domain + "/mypage/comment", getMemberCommentcmd);
+        return await axios.post("/mypage/comment", getMemberCommentcmd);
     },
 
     checkMemberPw: async(userId, userPw) => {
@@ -94,7 +94,7 @@ const AccountApi = {
             userId: userId,
             userPw: userPw
         };
-        return await axios.post(Domain + "/mypage/checkmemberPw", checkMemberPwcmd);
+        return await axios.post("/mypage/checkmemberPw", checkMemberPwcmd);
     },
 
     updateUserInfo: async(userId, userPw, userNickname, userName, userPhone, userEmail) => {
@@ -107,7 +107,7 @@ const AccountApi = {
             userPhone: userPhone,
             userEmail: userEmail
         };
-        return await axios.post(Domain + "/mypage/edit", updateUserInfocmd);
+        return await axios.post("/mypage/edit", updateUserInfocmd);
     },
 
     updateUserInfo2: async(userId, userNickname) => {
@@ -116,7 +116,7 @@ const AccountApi = {
             userId: userId,
             userNickname: userNickname
         };
-        return await axios.post(Domain + "/mypage/edit2", updateUserInfo2cmd);
+        return await axios.post("/mypage/edit2", updateUserInfo2cmd);
     },
 
     buyTicketList: async(userId) => {
@@ -124,7 +124,7 @@ const AccountApi = {
         const buyListcmd = {
             userId: userId
         };
-        return await axios.post(Domain + "/mypage/buylist", buyListcmd);
+        return await axios.post("/mypage/buylist", buyListcmd);
     },
 
     withdraw: async(userId) => {
@@ -132,16 +132,16 @@ const AccountApi = {
         const withdrawcmd = {
             userId: userId
         };
-        return await axios.post(Domain + "/mypage/withdraw", withdrawcmd);
+        return await axios.post("/mypage/withdraw", withdrawcmd);
     },
 
     ticketDetail: async(reserveId) =>{
         try{
             Functions.setAuthorizationHeader();
-            return await axios.get(Domain + `/mypage/ticket/${reserveId}`);
+            return await axios.get("/mypage/ticket/${reserveId}");
         } catch(error){
             await Functions.handleApiError(error);
-            return await axios.get(Domain + `/mypage/ticket/${reserveId}`);
+            return await axios.get("/mypage/ticket/${reserveId}");
         }
     },
 
@@ -149,7 +149,7 @@ const AccountApi = {
         const kakaoAccessTokencmd = {
             code: code
         }
-        return await axios.post(Domain + `/auth/kakao/callback`, kakaoAccessTokencmd)
+        return await axios.post("/auth/kakao/callback", kakaoAccessTokencmd)
     },
 
 }
