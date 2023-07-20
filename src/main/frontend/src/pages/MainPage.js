@@ -16,6 +16,7 @@ const Container = styled.div`
 const MainPage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [playList, setPlayList] = useState([]);
+  const [initialPlayList, setInitialPlayList] = useState([])
 
   const location = useLocation();
 
@@ -37,6 +38,7 @@ const MainPage = () => {
         const rsp = await MainApi.getPlayList();
         if (rsp.status === 200) {
           setPlayList(rsp.data);
+          setInitialPlayList(rsp.data);
           console.log(rsp.data);
         }
       } catch (error) {
@@ -54,7 +56,7 @@ const MainPage = () => {
     setPlayList(playlist);
   }, []);
 
-  const memoizedPlayList = useMemo(() => <PlayList playList={playList} />, [playList]);
+  const memoizedPlayList = useMemo(() => <PlayList handlePlayList={handlePlayList} playList={playList} initialPlayList={initialPlayList} />, [playList]);
 
   return (
     <Container>

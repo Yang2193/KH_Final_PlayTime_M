@@ -1,19 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.a4a3b1f8.css",
-    "main.js": "/static/js/main.faaf6774.js",
+    "main.css": "/static/css/main.7d717d20.css",
+    "main.js": "/static/js/main.ccdb1ad7.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
     "static/media/mypageicon2.png": "/static/media/mypageicon2.94b010bc26f3d6c89cef.png",
-    "static/media/Cog.png": "/static/media/Cog.ad2704af32b649ee3cf4.png",
     "static/media/logo-no-background.png": "/static/media/logo-no-background.2722d3215acbf375e1bd.png",
     "static/media/ReortIcon.png": "/static/media/ReortIcon.83c8c718efce27324df7.png",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.a4a3b1f8.css.map": "/static/css/main.a4a3b1f8.css.map",
-    "main.faaf6774.js.map": "/static/js/main.faaf6774.js.map",
+    "main.7d717d20.css.map": "/static/css/main.7d717d20.css.map",
+    "main.ccdb1ad7.js.map": "/static/js/main.ccdb1ad7.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a4a3b1f8.css",
-    "static/js/main.faaf6774.js"
+    "static/css/main.7d717d20.css",
+    "static/js/main.ccdb1ad7.js"
   ]
 }

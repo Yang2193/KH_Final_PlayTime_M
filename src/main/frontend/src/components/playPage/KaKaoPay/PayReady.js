@@ -100,13 +100,13 @@ const PayReady = () => {
             // 상품 비과세
             tax_free_amount: 0,
             // 결제 성공 URL
-            approval_url: "http://localhost:8111/payResult",
+            approval_url: "http://localhost:3000/payresult",
             // 결제 실패 URL
-            fail_url: "http://localhost:8111/Info",
+            fail_url: "http://localhost:3000/info",
             // 결제 취소 URL
-            cancel_url: "http://localhost:8111/Info"
+            cancel_url: "http://localhost:3000/info"
     });
-    
+
     useEffect(() => {
         axios({
             url: "https://kapi.kakao.com/v1/payment/ready",
@@ -137,12 +137,18 @@ const PayReady = () => {
         <PayInfo>
             <h1> 결제 정보 </h1>
             <div>
-                <p>상품 정보 : {title}</p>
-                <p>날짜 정보 : {dateInfo}</p>
-                <p>시간 정보 : {timeInfo}</p>
-                <p>좌석 정보 : {seatInfo}</p>
-                <p>수량 : {tiketCount}매 </p>
-                <p>가격 정보 : {priceInfo}원</p>
+                <p>상품 정보</p>
+                <p className="info">{title}</p>
+                <p>날짜 정보</p>
+                <p className="info">{dateInfo}</p>
+                <p>시간 정보</p>
+                <p className="info">{timeInfo}</p>
+                <p>좌석 정보</p>
+                <p className="info">{seatInfo}</p>
+                <p>수량</p>
+                <p className="info">{tiketCount}매 </p>
+                <p>가격 정보</p>
+                <p className="info">{priceInfo}원</p>
             </div>
             <a href={payUrl}>결제하기</a>
         </PayInfo>

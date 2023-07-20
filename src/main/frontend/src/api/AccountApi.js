@@ -21,12 +21,6 @@ const AccountApi = {
         };
         return await axios.post("/member/userinfo", infoData);
     },
-
-    // Context에서 회원조회
-    userInfo: async() => {
-        Functions.setAuthorizationHeader();
-        return await axios.get("/user");
-    },
     
     // 회원가입
     memberReg : async(userId, userPw, userNickname, userName, userEmail, userPhone) => {
@@ -49,7 +43,7 @@ const AccountApi = {
         return await axios.post("/auth/userdelete", memberDelCmd);
     },
 
-    // 아이디 찾기
+    // 아이디 / 패스워드 찾기
     findMemberId : async(userName, userEmail) => {
         const findId = {
             userName: userName,
@@ -65,6 +59,14 @@ const AccountApi = {
             userEmail: email
         };
         return await axios.post("/auth/find/pw", findPw);
+    },
+
+    // 회원가입 시 이메일 인증
+    sendAuthEmail: async(userEmail) => {
+        const sendAuthEmailcmd = {
+            userEmail: userEmail
+        };
+        return await axios.post("/auth/sendAuthEmail", sendAuthEmailcmd);
     },
 
     // 마이페이지 회원 별 리뷰 가져오기
@@ -86,13 +88,13 @@ const AccountApi = {
         return await axios.post("/mypage/comment", getMemberCommentcmd);
     },
 
-    checkMemberPw: async(userId, inputPw) => {
+    checkMemberPw: async(userId, userPw) => {
         Functions.setAuthorizationHeader();
         const checkMemberPwcmd = {
             userId: userId,
-            userPw: inputPw
+            userPw: userPw
         };
-        return await axios.post("/mypage/checkmemberpw", checkMemberPwcmd);
+        return await axios.post("/mypage/checkmemberPw", checkMemberPwcmd);
     },
 
     updateUserInfo: async(userId, userPw, userNickname, userName, userPhone, userEmail) => {
@@ -106,6 +108,15 @@ const AccountApi = {
             userEmail: userEmail
         };
         return await axios.post("/mypage/edit", updateUserInfocmd);
+    },
+
+    updateUserInfo2: async(userId, userNickname) => {
+        Functions.setAuthorizationHeader();
+        const updateUserInfo2cmd = {
+            userId: userId,
+            userNickname: userNickname
+        };
+        return await axios.post("/mypage/edit2", updateUserInfo2cmd);
     },
 
     buyTicketList: async(userId) => {
@@ -127,12 +138,20 @@ const AccountApi = {
     ticketDetail: async(reserveId) =>{
         try{
             Functions.setAuthorizationHeader();
-            return await axios.get(Domain + `/mypage/ticket/${reserveId}`);
+            return await axios.get("/mypage/ticket/${reserveId}");
         } catch(error){
             await Functions.handleApiError(error);
-            return await axios.get(Domain + `/mypage/ticket/${reserveId}`);
+            return await axios.get("/mypage/ticket/${reserveId}");
         }
     },
+
+    kakaoAccessToken: async(code) => {
+        const kakaoAccessTokencmd = {
+            code: code
+        }
+        return await axios.post("/auth/kakao/callback", kakaoAccessTokencmd)
+    },
+
 }
 
 export default AccountApi;

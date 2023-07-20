@@ -1,4 +1,4 @@
-package com.kh.finalPlayTime.service;
+package com.kh.finalPlayTime.kakao.service;
 
 import com.kh.finalPlayTime.constant.Authority;
 import com.kh.finalPlayTime.constant.Withdraw;
@@ -7,9 +7,11 @@ import com.kh.finalPlayTime.dto.TokenDto;
 import com.kh.finalPlayTime.entity.MemberInfo;
 import com.kh.finalPlayTime.jwt.TokenProvider;
 import com.kh.finalPlayTime.repository.MemberInfoRepository;
+import com.kh.finalPlayTime.service.EmailService;
 import com.kh.finalPlayTime.utils.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -18,61 +20,47 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
-public class AuthService {
+public class KAuthService {
     private final AuthenticationManagerBuilder managerBuilder;
     private final MemberInfoRepository memberInfoRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final EmailService emailService;
-
-    public MemberDto signup(MemberDto memberDto){
-        if(memberInfoRepository.existsByUserId(memberDto.getUserId())) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
-        }
-
-        MemberInfo memberInfo = memberDto.toMember(passwordEncoder);
-        return MemberDto.of(memberInfoRepository.save(memberInfo));
-    }
-
+    @Value("${cos.key}")
+    private String cosKey;
     public TokenDto login(MemberDto memberDto){
-        UsernamePasswordAuthenticationToken authenticationToken = memberDto.toAuthentication();
-
-        MemberInfo loginMember = memberInfoRepository.findByUserId(memberDto.getUserId())
+        if (memberDto.getId() != null) {
+            memberDto.setUserId(String.valueOf(memberDto.getId()));
+        }
+        UsernamePasswordAuthenticationToken authenticationToken = memberDto.toAuthentication2(cosKey);
+        MemberInfo loginMember = memberInfoRepository.findByUserId(String.valueOf(memberDto.getUserId()))
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. 회원가입 진행 후 다시 시도해주세요."));
 
         // 비밀번호 맞는지 확인
-        if (!passwordEncoder.matches(memberDto.getUserPw(), loginMember.getUserPw())) {
+        System.out.println(loginMember.getUserPw());
+        if (!passwordEncoder.matches(cosKey, loginMember.getUserPw())) {
             throw new IllegalArgumentException("비밀번호가 맞지 않습니다.");
         }
-
+        System.out.println("비밀번호 체크 통과.");
         if (loginMember.getWithdraw().equals(Withdraw.N)) {
             throw new IllegalArgumentException("해당 사용자는 탈퇴한 상태입니다.");
         }
+        System.out.println("탈퇴여부 체크 통과.");
 
         // 권한 확인
-        if (loginMember.getAuthority().equals(Authority.ROLE_ADMIN)) {
+        if (loginMember.getAuthority().equals(Authority.ROLE_USER)) {
+            System.out.println("권한 체크 진입.");
             try {
+                System.out.println("1111111111111");
                 Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
                 TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-//                tokenDto.setAuthority(String.valueOf(Authority.ROLE_ADMIN));
-                return tokenDto;
-            } catch (AuthenticationException e) {
-                throw e;
-            }
-        } else if (loginMember.getAuthority().equals(Authority.ROLE_USER)) {
-            try {
-                Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
-                TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-//                tokenDto.setAuthority(String.valueOf(Authority.ROLE_USER));
+                System.out.println("토큰 발급" + tokenDto);
                 return tokenDto;
             } catch (AuthenticationException e) {
                 throw e;
@@ -113,12 +101,6 @@ public class AuthService {
         System.out.println("서비스 ID 찾기 :" + memberDto.getUserId());
         String result = member.getUserId();
         return result;
-    }
-
-    // 회원가입 시 인증메일 발송
-    public String sendEmail(String userEmail) throws Exception {
-        String authCode = emailService.sendAuthMailKey(userEmail);
-        return authCode;
     }
 
     // 패스워드 찾기

@@ -17,7 +17,7 @@ const ListBox = styled.div`
             height: 80px;
         }
     }
-    @media (max-width: 420px) {
+    @media (max-width: 412px) {
        font-size : 60%;
        top: 5%;
   }  
@@ -52,11 +52,12 @@ const ListBox = styled.div`
         text-align: center;
         font-size: 1rem;
         padding: 10px 0;
+        cursor: pointer;
 
         @media (max-width: 768px) {
         font-size: 0.8rem;
         }
-        @media (max-width: 420px) {
+        @media (max-width: 412px) {
        font-size : 0.6rem;
   }  
     }
@@ -73,8 +74,25 @@ const ListBox = styled.div`
         margin: 0 20px;
     }
 `
+const ButtonBox = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+   .resetButton{
+    color: white;
+    background-color: #990A2C;
+    border-radius: 4px;
+    border: 1px solid #990A2C;
+    width: 120px;
+    height: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+   }
+  `
 
-const PlayList = ({playList}) => {
+const PlayList = ({playList, handlePlayList, initialPlayList}) => {
     
     const nav = useNavigate();
     const movePage = useCallback(
@@ -88,6 +106,11 @@ const PlayList = ({playList}) => {
 
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호
     const [loading, setLoading] = useState(true);
+
+
+    const handleResetPlaylist = useCallback(() => {
+      handlePlayList(initialPlayList);
+    }, [initialPlayList]);
 
     useEffect(() => {  
         setCurrentPage(0);
@@ -155,6 +178,11 @@ const PlayList = ({playList}) => {
                         )}
                         </tbody>
                     </table>
+                    {((!loading)&&(playList !== initialPlayList)) && 
+                    <ButtonBox>
+                      <button className="resetButton" onClick={handleResetPlaylist}>돌아가기</button>
+                    </ButtonBox>
+                      }
             </ListBox>
             {pageCount > 1 && <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>}
         </>
