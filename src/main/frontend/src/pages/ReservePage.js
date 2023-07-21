@@ -665,7 +665,7 @@ const[modal,setModal] =useState(false);
         )}
        <Footer/>
        <MessageModal open={modal} close={onClickClose} header="회차 확인">회차를 선택해 주세요.</MessageModal>
-       <MessageModal open={seatMo} close={onClickClose} header="회차 확인">좌석을 선택해 주세요.</MessageModal>
+       <MessageModal open={seatMo} close={onClickClose} header="좌석 확인">좌석을 선택해 주세요.</MessageModal>
 
         </ReserveStyle>
         )
