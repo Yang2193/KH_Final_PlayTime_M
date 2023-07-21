@@ -155,11 +155,11 @@ const MemberInfo = () => {
           if (response.data === false) {
             console.log("중복된 아이디 없음.");
             setIdchecksuccess(true);
-            setIsId(false);
+            setIsId(true);
           } else if (response.data === true) {
             console.log("아이디가 중복 되었음.");
             setIdcheckfail(true);
-            setIsId(true);
+            setIsId(false);
             setIdError("중복 아이디가 존재합니다.");
           } else {
             console.log("서버 응답 형식이 올바르지 않습니다.");
@@ -289,11 +289,11 @@ const MemberInfo = () => {
                     </div>
                 </div>
             </div>
-            {isAllCheckModalOpen && (<MessageModal open={isAllCheckModalOpen} close={onClickClose} type="modalType" header="회원가입 오류">회원가입에 필요한 필수 정보를 작성하세요.</MessageModal>)}
-            {authSuccessModal && (<MessageModal open={authSuccessModal} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
-            {authFailModal && (<MessageModal open={authFailModal} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
-            {idcheckfail && (<MessageModal open={idcheckfail} close={onClickClose} type="modalType" header="중복 확인">중복된 아이디가 있습니다.</MessageModal>)}
-            {idchecksuccess && (<MessageModal open={idchecksuccess} close={onClickClose} type="modalType" header="중복 확인">사용 가능한 아이디 입니다.</MessageModal>)}
+            {isAllCheckModalOpen && (<MessageModal open={isAllCheckModalOpen} confirm={onClickClose} close={onClickClose} type="modalType" header="회원가입 오류">회원가입에 필요한 필수 정보를 작성하세요.</MessageModal>)}
+            {authSuccessModal && (<MessageModal open={authSuccessModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
+            {authFailModal && (<MessageModal open={authFailModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
+            {idcheckfail && (<MessageModal open={idcheckfail} confirm={onClickClose} close={onClickClose} type="modalType" header="중복 확인">중복된 아이디가 있습니다.</MessageModal>)}
+            {idchecksuccess && (<MessageModal open={idchecksuccess} confirm={onClickClose} close={onClickClose} type="modalType" header="중복 확인">사용 가능한 아이디 입니다.</MessageModal>)}
         </div>
     );
 }

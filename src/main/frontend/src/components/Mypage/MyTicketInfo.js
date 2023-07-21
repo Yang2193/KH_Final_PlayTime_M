@@ -68,14 +68,15 @@ const ListBox = styled.div`
 `
 
 const MyTicketInfo = () => {
-    const userId = localStorage.getItem('userId');
+    const userInfoString = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoString);
     const [buyList, setBuyList] = useState([]);
     const nav = useNavigate();
 
     useEffect(() => {
         const buyTicketlist = async() => {
             try{
-                const buyTicketData = await AccountApi.buyTicketList(userId);
+                const buyTicketData = await AccountApi.buyTicketList(userInfo.userId);
                 console.log(buyTicketData);
                 if(buyTicketData.status === 200) {
                     setBuyList(buyTicketData.data);
@@ -95,7 +96,7 @@ const MyTicketInfo = () => {
 
     return (
         <>
-        <h3>{userId}님의 구매내역</h3>
+        <h3>{userInfo.userNickname}님의 구매내역</h3>
         <ListBox>
         <table className="buyListTable">
           <thead>

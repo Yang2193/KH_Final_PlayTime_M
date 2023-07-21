@@ -104,27 +104,30 @@ const AccountApi = {
         return await axios.post("/mypage/checkmemberPw", checkMemberPwcmd);
     },
 
-    updateUserInfo: async(userId, userPw, userNickname, userName, userPhone, userEmail) => {
-        Functions.setAuthorizationHeader();
-        const updateUserInfocmd = {
-            userId: userId,
-            userPw: userPw,
-            userNickname: userNickname,
-            userName: userName,
-            userPhone: userPhone,
-            userEmail: userEmail
-        };
-        return await axios.post("/mypage/edit", updateUserInfocmd);
-    },
+    updateUserInfo: async(userId, userPw, userNickname, userName, userPhone, userEmail, imgUrl) => {
+            Functions.setAuthorizationHeader();
+            const updateUserInfocmd = {
+                userId: userId,
+                userPw: userPw,
+                userNickname: userNickname,
+                userName: userName,
+                userPhone: userPhone,
+                userEmail: userEmail,
+                imgUrl: imgUrl
+            };
+            return await axios.post("/mypage/edit", updateUserInfocmd);
+        },
 
-    updateUserInfo2: async(userId, userNickname) => {
-        Functions.setAuthorizationHeader();
-        const updateUserInfo2cmd = {
-            userId: userId,
-            userNickname: userNickname
-        };
-        return await axios.post("/mypage/edit2", updateUserInfo2cmd);
-    },
+        updateUserInfo2: async(userId, userNickname, imageUrl) => {
+            Functions.setAuthorizationHeader();
+            const updateUserInfo2cmd = {
+                userId: userId,
+                userNickname: userNickname,
+                imageUrl: imageUrl
+            };
+            return await axios.post("/mypage/edit2", updateUserInfo2cmd);
+        },
+
 
     buyTicketList: async(userId) => {
         Functions.setAuthorizationHeader();

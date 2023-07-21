@@ -243,6 +243,15 @@ label{
   grid-area: sns-bye;
   text-align:center;
   }
+
+.mypage-bye-btn {
+  cursor: pointer;
+}
+
+.mypage-pic-del-btn {
+  cursor: pointer;
+}
+
 .mypage-pop-up {
   cursor : pointer;
   color: #7E7B7B;

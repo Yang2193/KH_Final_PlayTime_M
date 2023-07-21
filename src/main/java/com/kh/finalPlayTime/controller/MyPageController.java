@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -74,16 +74,17 @@ public class MyPageController {
         String userName = updateData.get("userName");
         String userPhone = updateData.get("userPhone");
         String userEmail = updateData.get("userEmail");
-        System.out.println("컨트롤러: " + userId + userPw + userNickname + userName + userPhone + userEmail);
-        return ResponseEntity.ok(memberService.updateMemberInfo(userId,userPw,userNickname,userName,userPhone,userEmail));
+        String imgUrl = updateData.get("imageUrl");
+        return ResponseEntity.ok(memberService.updateMemberInfo(userId,userPw,userNickname,userName,userPhone,userEmail, imgUrl));
     }
 
     @PostMapping("/edit2")
     public ResponseEntity<Boolean> updateMemberInfo2(@RequestBody Map<String, String> updateData) {
         String userId = updateData.get("userId");
         String userNickname = updateData.get("userNickname");
-        System.out.println("컨트롤러: " + userId + userNickname);
-        return ResponseEntity.ok(memberService.updateMemberInfo2(userId,userNickname));
+        String userImgUrl = updateData.get("imageUrl");
+        System.out.println("컨트롤러: " + userImgUrl);
+        return ResponseEntity.ok(memberService.updateMemberInfo2(userId,userNickname,userImgUrl));
     }
     @PostMapping("/buylist")
     public ResponseEntity<List<Reserve>> getBuyList(@RequestBody Map<String, String> requestMap) {

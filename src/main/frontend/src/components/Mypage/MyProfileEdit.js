@@ -194,8 +194,8 @@ const MyProfileEdit = () => {
       </div>
     )}
     </MenuBlock>
-    {authSuccessModal && (<MessageModal open={authSuccessModal} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
-    {authFailModal && (<MessageModal open={authFailModal} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
+    {authSuccessModal && (<MessageModal open={authSuccessModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
+    {authFailModal && (<MessageModal open={authFailModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
     </>
   );
 };
