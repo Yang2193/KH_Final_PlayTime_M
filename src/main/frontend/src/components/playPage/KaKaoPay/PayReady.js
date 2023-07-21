@@ -25,7 +25,7 @@ const PayInfo = styled.div`
         background-color: #eee;
         border-radius: 15px;
         margin-bottom: 5%;
-        width: 50%;
+        width: 412px;
         @media (max-width:2560px) {
             height: 50%;
         }
@@ -33,7 +33,8 @@ const PayInfo = styled.div`
             height: 100%;
         }
         @media (max-width:768px) {
-            width: 80%;
+            width: 50%;
+            height: 60%;
             padding-left: 2%;
             margin-bottom: 10%;
         }
@@ -45,11 +46,10 @@ const PayInfo = styled.div`
             margin: 0;
             margin-bottom: 10px;
             font-size: 1.3em;
+            text-align: center;
+
             @media (max-width:768px) {
                 font-size: 1em;
-            }
-            @media (max-width:412px) {
-                text-align: center;
             }
         }
         .info{
@@ -66,11 +66,15 @@ const PayInfo = styled.div`
         border: 1px solid;
         background-color: #990A2C;
         width: 200px;
-        height: 50px;
+        height: 80px;
         font-size: 1em;
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 10px;
+        @media (max-width:768px) {
+                height: 50px;
+            }
     }
 `
 

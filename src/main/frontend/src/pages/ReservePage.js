@@ -9,6 +9,7 @@ import { Button } from "../utils/GlobalStyle";
 import { useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 import ReserveApi from "../api/ReserveApi";
+import MessageModal from "../utils/MessageModal";
 
 const ReserveStyle = styled.div`
     width: 100%;
@@ -196,7 +197,7 @@ const ReserveStyle = styled.div`
             @media (max-width:768px) {
                 width: 20%;
                 font-size: 1em;
-                height: 100%;
+                height: 70%;
             }
             @media (max-width:412px) {
                 margin-top: 0;
@@ -231,6 +232,10 @@ const ReserveStyle = styled.div`
 
             @media (max-width:1920px) {
                 font-size: 1em;
+            }
+            @media (max-width:768px) {
+                width: 50%;
+                height: 6%;
             }
             @media (max-width:412px) {
                 width: 50%;
@@ -516,16 +521,29 @@ const ReservePage = () =>{
     useEffect(() => {
         setSelTime("");
     }, [value]);
-
+    const [seatMo,setSeatMo] = useState(false);
     const nav = useNavigate();
     const payReady=()=>{
-        nav("/payReady")
+        console.log(seatDetails);
+
+        if (seatDetails.length===0) {
+            setSeatMo(true)
+            return
+        }else{nav("/payReady")}
     }
 // 타입설정
+const[modal,setModal] =useState(false);
     const[type,setType] = useState("default");
     const nextPage =() =>{
-        setType("seat");
+        if (selTime==="") {
+            setModal(true)
+            return
+        } else {setType("seat");}
     }
+    const onClickClose = () => {
+        setModal(false);
+        setSeatMo(false);
+        }
 
     return(
         <ReserveStyle>
@@ -642,10 +660,13 @@ const ReservePage = () =>{
                 </>
             )}
         </div>
-        <Button className="btn" onClick={() => payReady()}>결제 하기</Button>
+        <Button className="btn" onClick={() => payReady()}>결제 정보 확인</Button>
         </div>
         )}
        <Footer/>
+       <MessageModal open={modal} close={onClickClose} header="회차 확인">회차를 선택해 주세요.</MessageModal>
+       <MessageModal open={seatMo} close={onClickClose} header="회차 확인">좌석을 선택해 주세요.</MessageModal>
+
         </ReserveStyle>
         )
 }
