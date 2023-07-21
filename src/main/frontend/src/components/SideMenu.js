@@ -37,6 +37,18 @@ const Box = styled.div`
 
     z-index: 3;
 
+     @media (max-width: 768px) {
+            left: -190px;
+            top: 70px;
+
+        }
+
+        @media (max-width: 412px) {
+            left: -190px;
+            top: 50px;
+
+        }
+
     ${({ isOpen }) =>
     isOpen &&
     css`

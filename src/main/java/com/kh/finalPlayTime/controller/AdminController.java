@@ -220,7 +220,7 @@ public class AdminController {
         adminService.createSeat(seatInfo);
         SeatDto seatDto = adminService.getSeat(seatInfo.get("theaterId"), seatInfo.get("theaterName"));
         model.addAttribute("seatDto", seatDto);
-        return "admin/theater/theaterSeat";
+        return "redirect:/admin/theater";
     }
 
     //좌석 삭제 컨트롤러
