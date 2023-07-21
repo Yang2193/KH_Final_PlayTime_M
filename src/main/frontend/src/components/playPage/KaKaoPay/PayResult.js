@@ -16,8 +16,8 @@ const PayInfo = styled.div`
     div{
       background-color: #eee;
       border-radius: 15px;
-      width: 50%;
-      height: 70%;
+      width: 30%;
+      height: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -36,9 +36,9 @@ const PayInfo = styled.div`
       margin-top: 10%;
       border: none;
       font-size: 1em;
-      width: 20%;
+      width: 40%;
       border-radius: 15px;
-      height: 10%;
+      height: 15%;
       cursor: pointer;
       @media (max-width:768px) {
         height: 15%;
@@ -49,6 +49,7 @@ const PayInfo = styled.div`
         height: 10%;
     }
     }
+
 `
 
 const PayResult = () => {
