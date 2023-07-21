@@ -22,6 +22,27 @@ const OneCss=styled.div`
   @media (max-width:412px) {
     overflow: hidden;
   }
+.average{
+  width: 100%;
+  border-bottom: 1px solid;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 1%;
+  @media (max-width:768px) {
+    width: 600px;
+  }
+  @media (max-width:412px) {
+    margin-top: 10px;
+    font-size:1em;
+    width: 360px;
+  }
+  @media (max-width:360px) {
+    width: 310px;
+  }
+}
 .empty{
   display: flex;
   align-items: center;
@@ -240,7 +261,10 @@ const updateReview = async (id) =>{
     const currentPageData = reviews.slice(offset, offset + ITEMS_PAGE);
   return (
     <OneCss>
-      <div className='addReview'>
+        {reviews.length > 0 && ( // Add this condition to check if reviews has items
+        <div className='average'>한줄평 ({reviews.length}) <span>{(reviews.reduce((total, review) => total + review.olrRating, 0) / reviews.length).toFixed(1)} / 5.0</span> </div>
+      )}
+        <div className='addReview'>
         <div className='ratingBox'>
           <Rating
           size={"25px"}
