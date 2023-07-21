@@ -100,11 +100,11 @@ const PayReady = () => {
             // 상품 비과세
             tax_free_amount: 0,
             // 결제 성공 URL
-            approval_url: "http://localhost:3000/payresult",
+            approval_url: "http://localhost:8111/payResult",
             // 결제 실패 URL
-            fail_url: "http://localhost:3000/info",
+            fail_url: "http://localhost:8111/info",
             // 결제 취소 URL
-            cancel_url: "http://localhost:3000/info"
+            cancel_url: "http://localhost:8111/info"
     });
 
     useEffect(() => {
