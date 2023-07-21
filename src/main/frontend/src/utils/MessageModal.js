@@ -56,6 +56,7 @@ const ModalStyle = styled.div`
         padding: 12px 12px 12px 12px;
         background-color: #990A2C;
         font-weight: 700;
+        color: white;
         text-align: center;
 
     }
@@ -67,7 +68,7 @@ const ModalStyle = styled.div`
         font-size: 21px;
         font-weight: 700;
         text-align: center;
-        color: #999;
+        color: white;
         background-color: transparent;
     }
 
