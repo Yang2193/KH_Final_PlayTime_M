@@ -145,10 +145,10 @@ const AccountApi = {
     ticketDetail: async(reserveId) =>{
         try{
             Functions.setAuthorizationHeader();
-            return await axios.get("/mypage/ticket/${reserveId}");
+            return await axios.get(`/mypage/ticket/${reserveId}`);
         } catch(error){
             await Functions.handleApiError(error);
-            return await axios.get("/mypage/ticket/${reserveId}");
+            return await axios.get(`/mypage/ticket/${reserveId}`);
         }
     },
 

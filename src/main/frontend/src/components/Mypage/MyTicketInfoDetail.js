@@ -40,7 +40,7 @@ const BarCodeImg = styled.img`
 
 const Ticket = () =>{
     const {reserveId} = useParams();
-    const[ticketData, setTicketData] = useState(null);
+    const[ticketData, setTicketData] = useState([]);
     useEffect(() =>{
         const fetchData = async() =>{
             try{
