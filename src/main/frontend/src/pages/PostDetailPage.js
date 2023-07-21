@@ -545,7 +545,7 @@ const PostDetailPage = () => {
           </CommentSection>
         </PostDetailWrapper>
       </Background>
-      <Footer />
+      <Footer/>
     </>
   );
 };

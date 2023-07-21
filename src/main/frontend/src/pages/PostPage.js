@@ -113,11 +113,11 @@ const Post = () => {
                   >
 
                     {window.innerWidth > 412
-                      ? post.postTitle.length > 20
-                        ? `${post.postTitle.slice(0, 25)}...`
+                      ? post.postTitle.length > 18
+                        ? `${post.postTitle.slice(0, 22)}...`
                         : post.postTitle
-                      : post.postTitle.length > 15
-                      ? `${post.postTitle.slice(0, 25)}...`
+                      : post.postTitle.length > 13
+                      ? `${post.postTitle.slice(0, 22)}...`
                       : post.postTitle}
                   </Link>
                 </td>

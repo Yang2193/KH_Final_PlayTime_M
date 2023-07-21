@@ -180,7 +180,7 @@ reportComment: async (commentId, reportReason, nickname, postId,userId) => {
                 return await axios.post(`/post/update/oneLineReview`,data)
             }
         },
-    
+
 };
 
 

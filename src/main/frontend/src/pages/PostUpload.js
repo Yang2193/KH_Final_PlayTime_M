@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const Heading = styled.h2`
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
 const Label = styled.label`
@@ -40,6 +40,12 @@ const Button = styled.button`
   border-radius: 4px;
 `;
 
+// 로그인 상태 확인 함수
+const isLoggedIn = () => {
+  const userId = localStorage.getItem('userId');
+  return !!userId; // userId가 존재하면 true, 없으면 false 반환
+};
+
 const PostUpload = () => {
   const [postData, setPostData] = useState({
     postTitle: '',
@@ -55,6 +61,7 @@ const PostUpload = () => {
       postImages: [...prevData.postImages, image], // 이미지 URL을 배열에 추가합니다.
     }));
   };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPostData((prevData) => ({
@@ -65,16 +72,26 @@ const PostUpload = () => {
 
   const handleUpload = async () => {
     try {
-      // 이미지 URL 배열을 하나의 스트링으로 합칩니다. 각 이미지 URL을 쉼표로 구분합니다.
+      if (!isLoggedIn()) {
+        toast.error('로그인이 필요합니다.');
+        return;
+      }
+
+      if (!postData.postTitle) {
+        toast.error('제목을 입력해주세요.');
+        return;
+      }
+
       const postImageStr = postData.postImages.join(',');
 
       const response = await PostAPI.addPost(
         postData.postTitle,
         postContent,
-        postImageStr, // 이미지 URL 스트링을 전달합니다.
+        postImageStr,
         '1',
         localStorage.getItem('userId')
       );
+
       if (response.id) {
         toast.success('게시물 등록 성공');
         navigate(-1);
@@ -111,7 +128,6 @@ const PostUpload = () => {
         </div>
         <div>
           <Label>
-            내용 입력
             <MyEditor value={postContent} onChange={setPostContent} />
           </Label>
         </div>
@@ -120,5 +136,5 @@ const PostUpload = () => {
     </>
   );
 };
-//
+
 export default PostUpload;
