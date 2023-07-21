@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useParams,Link } from 'react-router-dom';
-import styled from 'styled-components';
-import PostAPI from '../api/PostApi';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import cogIcon from '../images/free-icon-menu-2.png';
-import RtMenu from '../components/Post/Report';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import PostReport from '../components/Post/PostReport ';
-
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import styled from "styled-components";
+import PostAPI from "../api/PostApi";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import cogIcon from "../images/free-icon-menu-2.png";
+import RtMenu from "../components/Post/Report";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PostReport from "../components/Post/PostReport ";
 
 const Background = styled.div`
   background-color: #e2e2e2;
@@ -18,7 +17,7 @@ const Background = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  white-space: nowrap;
+  white-space: wrap;
 `;
 
 const PostDetailWrapper = styled.div`
@@ -31,10 +30,8 @@ const PostDetailWrapper = styled.div`
   border-radius: 20px;
   position: relative;
   @media (max-width: 412px) {
-
-    width:100%;
+    width: 100%;
   }
-
 `;
 
 const PostHeader = styled.div`
@@ -45,9 +42,10 @@ const PostTitle = styled.h2`
   font-size: 23px;
   margin-bottom: 30px;
   word-break: break-all;
-  margin-right: auto;  @media (max-width: 412px) {
+  margin-right: auto;
+  @media (max-width: 412px) {
     font-size: 50%;
-}
+  }
 `;
 
 const PostInfo = styled.div`
@@ -62,15 +60,14 @@ const PostInfo = styled.div`
   border-radius: 5px;
   @media (max-width: 412px) {
     font-size: 30%;
-
-}
+  }
 `;
 
 const PostInfoItem = styled.span`
   display: inline-block;
   margin-right: 10px;
-  color: ${(props) => (props.userId ? '#000' : '#888')};
-  font-weight: ${(props) => (props.userId ? 'bold' : 'normal')};
+  color: ${(props) => (props.userId ? "#000" : "#888")};
+  font-weight: ${(props) => (props.userId ? "bold" : "normal")};
 `;
 
 const PostImage = styled.div`
@@ -79,20 +76,27 @@ const PostImage = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 
-
-
   img {
     width: 50%;
     max-width: 30%;
     margin-right: 40px;
-  } @media (max-width: 412px) {
-    height :50% ;
-    }
+  }
+  @media (max-width: 412px) {
+    height: 50%;
+  }
 `;
 
 const PostContent = styled.div`
   line-height: 1.6;
-  font-size: 17px;
+  font-size: 14px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  p strong {
+    width: 100%;
+    display: flex;
+  }
 `;
 
 const LoadingMessage = styled.div`
@@ -100,21 +104,17 @@ const LoadingMessage = styled.div`
   font-size: 16px;
   color: #888;
   margin-top: 40px;
-
 `;
 
 const CommentSection = styled.div`
   margin-top: 30px;
   height: ${(props) => props.height};
   transition: height 0.3s;
-
 `;
 
 const CommentInputWrapper = styled.div`
   display: flex;
   align-items: center;
-
-
 `;
 
 const CommentInput = styled.input`
@@ -135,24 +135,25 @@ const CommentButton = styled.button`
   max-height: 40px;
   width: 100px;
   font-size: 13px;
+  @media (max-width: 412px) {
+    font-size: 11px;
+  }
 `;
 
 const CommentList = styled.ul`
   list-style: none;
   padding: 0;
   margin-top: 20px;
-
 `;
 
 const CommentItem = styled.li`
   display: flex;
   align-items: flex-start;
   margin-bottom: 10px;
-  flex-direction: ${(props) => (props.isAuthor ? 'row-reverse' : 'row')};
+  flex-direction: ${(props) => (props.isAuthor ? "row-reverse" : "row")};
   @media (max-width: 412px) {
     font-size: 30%;
-
-}
+  }
 `;
 
 const CommentContent = styled.div`
@@ -171,14 +172,11 @@ const CommentContent = styled.div`
     font-size: 50%;
   }
 `;
-const CommentBox =styled.div`
-display: flex;
-position: relative;
-align-items: center;
-justify-content:start;
-
-
-
+const CommentBox = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: start;
 `;
 const CommentDate = styled.span`
   color: #888;
@@ -194,7 +192,7 @@ const CommentDate = styled.span`
 `;
 
 const CogImg = styled.div`
-  display: ${(props) => (props.isAuthor ? 'block' : 'none')};
+  display: ${(props) => (props.isAuthor ? "block" : "none")};
   position: absolute;
   right: 0px;
   top: 5px;
@@ -202,10 +200,9 @@ const CogImg = styled.div`
     height: 13px;
     cursor: pointer;
     @media (max-width: 412px) {
-    margin-top: 10px;
+      margin-top: 10px;
+    }
   }
-  }
-
 `;
 const CommentAuthor = styled.span`
   font-weight: bold;
@@ -220,18 +217,16 @@ const CommentMenu = styled.div`
   width: 120px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  display: ${(props) => (props.show ? 'block' : 'none')};
+  display: ${(props) => (props.show ? "block" : "none")};
   flex-direction: column;
   padding: 5px;
   border-radius: 5px;
   z-index: 999;
   @media (max-width: 412px) {
-      font-size: 30%;
-      right: 30px;
-      margin-top: 20px;
-
+    font-size: 30%;
+    right: 30px;
+    margin-top: 20px;
   }
-
 `;
 
 const CommentMenuItem = styled.div`
@@ -240,8 +235,6 @@ const CommentMenuItem = styled.div`
   color: #555;
   transition: background-color 0.3s;
 
-
-
   &:hover {
     background-color: #f6f6f6;
   }
@@ -249,12 +242,10 @@ const CommentMenuItem = styled.div`
 
 const C1 = styled.div`
   margin-top: 18px;
-
-
 `;
 
 const PostD = styled.div`
-  display:${(props) => (props.isAuthor ? 'block' : 'none')};
+  display: ${(props) => (props.isAuthor ? "block" : "none")};
   position: absolute;
   right: 10px;
   button {
@@ -266,30 +257,33 @@ const PostD = styled.div`
     cursor: pointer;
     font-size: 13px;
     @media (max-width: 412px) {
-    font-size: 30%;
-
-}
-
+      font-size: 30%;
+    }
   }
 `;
 
 const formatWriteDate = (date) => {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-  const formattedDate = new Date(date).toLocaleString('ko', options);
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  const formattedDate = new Date(date).toLocaleString("ko", options);
   return formattedDate;
 };
 
 const PostDetailPage = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
-  const [commentSectionHeight, setCommentSectionHeight] = useState('auto');
+  const [commentSectionHeight, setCommentSectionHeight] = useState("auto");
   const [showCommentMenu, setShowCommentMenu] = useState(false);
-  const [selectedCommentId, setSelectedCommentId] = useState('');
+  const [selectedCommentId, setSelectedCommentId] = useState("");
   const [isCommentAuthor, setIsCommentAuthor] = useState(false);
   const [showRtMenu, setShowRtMenu] = useState(false);
-
 
   useEffect(() => {
     fetchPost();
@@ -306,17 +300,17 @@ const PostDetailPage = () => {
       console.log(error);
     }
   };
-  const imageUrls = post ? post.postImageUrl.split(',') : [];
+  const imageUrls = post ? post.postImageUrl.split(",") : [];
   const navigate = useNavigate();
 
   const handleDeletePost = async () => {
-    const confirmDelete = window.confirm('게시물을 삭제하시겠습니까?');
+    const confirmDelete = window.confirm("게시물을 삭제하시겠습니까?");
 
     if (confirmDelete) {
       try {
         const response = await PostAPI.deletePost(postId);
         if (response.status === 200) {
-          toast.error('게시물이 삭제되었습니다.');
+          toast.error("게시물이 삭제되었습니다.");
           navigate(-1);
         }
       } catch (error) {
@@ -328,7 +322,10 @@ const PostDetailPage = () => {
   const increaseViews = async (postId) => {
     try {
       await PostAPI.increasePostViews(postId);
-      setPost((prevPost) => ({ ...prevPost, postViews: prevPost.postViews + 1 }));
+      setPost((prevPost) => ({
+        ...prevPost,
+        postViews: prevPost.postViews + 1,
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -343,25 +340,27 @@ const PostDetailPage = () => {
       const newComment = {
         commentContent: comment,
         postId: postId,
-        userId: localStorage.getItem('userId'),
+        userId: localStorage.getItem("userId"),
       };
 
       const response = await PostAPI.createComment(newComment);
       if (response.status === 200) {
         console.log(response.data);
         fetchPost();
-        setComment('');
+        setComment("");
       }
 
-      console.log('작성된 댓글:', response);
+      console.log("작성된 댓글:", response);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleCommentMenu = (commentId) => {
-    const loggedInUserId = localStorage.getItem('userId');
-    const selectedComment = comments.find((comment) => comment.id === commentId);
+    const loggedInUserId = localStorage.getItem("userId");
+    const selectedComment = comments.find(
+      (comment) => comment.id === commentId
+    );
 
     if (selectedComment && selectedComment.userId === loggedInUserId) {
       setSelectedCommentId(commentId);
@@ -374,11 +373,13 @@ const PostDetailPage = () => {
     try {
       const response = await PostAPI.deleteComment(selectedCommentId);
       if (response.status === 200) {
-        toast.error('댓글이 삭제되었습니다');
-        const updatedComments = comments.filter((comment) => comment.id !== selectedCommentId);
+        toast.error("댓글이 삭제되었습니다");
+        const updatedComments = comments.filter(
+          (comment) => comment.id !== selectedCommentId
+        );
         setComments(updatedComments);
         setShowCommentMenu(false);
-        setSelectedCommentId('');
+        setSelectedCommentId("");
       }
     } catch (error) {
       console.log(error);
@@ -388,14 +389,18 @@ const PostDetailPage = () => {
   const handleUpdateComment = async () => {
     try {
       const updatedCommentContent = prompt(
-        '댓글을 수정하세요',
-        comments.find((comment) => comment.id === selectedCommentId).commentContent
+        "댓글을 수정하세요",
+        comments.find((comment) => comment.id === selectedCommentId)
+          .commentContent
       );
 
-      const response = await PostAPI.updateComment(selectedCommentId, updatedCommentContent);
+      const response = await PostAPI.updateComment(
+        selectedCommentId,
+        updatedCommentContent
+      );
 
       if (response.status === 200) {
-        toast.success('댓글이 수정되었습니다.');
+        toast.success("댓글이 수정되었습니다.");
         console.log(response.data);
         const updatedComments = comments.map((comment) => {
           if (comment.id === selectedCommentId) {
@@ -408,7 +413,7 @@ const PostDetailPage = () => {
         });
         setComments(updatedComments);
         setShowCommentMenu(false);
-        setSelectedCommentId('');
+        setSelectedCommentId("");
       }
     } catch (error) {
       console.log(error);
@@ -416,9 +421,9 @@ const PostDetailPage = () => {
   };
 
   useEffect(() => {
-    const commentSection = document.getElementById('commentSection');
+    const commentSection = document.getElementById("commentSection");
     if (commentSection) {
-      const sectionHeight = commentSection.scrollHeight + 'px';
+      const sectionHeight = commentSection.scrollHeight + "px";
       setCommentSectionHeight(sectionHeight);
     }
   }, [comments]);
@@ -438,25 +443,41 @@ const PostDetailPage = () => {
 
             <PostInfo>
               <div>
-                <PostInfoItem userId>작성자: {post.memberInfo ? post.memberInfo.userNickname : ''}</PostInfoItem>
+                <PostInfoItem userId>
+                  작성자: {post.memberInfo ? post.memberInfo.userNickname : ""}
+                </PostInfoItem>
                 <PostInfoItem>{formatWriteDate(post.postDate)}</PostInfoItem>
               </div>
               <PostInfoItem>조회수: {post.postViews}</PostInfoItem>
             </PostInfo>
           </PostHeader>
           <PostImage>
-      {imageUrls.map((imageUrl, index) => (
-        <img key={index} src={imageUrl} alt={``} />
-      ))}
-    </PostImage>
-          <PostContent className="Explaination2" dangerouslySetInnerHTML={{ __html: post.postContent }}></PostContent>
-          <PostD isAuthor={post.memberInfo && post.memberInfo.userId === localStorage.getItem('userId')}>
+            {imageUrls.map((imageUrl, index) => (
+              <img key={index} src={imageUrl} alt={``} />
+            ))}
+          </PostImage>
+          <PostContent
+            dangerouslySetInnerHTML={{ __html: post.postContent }}
+          ></PostContent>
+          <PostD
+            isAuthor={
+              post.memberInfo &&
+              post.memberInfo.userId === localStorage.getItem("userId")
+            }
+          >
             <button onClick={handleDeletePost}>게시물 삭제</button>
-            <button onClick={() => navigate(`/postupdate/${post.id}`)}>게시물 수정</button>
+            <button onClick={() => navigate(`/postupdate/${post.id}`)}>
+              게시물 수정
+            </button>
           </PostD>
-          {post.memberInfo.userId !== localStorage.getItem('userId') && (
-              <PostReport postId={post.id} userId={post.userId} showRtMenu={showRtMenu} nickname={post.nickname} />
-            )}
+          {post.memberInfo.userId !== localStorage.getItem("userId") && (
+            <PostReport
+              postId={post.id}
+              userId={post.userId}
+              showRtMenu={showRtMenu}
+              nickname={post.nickname}
+            />
+          )}
           <CommentSection id="commentSection" height={commentSectionHeight}>
             <CommentInputWrapper>
               <CommentInput
@@ -465,39 +486,62 @@ const PostDetailPage = () => {
                 value={comment}
                 onChange={handleCommentChange}
               />
-              <CommentButton onClick={handleSubmitComment}>댓글 작성</CommentButton>
+              <CommentButton onClick={handleSubmitComment}>
+                댓글 작성
+              </CommentButton>
             </CommentInputWrapper>
             <CommentList>
               {comments.map((comment) => (
-                <CommentItem key={comment.id} isAuthor={comment.userId === post.memberInfo.userId}>
-                  <CommentContent isAuthor={comment.userId === post.memberInfo.userId}>
-        <CommentBox>
-            <CommentAuthor>{comment.nickname}</CommentAuthor>
-            <CommentDate>{formatWriteDate(comment.commentDate)}</CommentDate>
-          <CogImg isAuthor={comment.userId === localStorage.getItem('userId')}>
-            <img
-              src={cogIcon}
-              alt="Cog Icon"
-              onClick={() => handleCommentMenu(comment.id)}
-            />
-          </CogImg>
-          {comment.userId !== localStorage.getItem('userId') && (
-          <RtMenu postId={post.id} userId={comment.userId} commentId={comment.id} showRtMenu={showRtMenu} nickname={comment.nickname} />
-        )}
-        </CommentBox>
+                <CommentItem
+                  key={comment.id}
+                  isAuthor={comment.userId === post.memberInfo.userId}
+                >
+                  <CommentContent
+                    isAuthor={comment.userId === post.memberInfo.userId}
+                  >
+                    <CommentBox>
+                      <CommentAuthor>{comment.nickname}</CommentAuthor>
+                      <CommentDate>
+                        {formatWriteDate(comment.commentDate)}
+                      </CommentDate>
+                      <CogImg
+                        isAuthor={
+                          comment.userId === localStorage.getItem("userId")
+                        }
+                      >
+                        <img
+                          src={cogIcon}
+                          alt="Cog Icon"
+                          onClick={() => handleCommentMenu(comment.id)}
+                        />
+                      </CogImg>
+                      {comment.userId !== localStorage.getItem("userId") && (
+                        <RtMenu
+                          postId={post.id}
+                          userId={comment.userId}
+                          commentId={comment.id}
+                          showRtMenu={showRtMenu}
+                          nickname={comment.nickname}
+                        />
+                      )}
+                    </CommentBox>
 
-        <C1>{comment.commentContent}</C1>
+                    <C1>{comment.commentContent}</C1>
 
-        {comment.id === selectedCommentId && isCommentAuthor && (
-          <CommentMenu show={showCommentMenu}>
-            <CommentMenuItem onClick={handleDeleteComment}>삭제</CommentMenuItem>
-            <CommentMenuItem onClick={handleUpdateComment}>수정</CommentMenuItem>
-          </CommentMenu>
-        )}
-      </CommentContent>
-    </CommentItem>
-  ))}
-</CommentList>
+                    {comment.id === selectedCommentId && isCommentAuthor && (
+                      <CommentMenu show={showCommentMenu}>
+                        <CommentMenuItem onClick={handleDeleteComment}>
+                          삭제
+                        </CommentMenuItem>
+                        <CommentMenuItem onClick={handleUpdateComment}>
+                          수정
+                        </CommentMenuItem>
+                      </CommentMenu>
+                    )}
+                  </CommentContent>
+                </CommentItem>
+              ))}
+            </CommentList>
           </CommentSection>
         </PostDetailWrapper>
       </Background>
