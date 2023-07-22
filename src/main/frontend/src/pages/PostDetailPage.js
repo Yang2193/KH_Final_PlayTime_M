@@ -91,6 +91,9 @@ const PostContent = styled.div`
   max-height: 400px; /* 원하는 최대 높이 설정 */
   overflow: hidden;
   word-break: break-word;
+  .img{
+    width: 100%;
+  }
 
 `;
 
