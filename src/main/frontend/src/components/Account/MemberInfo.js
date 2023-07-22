@@ -2,7 +2,56 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MessageModal from "../../utils/MessageModal";
 import AccountApi from "../../api/AccountApi";
+import styled from "styled-components";
+const Container = styled.div`
+margin-top:30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fafafa;
+`;
 
+const SignUpForm = styled.div`
+  width: 430px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    &.focused {
+      border: 2px solid #007bff;
+    }
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 30px;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .message {
+    color: red;
+  }
+`;
 const MemberInfo = () => {
     const navigate = useNavigate();
 
@@ -15,7 +64,7 @@ const MemberInfo = () => {
     const [inputEmail, setInputEmail] = useState("");
     const [inputPhone, setInputPhone] = useState("");
     const [inputAuth, setInputAuth] = useState("");
-    
+
 
     // 오류 메세지
     const [idError, setIdError] = useState("");
@@ -228,16 +277,16 @@ const MemberInfo = () => {
         }
     }, [isId, isPw, isPwCk, isEmail, isName, isPhone, isAuth]);
 
-    const onClickPre = () => {
-        navigate("/login");
-    }
-
+        const onClickPre = () => {
+            navigate("/login");
+        }
+//sdsdsd
     return (
         <div>
         {/* FORM SECTION */}
-            <div>
+            <Container>
                 {/* SIGN UP */}
-                <div>
+                <SignUpForm>
                     <div>
                         <div>
                             <div>
@@ -301,8 +350,8 @@ const MemberInfo = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </SignUpForm>
+            </Container>
             {isAllCheckModalOpen && (<MessageModal open={isAllCheckModalOpen} confirm={onClickClose} close={onClickClose} type="modalType" header="회원가입 오류">회원가입에 필요한 필수 정보를 작성하세요.</MessageModal>)}
             {authSuccessModal && (<MessageModal open={authSuccessModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
             {authFailModal && (<MessageModal open={authFailModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}

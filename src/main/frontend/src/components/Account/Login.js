@@ -92,7 +92,7 @@ import MessageModal from "../../utils/MessageModal";
 
     const onClickKakaoLogin = () => {
       const clientId = "088a7b267c39d0a11ec3904372ed9d33";
-      const redirectUri = "http://localhost:3000/auth/kakao/callback";
+      const redirectUri = "http://ticket-playtime.xyz//auth/kakao/callback";
       const authorizeUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
       window.location.href = authorizeUrl;
     };
