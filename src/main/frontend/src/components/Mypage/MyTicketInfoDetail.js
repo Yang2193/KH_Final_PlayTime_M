@@ -3,6 +3,8 @@ import AccountApi from "../../api/AccountApi";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import barcode from "../../images/barcode.gif";
+import qrcodeImg from "../../images/qrcode.png";
+
 
 const Container = styled.div`
 
@@ -71,7 +73,7 @@ const Ticket = () =>{
                     <p>{ticketData.seatInfo}</p>
                     <p>극장에 QR코드를 제시해주세요<div className=""></div></p>
                     <BarCode>
-                        <BarCodeImg src={barcode} alt="barcode"/>
+                        <BarCodeImg src={qrcodeImg} alt="barcode"/>
                     </BarCode>
                 </InfoBox>
              
