@@ -2,6 +2,8 @@ package com.kh.finalPlayTime.controller;
 
 import com.kh.finalPlayTime.dto.MemberDto;
 import com.kh.finalPlayTime.dto.TokenDto;
+import com.kh.finalPlayTime.entity.MemberInfo;
+import com.kh.finalPlayTime.repository.MemberInfoRepository;
 import com.kh.finalPlayTime.service.AuthService;
 import com.kh.finalPlayTime.service.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -19,6 +22,7 @@ import java.util.Map;
 public class AuthController { // 로그인 회원가입 ID/PW 찾기 여기에서
     private final AuthService authService;
     private final TokenService tokenService;
+    private final MemberInfoRepository memberInfoRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<MemberDto> signup(@RequestBody MemberDto memberDto){
@@ -64,5 +68,13 @@ public class AuthController { // 로그인 회원가입 ID/PW 찾기 여기에�
     public ResponseEntity<String> sendAuthEmail(@RequestBody Map<String, String> sendData) throws Exception {
         String userEmail = sendData.get("userEmail");
         return ResponseEntity.ok(authService.sendEmail(userEmail));
+    }
+    @PostMapping("/userIdCheck")
+    public Boolean userIdCheck(@RequestBody Map<String, String> checkData) {
+        String userId = checkData.get("userId");
+        System.out.println(userId);
+        Optional<MemberInfo> memberInfoOptional = memberInfoRepository.findByUserId(userId);
+        System.out.println(memberInfoOptional.isPresent());
+        return memberInfoOptional.isPresent();
     }
 }

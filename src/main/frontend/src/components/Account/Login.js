@@ -92,7 +92,7 @@ import MessageModal from "../../utils/MessageModal";
 
     const onClickKakaoLogin = () => {
       const clientId = "088a7b267c39d0a11ec3904372ed9d33";
-      const redirectUri = "http://ticket-playtime.xyz/auth/kakao/callback";
+      const redirectUri = "http://localhost:3000/auth/kakao/callback";
       const authorizeUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
       window.location.href = authorizeUrl;
     };
@@ -126,7 +126,7 @@ import MessageModal from "../../utils/MessageModal";
             </div>
           </div>
         </div>
-        {modalOpen && (<MessageModal open={modalOpen} close={onClickClose} type="modalType" header="로그인 오류">아이디 및 패스워드가 틀렸습니다.</MessageModal>)}
+        {modalOpen && (<MessageModal open={modalOpen} confirm={onClickClose} close={onClickClose} type="modalType" header="로그인 오류">아이디 및 패스워드가 틀렸습니다.</MessageModal>)}
       </div>
     );
   };
