@@ -39,6 +39,7 @@ public class MemberService {
             memberDto.setUserEmail(memberInfo.getUserEmail());
             memberDto.setAuthority(memberInfo.getAuthority());
             memberDto.setSocialOAuth(memberInfo.getSocialOAuth());
+            memberDto.setImgUrl(memberInfo.getImgUrl());
             memberDto.setMessage("조회 성공");
         } else {
             memberDto.setMessage("아이디가 존재하지 않습니다.");
@@ -94,6 +95,7 @@ public class MemberService {
                 .orElseThrow(() -> new RuntimeException("해당 userId를 가진 멤버를 찾을 수 없습니다."));
     }
     public boolean updateMemberInfo2(String userId, String userNickname, String imgUrl) {
+        System.out.println(userId + userNickname + imgUrl);
         return memberInfoRepository.findByUserId(userId)
                 .map(member -> {
                     member.setUserNickname(userNickname);

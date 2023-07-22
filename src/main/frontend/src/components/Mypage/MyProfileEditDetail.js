@@ -50,8 +50,10 @@ const MyProfileEditDetail = () => {
     setUpdateModal(false);
   }
 
-  const onClickOpen = () => {
+  const onClickWithDrawModalOpen = () => {
     setWithDrawModal(true);
+  }
+  const onClickUpdateModalOpen = () => {
     setUpdateModal(true);
   }
 
@@ -206,7 +208,6 @@ const MyProfileEditDetail = () => {
     setImageUrl(profile);
   };
 
-  console.log(imageUrl);
   return (
     <>
   <Header />
@@ -229,7 +230,7 @@ const MyProfileEditDetail = () => {
                 </div>
                 <div className="mypage-pic-change">
                 <label>
-                  <input
+                  <input className="mypage-pic-input"
                     type="file"
                     onChange={handleImageUpload}
                     style={{ display: "none" }}
@@ -244,7 +245,7 @@ const MyProfileEditDetail = () => {
                   <div className="mypage-nickname-setbox">
                     <div className="mypage-title mypage-nickname-title">닉네임</div>
                     <div className="mypage-nickname-input">
-                      <input type="text" name="nickname" maxLength={64} placeholder="입력해주세요" value={nickname} onChange={onChageNickname} />
+                      <input className="mypage-pic-input" type="text" name="nickname" maxLength={64} placeholder="입력해주세요" value={nickname} onChange={onChageNickname} />
                     </div>
                   </div>
                   <div className="mypage-nickname-checkbox">
@@ -259,14 +260,14 @@ const MyProfileEditDetail = () => {
                 <div className="mypage-box mypage-sns-box">
                   <div className="mypage-title mypage-sns-title">PW</div>
                   <div className="mypage-sns-input">
-                    <input type="password" value={password} onChange={onChagePw} />
+                    <input className="mypage-pic-input" type="password" value={password} onChange={onChagePw} />
                     {passwordMsg && <p>{passwordMsg}</p>}
                   </div>
                 </div>
                 <div className="mypage-box mypage-sns-box">
                   <div className="mypage-title mypage-sns-title"></div>
                   <div className="mypage-sns-input">
-                    <input type="password" value={conPassword} onChange={onChageConPw} />
+                    <input className="mypage-pic-input" type="password" value={conPassword} onChange={onChageConPw} />
                     {conPasswordMsg && <p>{conPasswordMsg}</p>}
                   </div>
                 </div>
@@ -274,7 +275,7 @@ const MyProfileEditDetail = () => {
                   <div className="mypage-title mypage-sns-title"></div>
                   <div className="mypage-title mypage-sns-title">PHONE</div>
                   <div className="mypage-sns-input">
-                  <input type="text" value={phone} onChange={onChagePhone} />
+                  <input className="mypage-pic-input" type="text" value={phone} onChange={onChagePhone} />
                   {phoneMsg && <p>{phoneMsg}</p>}
                   </div>
                 </div>
@@ -282,7 +283,7 @@ const MyProfileEditDetail = () => {
                   <div className="mypage-title mypage-sns-title"></div>
                   <div className="mypage-title mypage-sns-title">Email</div>
                   <div className="mypage-sns-input">
-                  <input type="text" value={email} onChange={onChageEmail} />
+                  <input className="mypage-pic-input" type="text" value={email} onChange={onChageEmail} />
                   {emailMsg && <p>{emailMsg}</p>}
                   </div>
                 </div>
@@ -293,12 +294,12 @@ const MyProfileEditDetail = () => {
       </div>
       <div className="mypage-save-box">
         <div className="mypage-buttons">
-          <button className="mypage-bye-btn mypage-gradient-btn" onClick={onClickOpen}>탈퇴</button>
-          <button className="mypage-save-btn mypage-gradient-btn" onClick={onClickOpen}>수정</button>
+          <button className="mypage-bye-btn mypage-gradient-btn" onClick={onClickWithDrawModalOpen}>탈퇴</button>
+          <button className="mypage-save-btn mypage-gradient-btn" onClick={onClickUpdateModalOpen}>수정</button>
         </div>
       </div>
-      {withDrawModal && (<MessageModal open={withDrawModal} confirm={handleConfirmWithdraw} close={onClickClose} type="modalType" header="회원 탈퇴">회원탈퇴가 완료 되었습니다.</MessageModal>)}
-      {updateModal && (<MessageModal open={updateModal} confirm={updateInfo} close={onClickClose} type="modalType" header="회원정보수정">회원정보가 수정 되었습니다.</MessageModal>)}
+      {withDrawModal && (<MessageModal open={withDrawModal} confirm={handleConfirmWithdraw} close={onClickClose} type="modalType" header="회원 탈퇴">회원탈퇴를 하시겠습니까?</MessageModal>)}
+      {updateModal && (<MessageModal open={updateModal} confirm={updateInfo} close={onClickClose} type="modalType" header="회원정보수정">회원정보를 저장하시겠습니까?</MessageModal>)}
       </>
     ) : (
       <>

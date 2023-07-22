@@ -46,6 +46,9 @@ const MemberInfo = () => {
     const [authFailModal, setAuthFailModal] = useState(false);
     const [idchecksuccess, setIdchecksuccess] = useState(false);
     const [idcheckfail, setIdcheckfail] = useState(false);
+    const [idcheckNull, setIdcheckNull] = useState(false);
+    const [authEmail, setAuthEmail] = useState(false);
+    const [signUpModal, setSignUpModal] = useState(false);
 
     //모달창 닫기
     const onClickClose = () => {
@@ -54,6 +57,9 @@ const MemberInfo = () => {
         setAuthFailModal(false);
         setIdchecksuccess(false);
         setIdcheckfail(false);
+        setIdcheckNull(false);
+        setAuthEmail(false);
+        setSignUpModal(false);
     }
 
     const onChangeUserId = (e) => {
@@ -148,24 +154,27 @@ const MemberInfo = () => {
         const authNow = e.target.value;
         setInputAuth(authNow);
     }
-
     const onClickIdCheck = async () => {
-        try {
-          const response = await AccountApi.userIdCheck(inputId);
-          if (response.data === false) {
-            console.log("중복된 아이디 없음.");
-            setIdchecksuccess(true);
-            setIsId(true);
-          } else if (response.data === true) {
-            console.log("아이디가 중복 되었음.");
-            setIdcheckfail(true);
-            setIsId(false);
-            setIdError("중복 아이디가 존재합니다.");
-          } else {
-            console.log("서버 응답 형식이 올바르지 않습니다.");
-          }
-        } catch (e) {
-          console.log(e);
+        if(inputId === "") {
+            setIdcheckNull(true);
+        } else {
+            try {
+            const response = await AccountApi.userIdCheck(inputId);
+            if (response.data === false) {
+                console.log("중복된 아이디 없음.");
+                setIdchecksuccess(true);
+                setIsId(true);
+            } else if (response.data === true) {
+                console.log("아이디가 중복 되었음.");
+                setIdcheckfail(true);
+                setIsId(false);
+                setIdError("중복 아이디가 존재합니다.");
+            } else {
+                console.log("서버 응답 형식이 올바르지 않습니다.");
+            }
+            } catch (e) {
+            console.log(e);
+            }
         }
       };
 
@@ -173,6 +182,7 @@ const MemberInfo = () => {
         if(isEmail) {
             try {
                 const response = await AccountApi.sendAuthEmail(inputEmail);
+                setAuthEmail(true);
                 console.log(response);
                 localStorage.setItem("authCode", response.data);
             } catch (e){
@@ -196,7 +206,7 @@ const MemberInfo = () => {
                 const response = await AccountApi.memberReg(inputId, inputPw, inputNickname, inputName, inputEmail, inputPhone);
                 if(response.status === 200) {
                     console.log(response.data.message);
-                    navigate("/login");
+                    setSignUpModal(true);
                 }
             } catch(e) {
                 console.log(e);
@@ -217,6 +227,10 @@ const MemberInfo = () => {
             setAllCheckError("필수 회원 정보를 모두 입력 하지 않았습니다.")
         }
     }, [isId, isPw, isPwCk, isEmail, isName, isPhone, isAuth]);
+
+    const onClickPre = () => {
+        navigate("/login");
+    }
 
     return (
         <div>
@@ -272,7 +286,7 @@ const MemberInfo = () => {
                             <div>
                                 <i></i>
                                 <input type="email" placeholder="Email" value={inputEmail} onChange={onChangeUserEmail} className={isEmail ? 'focused-email' : ''}/>
-                                <button onClick={onClickEmailAuth}>인증번호 받기</button>
+                                <button onClick={onClickEmailAuth} disabled={!isId || !isPw || !isNickname || !isName || !isPhone || !isEmail}>인증번호 받기</button>
                             </div>
                             <div>
                                 <input type="password" value={inputAuth} onChange={onChangeAuth}/>
@@ -282,7 +296,7 @@ const MemberInfo = () => {
                                 {inputEmail.length > 0 && <span className={`message ${isEmail ? '' : 'error'}`}>{emailError}</span>}
                             </div>
                             <div>
-                                <button>이전</button>
+                                <button onClick={onClickPre}>이전</button>
                                 <button onClick={onClickSignUp}>다음</button>
                             </div>
                         </div>
@@ -294,6 +308,9 @@ const MemberInfo = () => {
             {authFailModal && (<MessageModal open={authFailModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
             {idcheckfail && (<MessageModal open={idcheckfail} confirm={onClickClose} close={onClickClose} type="modalType" header="중복 확인">중복된 아이디가 있습니다.</MessageModal>)}
             {idchecksuccess && (<MessageModal open={idchecksuccess} confirm={onClickClose} close={onClickClose} type="modalType" header="중복 확인">사용 가능한 아이디 입니다.</MessageModal>)}
+            {idcheckNull && (<MessageModal open={idcheckNull} confirm={onClickClose} close={onClickClose} type="modalType" header="중복 확인">입력하신 아이디가 없습니다.</MessageModal>)}
+            {authEmail && (<MessageModal open={authEmail} confirm={onClickClose} close={onClickClose} type="modalType" header="이메일 인증">인증번호를 발급했습니다, 메일함을 확인해주세요</MessageModal>)}
+            {signUpModal && (<MessageModal open={signUpModal} confirm={onClickPre} close={onClickPre} type="modalType" header="회원가입 완료">회원가입이 완료되었습니다. PLAYTIME에 오신 걸 환영합니다. 로그인 페이지로 이동합니다. 다시 로그인을 진행합니다.</MessageModal>)}
         </div>
     );
 }

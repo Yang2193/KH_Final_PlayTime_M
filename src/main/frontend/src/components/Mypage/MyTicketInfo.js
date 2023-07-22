@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AccountApi from "../../api/AccountApi";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const ListBox = styled.div`
     position: relative;
@@ -95,32 +97,34 @@ const MyTicketInfo = () => {
     }
 
     return (
-        <>
-        <h3>{userInfo.userNickname}님의 구매내역</h3>
-        <ListBox>
-        <table className="buyListTable">
-          <thead>
-          </thead>
-          <tbody>
-            {buyList.map((bl) => (
-              <tr className="buyItem" key={bl.id}>
-                <td className="image"><img src={bl.playInfo.imageUrl} alt="image1" className="img-thumb"/></td>
-                <td className="title">{bl.playInfo.title}</td>
-                <td className="location">{bl.playInfo.theaterName}</td>
-                <td className="reserveDate">{bl.reserveDate}</td>
-                <td className="time">{bl.time}</td>
-                <td className="seeDate">{bl.seeDate}</td>
-                <td className="seatInfo">{bl.seatInfo}</td>
-                <td className="ticket">
-                    <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </ListBox>
-        </>
-    );
+            <>
+            <Header/>
+            <h3>{userInfo.userNickname}님의 구매내역</h3>
+            <ListBox>
+            <table className="buyListTable">
+              <thead>
+              </thead>
+              <tbody>
+                {buyList.map((bl) => (
+                  <tr className="buyItem" key={bl.id}>
+                    <td className="image"><img src={bl.playInfo.imageUrl} alt="image1" className="img-thumb"/></td>
+                    <td className="title">{bl.playInfo.title}</td>
+                    <td className="location">{bl.playInfo.theaterName}</td>
+                    <td className="reserveDate">{bl.reserveDate}</td>
+                    <td className="time">{bl.time}</td>
+                    <td className="seeDate">{bl.seeDate}</td>
+                    <td className="seatInfo">{bl.seatInfo}</td>
+                    <td className="ticket">
+                        <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </ListBox>
+            <Footer/>
+            </>
+        );
 }
 
 export default MyTicketInfo;

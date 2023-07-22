@@ -175,7 +175,7 @@ const MyProfileEdit = () => {
         <table>
         {isAuthRequested ? (
               <>
-                <button onClick={userAuthSendMail}>인증번호 받기</button>
+                <button onClick={userAuthSendMail}>이메일 인증번호 받기</button>
                 <input type="password" value={inputAuth} onChange={onChangeAuth} onKeyUp={handleOnKeyPress}/>
                 <button onClick={onClickIsAuth}>인증</button>
               </>
@@ -187,9 +187,9 @@ const MyProfileEdit = () => {
     ) : (
       <div className="auth">
         <span>프로필 수정</span>
-        <table>
+        <table> 패스워드를 입력하세요.
         <input type="password" value={inputAuth} onChange={onChangeAuth} onKeyUp={handleOnKeyPress}/>
-        <button onClick={onClickPwCheck}>인증</button>
+        <button onClick={onClickPwCheck}>확인</button>
         </table>
       </div>
     )}

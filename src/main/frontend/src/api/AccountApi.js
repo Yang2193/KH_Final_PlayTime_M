@@ -23,12 +23,13 @@ const AccountApi = {
     },
 
     // 중복아이디 체크
-        userIdCheck: async(userId) => {
-            const userIdCheckcmd = {
-                userId: userId
-            };
-            return await axios.post("/auth/userIdCheck", userIdCheckcmd)
-        },
+    userIdCheck: async(userId) => {
+        const userIdCheckcmd = {
+            userId: userId
+        };
+        return await axios.post("/auth/userIdCheck", userIdCheckcmd)
+    },
+
     // 회원가입
     memberReg : async(userId, userPw, userNickname, userName, userEmail, userPhone) => {
         const memberInfo = {
@@ -104,30 +105,30 @@ const AccountApi = {
         return await axios.post("/mypage/checkmemberPw", checkMemberPwcmd);
     },
 
-    updateUserInfo: async(userId, userPw, userNickname, userName, userPhone, userEmail, imgUrl) => {
-            Functions.setAuthorizationHeader();
-            const updateUserInfocmd = {
-                userId: userId,
-                userPw: userPw,
-                userNickname: userNickname,
-                userName: userName,
-                userPhone: userPhone,
-                userEmail: userEmail,
-                imgUrl: imgUrl
-            };
-            return await axios.post("/mypage/edit", updateUserInfocmd);
-        },
+    updateUserInfo: async(userId, userPw, userNickname, userName, userPhone, userEmail, imageUrl) => {
+        Functions.setAuthorizationHeader();
+        const updateUserInfocmd = {
+            userId: userId,
+            userPw: userPw,
+            userNickname: userNickname,
+            userName: userName,
+            userPhone: userPhone,
+            userEmail: userEmail,
+            imageUrl: imageUrl
+        };
+        return await axios.post("/mypage/edit", updateUserInfocmd);
+    },
 
-        updateUserInfo2: async(userId, userNickname, imageUrl) => {
-            Functions.setAuthorizationHeader();
-            const updateUserInfo2cmd = {
-                userId: userId,
-                userNickname: userNickname,
-                imageUrl: imageUrl
-            };
-            return await axios.post("/mypage/edit2", updateUserInfo2cmd);
-        },
-
+    updateUserInfo2: async(userId, userNickname, imageUrl) => {
+        Functions.setAuthorizationHeader();
+        console.log(imageUrl);
+        const updateUserInfo2cmd = {
+            userId: userId,
+            userNickname: userNickname,
+            imageUrl: imageUrl
+        };
+        return await axios.post("/mypage/edit2", updateUserInfo2cmd);
+    },
 
     buyTicketList: async(userId) => {
         Functions.setAuthorizationHeader();
@@ -159,15 +160,15 @@ const AccountApi = {
         const kakaoAccessTokencmd = {
             code: code
         }
-        return await axios.post("/auth/kakao/callback", kakaoAccessTokencmd)
+        return await axios.post(`/auth/kakao/callback`, kakaoAccessTokencmd)
     },
 
     kakaologout: async(token) => {
-            const kakaoAccessTokencmd = {
-                token: token
-            };
-            return await axios.post("/auth/kakao/logout", kakaoAccessTokencmd);
-        }
+        const kakaoAccessTokencmd = {
+            token: token
+        };
+        return await axios.post(`/auth/kakao/logout`, kakaoAccessTokencmd);
+    }
 
 }
 
