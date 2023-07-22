@@ -15,9 +15,6 @@ const NavBar = styled.div`
     @media (max-width:768px) {
       width: 100%;
     }
-    @media (max-width:412px) {
-        margin-top: 20px;
-    }
     @media (max-width:360px) {
         margin-top: 0px;
     }

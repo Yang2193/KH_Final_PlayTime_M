@@ -72,7 +72,8 @@ const ListBox = styled.div`
 
 const MyPlayLike = () => {
   // 로그인 한 회원정보 가져오기
-  const userId = localStorage.getItem("userId");
+  const userInfoString = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoString);
 
   // 찜목록 데이터 저장하기
   const [likeList, setLikeList] = useState([]);
@@ -91,7 +92,7 @@ const MyPlayLike = () => {
   useEffect(() => {
     const playLikeData = async () => {
       try {
-        const likeData = await PlayInfoApi.myPagePlayLike(userId);
+        const likeData = await PlayInfoApi.myPagePlayLike(userInfo.userId);
         console.log(likeData.data);
         if (likeData.status === 200) {
           setLikeList(likeData.data);
@@ -105,10 +106,12 @@ const MyPlayLike = () => {
     playLikeData();
   }, []);
 
+  console.log(userInfo)
+
   return (
     <>
       <Header></Header>
-      <h3>{userId}님의 찜목록</h3>
+      <h3>{userInfo.userNickname}님의 찜목록</h3>
       <ListBox>
         <table className="ReviewTable">
           <thead></thead>

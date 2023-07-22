@@ -1,45 +1,47 @@
 import React, { useState } from "react";
 import PostAPI from "../../api/PostApi";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import AccountApi from "../../api/AccountApi";
 import { useEffect } from "react";
 import styled from "styled-components";
 import Header from "../Header";
 import Footer from "../Footer";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
+
 const MyReviewContainer = styled.div`
-  margin-top: 100px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+
+  justify-content: center;
 `;
 
 const MyReviewCloseButton = styled.div`
   cursor: pointer;
-  color: #495057;
-  font-size: 20px;
-  font-weight: 700;
-  margin-top: 10px;
-
+  padding: 6px 12px;
+  background-color: #428bca;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
   @media (max-width: 412px) {
-    margin-left: auto;
-    margin-bottom: auto;
+    width: 50%;
+    margin: 0 auto;
   }
 `;
 
 const MyReviewCard = styled.div`
-  display: flex;
-  width: 80%;
-  max-width: 600px;
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+           width: 230px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
 
   @media (max-width: 412px) {
     flex-direction: column;
+
+    margin: 10px;
+    width: calc(100% - 100px);
   }
 `;
 
@@ -55,16 +57,14 @@ const MyReviewTitle = styled.h3`
   color: #000;
   @media (max-width: 412px) {
     font-size: 18px;
+
   }
 `;
-
 
 const MyReviewDescription = styled.p`
   font-size: 14px;
   color: #555;
   margin-bottom: 10px;
-
-
 `;
 
 const MyReviewDate = styled.p`
@@ -76,26 +76,27 @@ const MyReviewPageTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  margin-left: 30px;
 
+  @media (max-width: 412px) {
+
+  }
 `;
 
 const MyReviewImage = styled.img`
-  width: 200px;
-  height: 250px;
-  margin-right: 20px;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
   background-color: #f0f0f0;
-
+  height: 300px;
 
   @media (max-width: 412px) {
+    height: 300px;
     width: 100%;
-    height: 350px;
-    margin-right: 0;
-    margin-bottom: 20px;
   }
 `;
 
 const MyReviewContent = styled.div`
-  flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
 
 `;
 
@@ -103,48 +104,52 @@ const MyReviewEmptyMessage = styled.p`
   font-size: 16px;
   color: #555;
   text-align: center;
-
 `;
 
 const MyReview = () => {
   const nav = useNavigate();
   // 로그인 한 회원정보 가져오기
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem("userId");
 
   // 리뷰 내역 저장
   const [posts, setPosts] = useState([]);
 
   const increaseViews = async (postId) => {
-      try {
-        await PostAPI.increasePostViews(postId);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    try {
+      await PostAPI.increasePostViews(postId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const formatWriteDate = (date) => {
-      const currentDate = new Date();
-      const writeDate = new Date(date);
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const currentDate = new Date();
+    const writeDate = new Date(date);
+    const options = { year: "numeric", month: "long", day: "numeric" };
 
-      if (isSameDay(currentDate, writeDate)) {
-          const formattedTime = writeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          return `오늘 ${formattedTime}`;
-      } else {
-          const formattedDate = writeDate.toLocaleDateString('ko', options);
-          return formattedDate;
-      }
+    if (isSameDay(currentDate, writeDate)) {
+      const formattedTime = writeDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      return `오늘 ${formattedTime}`;
+    } else {
+      const formattedDate = writeDate.toLocaleDateString("ko", options);
+      return formattedDate;
+    }
   };
   const deletePost = async (postId) => {
-    const confirmDelete = window.confirm('게시물을 삭제하시겠습니까?');
+    const confirmDelete = window.confirm("게시물을 삭제하시겠습니까?");
 
     if (confirmDelete) {
       try {
         const response = await PostAPI.deletePost(postId);
         if (response.status === 200) {
-          toast.error('게시물이 삭제되었습니다.');
+          toast.error("게시물이 삭제되었습니다.");
           // 삭제된 게시물을 화면에서 제거
-          setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+          setPosts((prevPosts) =>
+            prevPosts.filter((post) => post.id !== postId)
+          );
         }
       } catch (error) {
         console.log(error);
@@ -152,60 +157,67 @@ const MyReview = () => {
     }
   };
 
-
   const isSameDay = (date1, date2) => {
-      return (
-          date1.getFullYear() === date2.getFullYear() &&
-          date1.getMonth() === date2.getMonth() &&
-          date1.getDate() === date2.getDate()
-      );
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   };
 
   useEffect(() => {
-    const memberReviewList = async() => {
+    const memberReviewList = async () => {
       try {
         const response = await AccountApi.getMemberReview(userId);
-        if (response.status === 200){
+        if (response.status === 200) {
           setPosts(response.data);
           console.log(posts);
         } else {
-          console.log('불러오기 실패');
+          console.log("불러오기 실패");
         }
       } catch (e) {
         console.log(e);
       }
     };
     memberReviewList();
-  }, [])
-
+  }, []);
 
   console.log(posts);
   return (
     <>
       <Header />
+      <MyReviewPageTitle>나의 게시물</MyReviewPageTitle>
       <MyReviewContainer>
-        <MyReviewPageTitle>나의 게시물</MyReviewPageTitle>
         {posts.length === 0 ? (
           <MyReviewEmptyMessage>게시물이 없습니다.</MyReviewEmptyMessage>
         ) : (
           posts.map((post) => (
             <MyReviewCard key={post.id}>
-              <Link to={`/post/${post.id}`} onClick={() => increaseViews(post.id)}>
+              <Link
+                to={`/post/${post.id}`}
+                onClick={() => increaseViews(post.id)}
+              >
                 {post.postImageUrl ? (
                   <MyReviewImage src={post.postImageUrl} alt="게시물 이미지" />
                 ) : (
-                  <MyReviewImage src="" alt="x" />
+                  <MyReviewImage  alt="" />
                 )}
               </Link>
               <MyReviewContent>
-
-                <Link to={`/post/${post.id}`} onClick={() => increaseViews(post.id)}>
+                <Link
+                  to={`/post/${post.id}`}
+                  onClick={() => increaseViews(post.id)}
+                >
                   <MyReviewTitle>{post.postTitle}</MyReviewTitle>
                 </Link>
-                <MyReviewDescription dangerouslySetInnerHTML={{ __html: post.postContent }}></MyReviewDescription>
+                <MyReviewDescription
+                  dangerouslySetInnerHTML={{ __html: post.postContent }}
+                ></MyReviewDescription>
                 <MyReviewDate>{formatWriteDate(post.postDate)}</MyReviewDate>
               </MyReviewContent>
-              <MyReviewCloseButton onClick={() => deletePost(post.id)}>✕</MyReviewCloseButton>
+              <MyReviewCloseButton onClick={() => deletePost(post.id)}>
+                삭제
+              </MyReviewCloseButton>
             </MyReviewCard>
           ))
         )}
@@ -213,6 +225,6 @@ const MyReview = () => {
       <Footer />
     </>
   );
-}
+};
 
 export default MyReview;

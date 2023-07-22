@@ -7,6 +7,7 @@ import profile from "../../images/mypageicon2.png";
 import xmark from "../../images/x-mark.png";
 import "../../styles/MyProfileEditDetail.css";
 import MessageModal from "../../utils/MessageModal";
+import { storage } from "../Post/firebase";
 
 const MyProfileEditDetail = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const MyProfileEditDetail = () => {
   const [nickname, setNickname] = useState(userInfo.userNickname);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [imageUrl, setImageUrl] = useState(userInfo.imgUrl || profile);
 
   // 오류 메세지
   const [passwordMsg, setPasswordMsg] = useState("");
@@ -35,6 +37,9 @@ const MyProfileEditDetail = () => {
   const [isEmail, setIsEmail] = useState(false);
   const [isAll, setIsAll] = useState(false);
 
+  const [postData, setPostData] = useState("");
+
+
   //팝업창
   const [withDrawModal, setWithDrawModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
@@ -47,6 +52,7 @@ const MyProfileEditDetail = () => {
 
   const onClickOpen = () => {
     setWithDrawModal(true);
+    setUpdateModal(true);
   }
 
   useEffect(() => {
@@ -133,12 +139,12 @@ const MyProfileEditDetail = () => {
         nickname,
         userInfo.userName,
         phone,
-        email
+        email,
+        imageUrl
       );
       if(response){
         navigate("/mypage");
         console.log("회원정보 수정", response);
-        setUpdateModal(true);
       }
     } catch (e) {
       console.log(e);
@@ -147,7 +153,7 @@ const MyProfileEditDetail = () => {
 
   const updateKakao = async() => {
     try {
-      const response = await AccountApi.updateUserInfo2(userInfo.userId, nickname);
+      const response = await AccountApi.updateUserInfo2(userInfo.userId, nickname, imageUrl);
       if(response){
         navigate("/mypage");
         console.log("회원정보 수정", response);
@@ -170,11 +176,37 @@ const MyProfileEditDetail = () => {
       }
   };
 
-  const imageUrl = userInfo.imgUrl || profile;
+
   const getUserId = userInfo.userEmail.split("@")[0];
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
 
+    // 파일이 선택되지 않았으면 무시
+    if (!file) return;
 
+    try {
+      // 파일 업로드
+      const storageRef = storage.ref();
+      const fileRef = storageRef.child(file.name);
+      await fileRef.put(file);
 
+      // 업로드한 파일의 다운로드 URL을 받아와서 상태를 업데이트
+      const downloadURL = await fileRef.getDownloadURL();
+      // 다운로드 URL을 이용하여 이미지를 화면에 표시하거나 상태를 업데이트하는 등의 작업을 수행하면 됩니다.
+      console.log("다운로드 URL:", downloadURL);
+
+      // 상태 업데이트
+      setImageUrl(downloadURL);
+    } catch (error) {
+      console.error("파일 업로드 실패:", error);
+    }
+  };
+
+  const handleDeleteImage = () => {
+    setImageUrl(profile);
+  };
+
+  console.log(imageUrl);
   return (
     <>
   <Header />
@@ -187,7 +219,7 @@ const MyProfileEditDetail = () => {
           <div className="mypage-pic-box">
                 <div className="mypage-pic-delete">
                   <label>
-                    <img className="mypage-pic-del-btn" src={xmark} alt="Delete Profile" />
+                  <button className="mypage-pic-del-btn" onClick={handleDeleteImage}><img  src={xmark} alt="Delete Profile"/></button>
                   </label>
                 </div>
                 <div className="mypage-pic">
@@ -196,9 +228,14 @@ const MyProfileEditDetail = () => {
                   </div>
                 </div>
                 <div className="mypage-pic-change">
-                  <label>
-                    <p className="mypage-pic-change-btn">변경</p>
-                  </label>
+                <label>
+                  <input
+                    type="file"
+                    onChange={handleImageUpload}
+                    style={{ display: "none" }}
+                  />
+                  <p className="mypage-pic-change-btn">변경</p>
+                </label>
                 </div>
               </div>
               <div className="mypage-box mypage-nickname-sns-box">
@@ -257,11 +294,11 @@ const MyProfileEditDetail = () => {
       <div className="mypage-save-box">
         <div className="mypage-buttons">
           <button className="mypage-bye-btn mypage-gradient-btn" onClick={onClickOpen}>탈퇴</button>
-          <button className="mypage-save-btn mypage-gradient-btn" onClick={updateInfo}>수정</button>
+          <button className="mypage-save-btn mypage-gradient-btn" onClick={onClickOpen}>수정</button>
         </div>
       </div>
-      {withDrawModal && (<MessageModal open={withDrawModal} confirm={handleConfirmWithdraw} close={handleConfirmWithdraw} type="modalType" header="회원 탈퇴">회원탈퇴가 완료 되었습니다.</MessageModal>)}
-      {updateModal && (<MessageModal open={updateModal} confirm={onClickClose} close={onClickClose} type="modalType" header="회원정보수정">회원정보가 수정 되었습니다.</MessageModal>)}
+      {withDrawModal && (<MessageModal open={withDrawModal} confirm={handleConfirmWithdraw} close={onClickClose} type="modalType" header="회원 탈퇴">회원탈퇴가 완료 되었습니다.</MessageModal>)}
+      {updateModal && (<MessageModal open={updateModal} confirm={updateInfo} close={onClickClose} type="modalType" header="회원정보수정">회원정보가 수정 되었습니다.</MessageModal>)}
       </>
     ) : (
       <>
@@ -269,9 +306,9 @@ const MyProfileEditDetail = () => {
           {userInfo ? (
             <>
               <div className="mypage-pic-box">
-                <div className="mypage-pic-delete">
+              <div className="mypage-pic-delete">
                   <label>
-                    <img className="mypage-pic-del-btn" src={xmark} alt="Delete Profile" />
+                  <button className="mypage-pic-del-btn" onClick={handleDeleteImage}><img  src={xmark} alt="Delete Profile"/></button>
                   </label>
                 </div>
                 <div className="mypage-pic">
@@ -280,9 +317,14 @@ const MyProfileEditDetail = () => {
                   </div>
                 </div>
                 <div className="mypage-pic-change">
-                  <label>
-                    <p className="mypage-pic-change-btn">변경</p>
-                  </label>
+                <label>
+                  <input
+                    type="file"
+                    onChange={handleImageUpload}
+                    style={{ display: "none" }}
+                  />
+                  <p className="mypage-pic-change-btn">변경</p>
+                </label>
                 </div>
               </div>
               <div className="mypage-box mypage-nickname-sns-box">

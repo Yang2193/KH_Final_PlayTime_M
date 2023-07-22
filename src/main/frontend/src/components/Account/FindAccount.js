@@ -40,13 +40,10 @@ export const FindUserId = () => {
                 setFindId(response.data);
                 setFindIdSuccess(true);
                 console.log(response.data);
-            } else {
-                setFindIdFail(true);
-                console.log(response);
             }
         } catch(e) {
             console.log("일치하는 회원정보가 없습니다.");
-            console.log(e);
+            setFindIdFail(true);
         }
     }
 
