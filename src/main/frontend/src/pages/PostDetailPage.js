@@ -78,7 +78,7 @@ const PostImage = styled.div`
   width: 100%;
 
   img {
-    width: 80%;
+    width: 40%;
     max-width: 80%;
     margin-right: 40px;
   }
