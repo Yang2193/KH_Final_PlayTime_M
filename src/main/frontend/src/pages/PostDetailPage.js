@@ -75,10 +75,11 @@ const PostImage = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 
   img {
-    width: 50%;
-    max-width: 30%;
+    width: 80%;
+    max-width: 80%;
     margin-right: 40px;
   }
   @media (max-width: 412px) {
@@ -87,16 +88,10 @@ const PostImage = styled.div`
 `;
 
 const PostContent = styled.div`
-  line-height: 1.6;
-  font-size: 14px;
-  display: flex;
-  width: 100%;
-  justify-content: center;
+  max-height: 400px; /* 원하는 최대 높이 설정 */
+  overflow: hidden;
+  word-break: break-word;
 
-  p strong {
-    width: 100%;
-    display: flex;
-  }
 `;
 
 const LoadingMessage = styled.div`
@@ -164,8 +159,8 @@ const CommentContent = styled.div`
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  white-space: normal; // 이 부분을 추가해 줍니다.
-  max-width: 500px;
+
+
 
   @media (max-width: 412px) {
     width: 70%;
@@ -545,7 +540,7 @@ const PostDetailPage = () => {
           </CommentSection>
         </PostDetailWrapper>
       </Background>
-      <Footer/>
+      <Footer />
     </>
   );
 };
