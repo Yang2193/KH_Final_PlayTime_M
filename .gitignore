@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### application.properties ###
-application.properties
+*.properties
 
 # dependencies
 src/main/frontend/node_modules
