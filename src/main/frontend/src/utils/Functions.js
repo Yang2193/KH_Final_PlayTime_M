@@ -1,6 +1,5 @@
 import axios from "axios";
 
-const KH_DOMAIN = "http://localhost:8111"
 
 // 이 프로젝트 전역에서 두루 쓰이는 함수를 모아놓았습니다.
 const Functions = {
@@ -33,7 +32,7 @@ const Functions = {
         const token = {
           refreshToken : Functions.getRefreshToken()
         }
-        const rsp = await axios.post(KH_DOMAIN + "/auth/token", token)
+        const rsp = await axios.post("/auth/token", token)
         Functions.setAccessToken(rsp.data.accessToken); 
         Functions.setAuthorizationHeader();
       },

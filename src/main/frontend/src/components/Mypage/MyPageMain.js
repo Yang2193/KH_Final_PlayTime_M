@@ -81,10 +81,11 @@ const MenuBlock = styled.div`
 
 const MyPageMain = () => {
     const [userNickname, setUserNickname] = useState("");
+    const userId = localStorage.getItem("userId");
     useEffect(()=> {
         const recentData = async() => {
             try {
-                const userData = await AccountApi.getUserInfo(localStorage.getItem("userId"));
+                const userData = await AccountApi.getUserInfo(userId);
                 console.log(userData);
                 if(userData.data) {
                     const userInfoData = JSON.stringify(userData.data);
