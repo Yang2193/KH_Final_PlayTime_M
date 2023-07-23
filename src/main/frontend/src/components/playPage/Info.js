@@ -6,13 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { FaHeart } from 'react-icons/fa';
 import MessageModal from "../../utils/MessageModal";
 import moment from "moment";
+
 const All = styled.div`
 @media (max-width:768px) {
         width: 100%;
         height: 1050px;
     }
     @media (max-width:412px) {
-        height: 780px;
+        height: 810px;
     }
     @media (max-width:360px) {
         height: 690px;
@@ -172,7 +173,7 @@ const FixData = styled.div`
             height: 50px;
         }
         @media (max-width:412px) {
-            height: 0px;
+            height: 60px;
             align-items: end;
         }
         @media (max-width:360px) {
