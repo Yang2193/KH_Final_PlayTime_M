@@ -4,7 +4,6 @@ import MessageModal from "../../utils/MessageModal";
 import AccountApi from "../../api/AccountApi";
 import styled from "styled-components";
 const Container = styled.div`
-margin-top:30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +34,7 @@ const SignUpForm = styled.div`
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #990A2C;
     color: #ffffff;
     border: none;
     border-radius: 4px;

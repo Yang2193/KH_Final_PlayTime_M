@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Header from "../Header";
 import Footer from "../Footer";
 import { toast, ToastContainer } from "react-toastify";
+import imgX from "../../images/gray.png"
 
 
 
@@ -32,12 +33,12 @@ const MyReviewCloseButton = styled.div`
 `;
 
 const MyReviewCard = styled.div`
-           width: 230px;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
+  width: 230px;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
 
   @media (max-width: 412px) {
     flex-direction: column;
@@ -47,20 +48,12 @@ const MyReviewCard = styled.div`
   }
 `;
 
-const MyReviewTitle = styled.h3`
-  font-size: 100%;
-  font-weight: bold;
-  margin-bottom: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 300px;
-  text-decoration: none;
-  color: #000;
-  @media (max-width: 412px) {
-    font-size: 18px;
+const MyReviewTitle = styled.h2`
+font-size: 24px;
+font-weight: bold;
+margin-bottom: 20px;
+text-align: center;
 
-  }
 `;
 
 const MyReviewDescription = styled.p`
@@ -78,8 +71,7 @@ const MyReviewPageTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-  margin-left: 30px;
-
+  text-align: center;
   @media (max-width: 412px) {
 
   }
@@ -188,7 +180,7 @@ const MyReview = () => {
   return (
     <>
       <Header />
-      <MyReviewPageTitle>나의 게시물</MyReviewPageTitle>
+      <MyReviewPageTitle>나의 후기</MyReviewPageTitle>
       <MyReviewContainer>
         {posts.length === 0 ? (
           <MyReviewEmptyMessage>게시물이 없습니다.</MyReviewEmptyMessage>

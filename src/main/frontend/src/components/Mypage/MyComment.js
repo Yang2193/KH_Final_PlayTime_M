@@ -7,14 +7,13 @@ import Header from "../Header";
 import Footer from "../Footer";
 
 
-const MyReviewContainer = styled.div`
-  margin-top: 100px;
+const MyCommentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const MyReviewCloseButton = styled.div`
+const MyCommentCloseButton = styled.div`
   cursor: pointer;
   color: #495057;
   font-size: 20px;
@@ -27,10 +26,11 @@ const MyReviewCloseButton = styled.div`
   }
 `;
 
-const MyReviewCard = styled.div`
+const MyCommentCard = styled.div`
   display: flex;
   width: 80%;
   max-width: 600px;
+  margin-top: 20px;
   margin-bottom: 20px;
   padding: 20px;
   border: 1px solid #ddd;
@@ -43,9 +43,10 @@ const MyReviewCard = styled.div`
   }
 `;
 
-const MyReviewTitle = styled.h3`
+const MyCommentTitle = styled.h3`
   font-size: 100%;
   font-weight: bold;
+  text-decoration: none;
   margin-bottom: 10px;
   white-space: nowrap;
   overflow: hidden;
@@ -59,7 +60,7 @@ const MyReviewTitle = styled.h3`
 `;
 
 
-const MyReviewDescription = styled.p`
+const MyCommentDescription = styled.p`
   font-size: 14px;
   color: #555;
   margin-bottom: 10px;
@@ -67,19 +68,21 @@ const MyReviewDescription = styled.p`
 
 `;
 
-const MyReviewDate = styled.p`
+const MyCommentDate = styled.p`
   font-size: 12px;
   color: black;
 `;
 
-const MyReviewPageTitle = styled.h2`
+const MyCommentPageTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
+  text-align: center;
   margin-bottom: 20px;
+  width: 100%
 
 `;
 
-const MyReviewImage = styled.img`
+const MyCommentImage = styled.img`
   width: 200px;
   height: 250px;
   margin-right: 20px;
@@ -94,12 +97,12 @@ const MyReviewImage = styled.img`
   }
 `;
 
-const MyReviewContent = styled.div`
+const MyCommentContent = styled.div`
   flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
 
 `;
 
-const MyReviewEmptyMessage = styled.p`
+const MyCommentEmptyMessage = styled.p`
   font-size: 16px;
   color: #555;
   text-align: center;
@@ -186,25 +189,25 @@ const MyComment = () => {
   return (
     <>
       <Header/>
-      <MyReviewContainer>
-      <MyReviewPageTitle>내 댓글 목록</MyReviewPageTitle>
+      <MyCommentContainer>
+      <MyCommentPageTitle>내 댓글 목록</MyCommentPageTitle>
         {commentList.length === 0 ? (
-          <MyReviewEmptyMessage>댓글이 없습니다.</MyReviewEmptyMessage>
+          <MyCommentEmptyMessage>댓글이 없습니다.</MyCommentEmptyMessage>
         ) : (
           commentList.map((cl) => (
-            <MyReviewCard key={cl.id}>
-              <MyReviewContent>
+            <MyCommentCard key={cl.id}>
+              <MyCommentContent>
                 <Link to={`/post/${cl.postId}`} onClick={() => increaseViews(cl.postId)}>
-                  <MyReviewTitle>{cl.postTitle}</MyReviewTitle>
+                  <MyCommentTitle>{cl.postTitle}</MyCommentTitle>
                 </Link>
-                <MyReviewDescription dangerouslySetInnerHTML={{ __html: cl.commentContent }}></MyReviewDescription>
-                <MyReviewDate>{formatWriteDate(cl.commentDate)}</MyReviewDate>
-              </MyReviewContent>
-              <MyReviewCloseButton onClick={() => handleDeleteComment(cl.id)}>✕</MyReviewCloseButton>
-            </MyReviewCard>
+                <MyCommentDescription dangerouslySetInnerHTML={{ __html: cl.commentContent }}></MyCommentDescription>
+                <MyCommentDate>{formatWriteDate(cl.commentDate)}</MyCommentDate>
+              </MyCommentContent>
+              <MyCommentCloseButton onClick={() => handleDeleteComment(cl.id)}>✕</MyCommentCloseButton>
+            </MyCommentCard>
           ))
         )}
-      </MyReviewContainer>
+      </MyCommentContainer>
       <Footer />
     </>
   );

@@ -87,9 +87,10 @@ const MyProfileEditDetail = () => {
 
   const onChageNickname = (e) => {
     const nicknameRegex = /^(?=.*[a-zA-Z0-9ㄱ-ㅎ가-힣])[a-zA-Z0-9ㄱ-ㅎ가-힣]{2,10}$/;
-    setNickname(e.target.value);
+    const updatedNickname = e.target.value;
+    setNickname(updatedNickname);
 
-    if (!nicknameRegex.test(nickname)) {
+    if (!nicknameRegex.test(updatedNickname)) {
       setNicknameMsg(
         "영문자 대/소 + 숫자 + 한글 조합으로 2~10자의 닉네임을 입력하세요."
       );
@@ -102,9 +103,8 @@ const MyProfileEditDetail = () => {
 
   const onChagePhone = (e) => {
     const telRegex = /^\d{2,3}-\d{3,4}-\d{4}$/;
-    const newPhone = e.target.value;
-    setPhone(newPhone);
-    if (!telRegex.test(newPhone)) {
+    setPhone(e.target.value);
+    if (!telRegex.test(phone)) {
       setPhoneMsg("'-'를 포함하여 전화번호 10-11자리를 입력하세요");
       setIsPhone(false);
     } else {
@@ -221,7 +221,7 @@ const MyProfileEditDetail = () => {
                   </div>
                 </div>
                 <div className="mypage-pic-change">
-                <label>
+                <label className="change-label">
                   <input className="mypage-pic-input"
                     type="file"
                     onChange={handleImageUpload}
@@ -296,65 +296,58 @@ const MyProfileEditDetail = () => {
     ) : (
       <>
         <div className="mypage-profile-box">
-          {userInfo ? (
-            <>
-              <div className="mypage-pic-box">
-              <div className="mypage-pic-delete">
-                  <label>
-                  <button className="mypage-pic-del-btn" onClick={handleDeleteImage}><img  src={xmark} alt="Delete Profile"/></button>
-                  </label>
-                </div>
-                <div className="mypage-pic">
-                  <div className="mypage-pic-div mypage-pic-div2">
-                    <img src={imageUrl} alt="Profile" />
-                  </div>
-                </div>
-                <div className="mypage-pic-change">
-                <label>
-                  <input
-                    type="file"
-                    onChange={handleImageUpload}
-                    style={{ display: "none" }}
-                  />
-                  <p className="mypage-pic-change-btn">변경</p>
-                </label>
+          <div className="mypage-pic-box">
+          <div className="mypage-pic-delete">
+              <button className="mypage-pic-del-btn" onClick={handleDeleteImage}>
+                <img src={xmark} alt="프로필 삭제" />
+              </button>
+          </div>
+            <div className="mypage-pic">
+              <div className="mypage-pic-div mypage-pic-div2">
+                <img src={imageUrl} alt="Profile" />
+              </div>
+            </div>
+            <div className="mypage-pic-change">
+            <label>
+              <input
+                type="file"
+                onChange={handleImageUpload}
+                style={{ display: "none" }}
+              />
+              <p className="mypage-pic-change-btn">변경</p>
+            </label>
+            </div>
+          </div>
+          <div className="mypage-box mypage-nickname-sns-box">
+            <div className="mypage-empty-box"></div>
+            <div className="mypage-nickname-box">
+              <div className="mypage-nickname-setbox">
+                <div className="mypage-title mypage-nickname-title">닉네임</div>
+                <div className="mypage-nickname-input">
+                  <input className="mypage-pic-input" type="text" name="nickname" maxLength={64} placeholder="입력해주세요" value={nickname} onChange={onChageNickname} />
                 </div>
               </div>
-              <div className="mypage-box mypage-nickname-sns-box">
-                <div className="mypage-empty-box"></div>
-                <div className="mypage-nickname-box">
-                  <div className="mypage-nickname-setbox">
-                    <div className="mypage-title mypage-nickname-title">닉네임</div>
-                    <div className="mypage-nickname-input">
-                      <input type="text" name="nickname" maxLength={64} placeholder="입력해주세요" value={nickname} onChange={onChageNickname} />
-                    </div>
-                  </div>
-                  <div className="mypage-nickname-checkbox">
-                    <p className="mypage-nickname-check"></p>
-                  </div>
-                </div>
-                <div className="mypage-box mypage-sns-box">
-                  <div className="mypage-title mypage-sns-title">ID</div>
-                  <div className="mypage-sns-input">{getUserId}</div>
-                  <div className="mypage-sns-bye">
-                    <div className="mypage-pop-up">
-                    <button className="mypage-bye-btn mypage-gradient-btn" onClick={handleConfirmWithdraw}>탈퇴</button>
-                    </div>
-                  </div>
+              <div className="mypage-nickname-checkbox">
+                <p className="mypage-nickname-check"></p>
+              </div>
+            </div>
+            <div className="mypage-box mypage-sns-box">
+              <div className="mypage-title mypage-sns-title">ID</div>
+              <div className="mypage-sns-input">{getUserId}</div>
+              <div className="mypage-sns-bye">
+                <div className="mypage-pop-up">
+                <button className="mypage-bye-btn mypage-bye-gradient-btn" onClick={handleConfirmWithdraw}>탈퇴</button>
                 </div>
               </div>
-            </>
-          ) : (
-            <p>Loading...</p>
-          )}
+            </div>
           </div>
-          <div className="mypage-save-box">
-          <button className="mypage-save-btn mypage-gradient-btn" onClick={updateKakao}>확인</button>
-          </div>
+        </div>
+        <div className="mypage-save-box">
+        <button className="mypage-save-btn mypage-gradient-btn" onClick={updateKakao}>확인</button>
+        </div>
       </>
     )}
   </div>
-  <Footer/>
 </>
   );
 };

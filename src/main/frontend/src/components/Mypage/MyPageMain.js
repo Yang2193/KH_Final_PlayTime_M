@@ -5,13 +5,24 @@ import AccountApi from "../../api/AccountApi";
 import profile from "../../images/mypageicon2.png";
 
 const MenuBlock = styled.div`
-    width: 768px;
-    height: auto;
     text-align: center;
     position: relative;
     transform: translate(-50%, -50%);
     top: 250px;
     left: 50%;
+    @media (max-width:768px) {
+        width: 100%;
+        height: 1050px;
+    }
+    @media (max-width:412px) {
+        width: 100%;
+        height: auto;
+    }
+    @media (max-width:360px) {
+        width: 100%;
+        height: auto;
+    }
+
 
     .profile {
         width: 150px;
@@ -21,12 +32,13 @@ const MenuBlock = styled.div`
         align-items: center;
         position: relative;
     }
-    
+
     .profile img {
         display: block;
         height: 70%;
         margin-left: auto;
         margin-right: auto;
+        clip-path: circle(40% at center);
     }
 
     .pageheader {

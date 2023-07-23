@@ -1,10 +1,7 @@
-#mypage-main{
-  padding-top : 50px;
-}
 
 .mypage-container {
   display: grid;
-  width : 50%;
+  width : 60%;
   grid-template-columns: 100%;
   grid-template-rows: 90% 10%;
   gap: 0px 0px;
@@ -19,7 +16,7 @@
   height : 100%;
 }
 
-.mypage-pic-input {
+.mypage input{
   display : block;
   border : none;
   border-right : 0px;
@@ -27,20 +24,36 @@
   border-left : 0px;
   border-bottom : 1px solid black;
   background : #fff;
-  transition : all 0.3s ease;
+  transition : all 0.mypage-3s ease;
   width : 90%;
 }
-.mypage-container input:focus {
-  outline:none;
-  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.15);
+
+.mypage-pic-input{
+  display : block;
+  border : none;
+  border-right : 0px;
+  border-top : 0px;
+  border-left : 0px;
+  border-bottom : 1px solid black;
+  background : #fff;
+  transition : all 0.mypage-3s ease;
+  width : 90%;
 }
 
-.mypage-container input::placeholder{
+.mypage input:focus {
+  outline:none;
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.mypage-15);
+}
+
+.mypage input::placeholder{
   font-size : smaller;
 }
+
 label{
   display : block;
+  text-align: center;
 }
+
 .mypage-title{
   width : 80%;
   height : fit-content;
@@ -73,18 +86,29 @@ label{
   grid-area: pic-box;
 }
 
-.mypage-pic-delete{
+.mypage-pic-delete {
   grid-area: pic-delete;
   text-align: end;
   padding-right: 20%;
+  position: relative;
 }
 
-.mypage-pic-delete img{
+.mypage-pic-del-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10px;
+  width: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mypage-pic-delete img {
   cursor: pointer;
   height: 10px;
   width: 10px;
 }
-
 .mypage-pic {
   grid-area: pic;
   width : 100%;
@@ -116,10 +140,6 @@ label{
 .mypage-pic-change-btn{
   color : #981d26;
   cursor: pointer;
-}
-
-.mypage-pic-change label {
-  text-align: center;
 }
 
 .mypage-nickname-sns-box {
@@ -194,7 +214,7 @@ label{
   cursor: pointer;
   height : 32px;
   display: block;
-  padding: 0.2em 0.5em;
+  padding: 0.mypage-2em 0.mypage-5em;
   border-radius: 0;
   color: #7E7B7B;
   margin-top: 2rem;
@@ -205,9 +225,9 @@ label{
   background-color: white;
   background-position: 1% 50%;
   background-size: 400% 300%;
-  border: 1.5px solid #7E7B7B;
+  border: 1.mypage-5px solid #7E7B7B;
   border-radius: 20px;
-  transition: 700ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: 700ms cubic-bezier(0.mypage-165, 0.mypage-84, 0.mypage-44, 1);
   margin:0 auto;
 }
 
@@ -239,19 +259,6 @@ label{
   text-align:center;
   }
 
-.mypage-bye-bye {
-  grid-area: sns-bye;
-  text-align:center;
-  }
-
-.mypage-bye-btn {
-  cursor: pointer;
-}
-
-.mypage-pic-del-btn {
-  cursor: pointer;
-}
-
 .mypage-pop-up {
   cursor : pointer;
   color: #7E7B7B;
@@ -264,20 +271,19 @@ label{
   margin-top: 20px;
 }
 
-.mypage-save-btn {
-  cursor: pointer;
+.mypage-bye-btn{
+  cursor : pointer;
 }
 
-.mypage-buttons {
-  display: flex;
-  justify-content: space-between;
+.mypage-save-btn{
+  cursor : pointer;
 }
 
 .mypage-gradient-btn {
   width: 100px;
   grid-area: gradient-btn;
   display: block;
-  padding: 0.5em 1em;
+  padding: 0.mypage-5em 1em;
   border-radius: 0;
   color: #7E7B7B;
   margin-top: 2rem;
@@ -288,37 +294,35 @@ label{
   background-color: white;
   background-position: 1% 50%;
   background-size: 400% 300%;
-  border: 1.5px solid #7E7B7B;
+  border: 1.mypage-5px solid #7E7B7B;
   border-radius: 20px;
-  transition: 700ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: 700ms cubic-bezier(0.mypage-165, 0.mypage-84, 0.mypage-44, 1);
+  margin:0 auto;
+}
+.mypage-bye-gradient-btn {
+  width: 50px;
+  display: block;
+  padding: 0.mypage-5em 1em;
+  border-radius: 0;
+  color: #7E7B7B;
+  margin-top: 2rem;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: white;
+  background-position: 1% 50%;
+  background-size: 400% 300%;
+  border: 1.mypage-5px solid #7E7B7B;
+  border-radius: 20px;
+  transition: 700ms cubic-bezier(0.mypage-165, 0.mypage-84, 0.mypage-44, 1);
   margin:0 auto;
 }
 .mypage-pic-div2{
   display: flex;
   align-items: center;
 }
-/* íŒì—… css ì‹œìž‘ */
-.mypage-pop-up {
-  cursor : pointer;
-  display: block;
-  padding: 0.2em 0.5em;
-  border-radius: 0;
-  color: #7E7B7B;
-  margin-top: 2rem;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-decoration: none;
-  background-color: white;
-  background-position: 1% 50%;
-  background-size: 400% 300%;
-  border: none;
-  transition: 700ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  margin: 0 auto;
-}
 
-
-/* ë°˜ì‘í˜• ì‹œìž‘ */
 @media screen and (max-width: 362px){
   .mypage-container{
     width : 95%;
@@ -382,13 +386,4 @@ label{
   .mypage-container{
     width : 50%;
   }
-}
-
-.mypage-default-profile-box {
-  grid-template-columns: 30% 70%;
-  grid-template-rows: 100%;
-  gap: 0px 0px;
-  grid-template-areas:
-    "pic-box nickname-sns-box";
-  grid-area: profile-box;
 }
