@@ -121,6 +121,12 @@ public class AuthService {
         return authCode;
     }
 
+    // 프로필 수정 시 인증메일 발송
+    public String AuthEmail(String userEmail) throws Exception {
+        String authCode = emailService.mypageEmailAuthKey(userEmail);
+        return authCode;
+    }
+
     // 패스워드 찾기
     public boolean findPw(String userId, String userName, String userEmail) throws Exception{
         Optional<MemberInfo> optionalMemberInfo = memberInfoRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail);

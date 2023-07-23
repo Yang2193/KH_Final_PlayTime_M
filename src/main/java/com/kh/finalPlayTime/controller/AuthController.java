@@ -35,6 +35,27 @@ public class AuthController { // 로그인 회원가입 ID/PW 찾기 여기에�
         return ResponseEntity.ok(tokenDto);
     }
 
+    @PostMapping("/sendAuthEmail")
+    public ResponseEntity<String> sendAuthEmail(@RequestBody Map<String, String> sendData) throws Exception {
+        String userEmail = sendData.get("userEmail");
+        return ResponseEntity.ok(authService.sendEmail(userEmail));
+    }
+
+    @PostMapping("/mypageEmailAuth")
+    public ResponseEntity<String> mypageEmailAuth(@RequestBody Map<String, String> sendData) throws Exception {
+        String userEmail = sendData.get("userEmail");
+        return ResponseEntity.ok(authService.AuthEmail(userEmail));
+    }
+
+    @PostMapping("/userIdCheck")
+    public Boolean userIdCheck(@RequestBody Map<String, String> checkData) {
+        String userId = checkData.get("userId");
+        System.out.println(userId);
+        Optional<MemberInfo> memberInfoOptional = memberInfoRepository.findByUserId(userId);
+        System.out.println(memberInfoOptional.isPresent());
+        return memberInfoOptional.isPresent();
+    }
+
     @PostMapping("/find/id")
     public ResponseEntity<String> findMemberId(@RequestBody Map<String, String> findIdData) {
         String userName = findIdData.get("userName");
@@ -61,20 +82,5 @@ public class AuthController { // 로그인 회원가입 ID/PW 찾기 여기에�
     public ResponseEntity<TokenDto> renewAccessToken(@RequestBody TokenDto requestDto){
         TokenDto renewDto = tokenService.createNewAccessToken(requestDto.getRefreshToken());
         return ResponseEntity.ok(renewDto);
-    }
-
-    // 회원가입 및 마이페이지정보수정 시 인증코드 발송
-    @PostMapping("/sendAuthEmail")
-    public ResponseEntity<String> sendAuthEmail(@RequestBody Map<String, String> sendData) throws Exception {
-        String userEmail = sendData.get("userEmail");
-        return ResponseEntity.ok(authService.sendEmail(userEmail));
-    }
-    @PostMapping("/userIdCheck")
-    public Boolean userIdCheck(@RequestBody Map<String, String> checkData) {
-        String userId = checkData.get("userId");
-        System.out.println(userId);
-        Optional<MemberInfo> memberInfoOptional = memberInfoRepository.findByUserId(userId);
-        System.out.println(memberInfoOptional.isPresent());
-        return memberInfoOptional.isPresent();
     }
 }
