@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import AccountApi from "../../api/AccountApi";
 import '../../styles/Account.css';
 import MessageModal from "../../utils/MessageModal";
-import Functions from "../../utils/Functions";
 
   const Login = () => {
     const navigate = useNavigate();
@@ -56,7 +55,7 @@ import Functions from "../../utils/Functions";
       } else {
           setIsLoginPw(true);
           setLoginPwOkMsg("");
-      }        
+      }
     }
 
     const handleOnKeyPress = e => {
@@ -64,20 +63,15 @@ import Functions from "../../utils/Functions";
             onClickLogin();
         }
     }
-  
+
     const onClickLogin = async() => {
       try {
         const response = await AccountApi.getToken(loginId, loginPw);
         if(response.status === 200) {
-          const accessToken = response.data.accessToken;
-          const refreshToken = response.data.refreshToken;
-          const expiresIn = response.data.tokenExpiresIn;
-
-          Functions.setAccessToken(accessToken);
-          Functions.setRefreshToken(refreshToken);
-          Functions.setTokenExpiresIn(expiresIn);
-          
+          localStorage.setItem("accessToken", response.data.accessToken);
+          localStorage.setItem("refreshToken", response.data.refreshToken);
           localStorage.setItem("userId", loginId);
+          localStorage.setItem("userPw", loginPw);
           localStorage.setItem("isLogin", "TRUE");
           localStorage.setItem("loginValue", "DEFAULT");
           try {
@@ -98,13 +92,13 @@ import Functions from "../../utils/Functions";
 
     const onClickKakaoLogin = () => {
       const clientId = "088a7b267c39d0a11ec3904372ed9d33";
-      const redirectUri = "http://ticket-playtime.xyz/auth/kakao/callback";
+      const redirectUri = "http://localhost:3000/auth/kakao/callback";
       const authorizeUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
       window.location.href = authorizeUrl;
     };
 
     return (
-      <div className="wrapper">
+      <>
         <div className="loginWrapper">
           <div className="login">
             <h2>로그인</h2>
@@ -124,7 +118,8 @@ import Functions from "../../utils/Functions";
                 {isLoginPw && <span className="loginPwOk">{loginPwOkMsg}</span>}
               </div>
               <div className="IdPwdSearchButtonBox">
-                <Link to="/find" className="IdPwdSearchButton">아이디 / 패스워드 찾기</Link>
+                <Link to="/find/id" className="IdSearchButton">아이디 찾기</Link>
+                <Link to="/find/pw" className="PwdSearchButton">패스워드 찾기</Link>
                 <Link to="/join" className="JoinButton">회원 가입</Link>
               </div>
               <button className="loginButton" onClick={onClickLogin}>로그인</button>
@@ -133,7 +128,7 @@ import Functions from "../../utils/Functions";
           </div>
         </div>
         {modalOpen && (<MessageModal open={modalOpen} confirm={onClickClose} close={onClickClose} type="modalType" header="로그인 오류">아이디 및 패스워드가 틀렸습니다.</MessageModal>)}
-      </div>
+      </>
     );
   };
   

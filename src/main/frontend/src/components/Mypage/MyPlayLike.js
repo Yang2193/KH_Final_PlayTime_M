@@ -5,6 +5,16 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../Header";
 import Footer from "../Footer";
+
+const MylikePageTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%
+`;
+
+
 const ListBox = styled.div`
   position: relative;
   top: 10%;
@@ -111,8 +121,8 @@ const MyPlayLike = () => {
   return (
     <>
       <Header></Header>
-      <h3>{userInfo.userNickname}님의 찜목록</h3>
       <ListBox>
+      <MylikePageTitle>{userInfo.userNickname}님의 찜목록</MylikePageTitle>
         <table className="ReviewTable">
           <thead></thead>
           <tbody>

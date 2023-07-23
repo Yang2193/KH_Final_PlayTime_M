@@ -12,7 +12,7 @@ const MenuBlock = styled.div`
     left: 50%;
     @media (max-width:768px) {
         width: 100%;
-        height: 1050px;
+        height: auto;
     }
     @media (max-width:412px) {
         width: 100%;
@@ -93,11 +93,10 @@ const MenuBlock = styled.div`
 
 const MyPageMain = () => {
     const [userNickname, setUserNickname] = useState("");
-    const userId = localStorage.getItem("userId");
     useEffect(()=> {
         const recentData = async() => {
             try {
-                const userData = await AccountApi.getUserInfo(userId);
+                const userData = await AccountApi.getUserInfo(localStorage.getItem("userId"));
                 console.log(userData);
                 if(userData.data) {
                     const userInfoData = JSON.stringify(userData.data);

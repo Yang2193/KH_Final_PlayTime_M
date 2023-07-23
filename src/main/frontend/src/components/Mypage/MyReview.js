@@ -7,14 +7,13 @@ import styled from "styled-components";
 import Header from "../Header";
 import Footer from "../Footer";
 import { toast, ToastContainer } from "react-toastify";
-//import imgX from "../../images/gray.png"
+import imgX from "../../images/gray.png"
 
 
 
 const MyReviewContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-
   justify-content: center;
 `;
 

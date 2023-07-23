@@ -68,6 +68,13 @@ const ListBox = styled.div`
         margin: 0 20px;
     }
 `
+const MyTicketPageTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%
+`;
 
 const MyTicketInfo = () => {
     const userInfoString = localStorage.getItem("userInfo");
@@ -97,34 +104,34 @@ const MyTicketInfo = () => {
     }
 
     return (
-            <>
-            <Header/>
-            <h3>{userInfo.userNickname}님의 구매내역</h3>
-            <ListBox>
-            <table className="buyListTable">
-              <thead>
-              </thead>
-              <tbody>
-                {buyList.map((bl) => (
-                  <tr className="buyItem" key={bl.id}>
-                    <td className="image"><img src={bl.playInfo.imageUrl} alt="image1" className="img-thumb"/></td>
-                    <td className="title">{bl.playInfo.title}</td>
-                    <td className="location">{bl.playInfo.theaterName}</td>
-                    <td className="reserveDate">{bl.reserveDate}</td>
-                    <td className="time">{bl.time}</td>
-                    <td className="seeDate">{bl.seeDate}</td>
-                    <td className="seatInfo">{bl.seatInfo}</td>
-                    <td className="ticket">
-                        <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </ListBox>
-            <Footer/>
-            </>
-        );
+        <>
+        <Header/>
+        <MyTicketPageTitle>{userInfo.userNickname}님의 구매내역</MyTicketPageTitle>
+        <ListBox>
+        <table className="buyListTable">
+          <thead>
+          </thead>
+          <tbody>
+            {buyList.map((bl) => (
+              <tr className="buyItem" key={bl.id}>
+                <td className="image"><img src={bl.playInfo.imageUrl} alt="image1" className="img-thumb"/></td>
+                <td className="title">{bl.playInfo.title}</td>
+                <td className="location">{bl.playInfo.theaterName}</td>
+                <td className="reserveDate">{bl.reserveDate}</td>
+                <td className="time">{bl.time}</td>
+                <td className="seeDate">{bl.seeDate}</td>
+                <td className="seatInfo">{bl.seatInfo}</td>
+                <td className="ticket">
+                    <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </ListBox>
+        <Footer/>
+        </>
+    );
 }
 
 export default MyTicketInfo;

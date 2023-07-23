@@ -6,7 +6,8 @@ import MainPage from './pages/MainPage';
 import PlayPage from './pages/PlayPage';
 import JoinPage from './pages/JoinPage';
 import LoginPage from './pages/LoginPage';
-import FindAccountPage from './pages/FindAccountPage';
+import FindUserIdPage from './pages/FindUserIdPage';
+import FindUserPwPage from './pages/FindUserPwPage';
 import Mypage from './pages/MyPage';
 import MyProfileEdit from './components/Mypage/MyProfileEdit';
 import MyComment from './components/Mypage/MyComment';
@@ -75,7 +76,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/auth/kakao/callback" element={<KakaoLogin />} />
         <Route path="/auth/kakao/logout" element={<KakaoLogout />} />
-        <Route path="/find" element={<FindAccountPage />} />
+        <Route path="/find/id" element={<FindUserIdPage />} />
+        <Route path="/find/pw" element={<FindUserPwPage />} />
         <Route path="/myPage" element={<Mypage />} />
         <Route path="/mypage/profile_edit" element={<MyProfileEdit />} />
         <Route path="/mypage/profile_edit/info" element={<MyProfileEditDetail />} />

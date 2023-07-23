@@ -117,7 +117,7 @@ const MyProfileEdit = () => {
 
   const userAuthSendMail = async() => {
         try {
-          const authKey = await AccountApi.sendAuthEmail(userInfo.userEmail);
+          const authKey = await AccountApi.mypageEmailAuth(userInfo.userEmail);
           localStorage.setItem("authCode", authKey.data);
           setIsAuthRequested(true);
         } catch (e) {
