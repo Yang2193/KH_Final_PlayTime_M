@@ -30,9 +30,9 @@ public class TokenProvider {
     //토큰을 생성하기 위한 기본적인 문자열.
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    //토큰 만료시간 설정. (현재 30분, 로그인 해도 30분 지나면 로그인 해제됨.)
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
-    //    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 30; //테스트용 30초 만료
+    //토큰 만료시간 설정. (현재 60분, 로그인 해도 60분 지나면 로그인 해제됨.)
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60;
+//        private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 30; //테스트용 30초 만료
     //Refresh Token 설정
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7L * 24 * 60 * 60 * 1000;
     private final Key key;
@@ -61,7 +61,6 @@ public class TokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .claim("userId", authentication.getName())
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
@@ -104,7 +103,6 @@ public class TokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .claim("userId", authentication.getName())
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();

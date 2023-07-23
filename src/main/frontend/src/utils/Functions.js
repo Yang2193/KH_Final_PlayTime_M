@@ -5,21 +5,27 @@ import axios from "axios";
 const Functions = {
     //accessToken 세터
     setAccessToken : (accessToken) => {
-        window.localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("accessToken", accessToken);
       },
     //accessToken 게터
     getAccessToken : () => {
-        return window.localStorage.getItem("accessToken");
+        return localStorage.getItem("accessToken");
       },
     //refreshToken 세터
     setRefreshToken : (refreshToken) => {
-        window.localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("refreshToken", refreshToken);
     },
     //refreshToken 게터
     getRefreshToken : () =>{
-        return window.localStorage.getItem("refreshToken");
+        return localStorage.getItem("refreshToken");
     },
 
+    setTokenExpiresIn : (expiresIn) =>{
+      localStorage.setItem("expiresIn", expiresIn);
+    },
+    getTokenExpiresIn : (expiresIn) =>{
+      return localStorage.getItem("expiresIn", expiresIn);
+    },
     //  헤더에 AccessToken 설정하는 함수
     setAuthorizationHeader : () => {
         const accessToken = Functions.getAccessToken();
@@ -48,6 +54,15 @@ const Functions = {
         window.location.href = '/login';
         // 에러 메시지를 표시하거나 기타 처리를 수행
       }
+    },
+    tokenRenewalV2: async() => {
+      const token = {
+        refreshToken : Functions.getRefreshToken()
+      }
+      const rsp = await axios.post("/auth/token", token)
+      Functions.setAccessToken(rsp.data.accessToken); 
+      Functions.setTokenExpiresIn(rsp.data.tokenExpiresIn);
+      return rsp.status;
     }
 
 }

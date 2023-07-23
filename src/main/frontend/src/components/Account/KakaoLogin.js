@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AccountApi from '../../api/AccountApi';
 import styled, { keyframes } from 'styled-components';
+import Functions from '../../utils/Functions';
 
 const loadingAnimation = keyframes`
   0%,
@@ -41,23 +42,31 @@ const KakaoLogin = () => {
         const getAccessToken = async () => {
         try {
             const response = await AccountApi.kakaoAccessToken(code);
-            console.log(response)
-            localStorage.setItem("userId", response.data.kakaoProfile.userId);
-            localStorage.setItem("accessToken", response.data.tokenDto.accessToken);
-            localStorage.setItem("refreshToken", response.data.tokenDto.refreshToken);
-            localStorage.setItem("kakaoAccessToken", response.data.kakaoTokens.access_token);
-            localStorage.setItem("loginValue", "KAKAO");
-            localStorage.setItem("isLogin", "TRUE");
-            try {
-              const userInfo = await AccountApi.getUserInfo(localStorage.getItem("userId"));
-              const userInfoData = JSON.stringify(userInfo.data);
-              localStorage.setItem("userInfo", userInfoData);
-              console.log(userInfo.data);
-            } catch(e) {
-            console.log(e);
-            }
-            console.log("토큰 발급 완료")
-            navigate("/");
+            console.log(response.data);
+            if(response.status === 200){
+              const accessToken = response.data.tokenDto.accessToken;
+              const refreshToken = response.data.tokenDto.refreshToken;                  
+              const expiresIn = response.data.tokenDto.tokenExpiresIn;
+
+              Functions.setAccessToken(accessToken);
+              Functions.setRefreshToken(refreshToken);
+              Functions.setTokenExpiresIn(expiresIn);
+
+              localStorage.setItem("userId", response.data.kakaoProfile.userId);             
+              localStorage.setItem("kakaoAccessToken", response.data.kakaoTokens.access_token);
+              localStorage.setItem("loginValue", "KAKAO");
+              localStorage.setItem("isLogin", "TRUE");
+              try {
+                const userInfo = await AccountApi.getUserInfo(localStorage.getItem("userId"));
+                const userInfoData = JSON.stringify(userInfo.data);
+                localStorage.setItem("userInfo", userInfoData);
+                console.log(userInfo.data);
+              } catch(e) {
+              console.log(e);
+              }
+              console.log("토큰 발급 완료")
+              navigate("/");
+          }
         } catch (error) {
             console.error('액세스 토큰 요청 실패:', error);
         }

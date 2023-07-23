@@ -8,11 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Slf4j
 public class WebController implements ErrorController {
-        private static final String PATH = "/error";
+    private static final String PATH = "/error";
 
-        @RequestMapping(value = PATH)
-        public ModelAndView saveLeadQuery() {
-            return new ModelAndView("forward:/");
-        }
+    @RequestMapping(value = PATH)
+    public ModelAndView saveLeadQuery() {
+        return new ModelAndView("forward:/");
+    }
 
 }

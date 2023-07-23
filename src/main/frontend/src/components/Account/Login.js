@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AccountApi from "../../api/AccountApi";
 import '../../styles/Account.css';
 import MessageModal from "../../utils/MessageModal";
+import Functions from "../../utils/Functions";
 
   const Login = () => {
     const navigate = useNavigate();
@@ -68,10 +69,15 @@ import MessageModal from "../../utils/MessageModal";
       try {
         const response = await AccountApi.getToken(loginId, loginPw);
         if(response.status === 200) {
-          localStorage.setItem("accessToken", response.data.accessToken);
-          localStorage.setItem("refreshToken", response.data.refreshToken);
+          const accessToken = response.data.accessToken;
+          const refreshToken = response.data.refreshToken;
+          const expiresIn = response.data.tokenExpiresIn;
+
+          Functions.setAccessToken(accessToken);
+          Functions.setRefreshToken(refreshToken);
+          Functions.setTokenExpiresIn(expiresIn);
+          
           localStorage.setItem("userId", loginId);
-          localStorage.setItem("userPw", loginPw);
           localStorage.setItem("isLogin", "TRUE");
           localStorage.setItem("loginValue", "DEFAULT");
           try {
