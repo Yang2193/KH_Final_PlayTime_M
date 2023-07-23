@@ -71,7 +71,7 @@ public class KAuthService {
     }
 
     //토큰 검증 및 사용자 정보 추출
-    public MemberInfo validateTokenAndGetUser(HttpServletRequest request, UserDetails userDetails){
+    public MemberInfo validateTokenAndGetUser(HttpServletRequest request, UserDetails userDetails) {
         //토큰 추출
         String accessToken = request.getHeader("Authorization");
         if (accessToken != null && accessToken.startsWith("Bearer ")) {
@@ -87,54 +87,5 @@ public class KAuthService {
         } else {
             throw new TokenExpiredException("토큰이 만료됐습니다. Refresh Token 재발급이 필요합니다.");
         }
-    }
-    // 아이디 찾기
-    public String findId(String userName, String userEmail) {
-        MemberInfo member = memberInfoRepository.findByUserNameAndUserEmail(userName, userEmail);
-        System.out.println("서비스 : " +userName + " " + userEmail + " " + member);
-        if (member == null) {
-            System.out.println("아이디를 찾지 못함");
-            return null; // 아이디를 찾지 못한 경우 null을 반환하거나 원하는 대응을 수행
-        }
-        MemberDto memberDto = new MemberDto();
-        memberDto.setUserId(member.getUserId());
-        System.out.println("서비스 ID 찾기 :" + memberDto.getUserId());
-        String result = member.getUserId();
-        return result;
-    }
-
-    // 패스워드 찾기
-    public boolean findPw(String userId, String userName, String userEmail) throws Exception{
-        Optional<MemberInfo> optionalMemberInfo = memberInfoRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail);
-        MemberDto memberDto = new MemberDto();
-        if(optionalMemberInfo.isPresent()) {
-            updatePasswordWithAuthKey(userId, userEmail);
-            return true;
-        }
-        System.out.println("Auth서비스 : 데이터 없음.");
-        return false;
-    }
-
-    // 패스워드 찾기 시 회원 이메일로 임시 패스워드 발송 및 db에 임시 패스워드 저장
-    public void updatePasswordWithAuthKey(String userId, String userEmail) throws Exception {
-        String ePw = emailService.sendPasswordAuthKey(userEmail);
-        MemberInfo memberInfo = memberInfoRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
-        String encodePassword = passwordEncoder.encode(ePw);
-        memberInfo.setUserPw(encodePassword);
-        memberInfoRepository.save(memberInfo);
-    }
-
-    // 회원탈퇴
-
-    public boolean withdrawal(String userId) {
-        Optional<MemberInfo> memberInfoOptional = memberInfoRepository.findByUserId(userId);
-        if (memberInfoOptional.isPresent()) {
-            MemberInfo memberInfo = memberInfoOptional.get();
-            memberInfo.setWithdraw(Withdraw.N);
-            memberInfoRepository.save(memberInfo);
-            return true;
-        }
-        return false;
     }
 }

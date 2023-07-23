@@ -175,12 +175,11 @@ const MyProfileEdit = () => {
         <table>
         {isAuthRequested ? (
               <>
-                <button onClick={userAuthSendMail}>이메일 인증번호 받기</button>
                 <input type="password" value={inputAuth} onChange={onChangeAuth} onKeyUp={handleOnKeyPress}/>
                 <button onClick={onClickIsAuth}>인증</button>
               </>
             ) : (
-              <button onClick={userAuthSendMail}>인증번호 받기</button>
+              <button onClick={userAuthSendMail}>이메일 인증번호 받기</button>
             )}
         </table>
       </div>

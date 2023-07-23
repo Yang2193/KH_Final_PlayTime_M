@@ -18,8 +18,8 @@ const MyProfileEditDetail = () => {
   const [password, setPassword] = useState(localStorage.getItem("userPw"));
   const [conPassword, setConPassword] = useState(localStorage.getItem("userPw"));
   const [nickname, setNickname] = useState(userInfo.userNickname);
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(userInfo.userPhone);
+  const [email, setEmail] = useState(userInfo.userEmail);
   const [imageUrl, setImageUrl] = useState(userInfo.imgUrl || profile);
 
   // 오류 메세지
@@ -57,14 +57,6 @@ const MyProfileEditDetail = () => {
     setUpdateModal(true);
   }
 
-  useEffect(() => {
-    if(userInfo)
-      setPhone(userInfo.userPhone);
-      setEmail(userInfo.userEmail);
-      setPassword(password);
-      setConPassword(conPassword);
-  }, [userInfo]);
-
   const onChagePw = (e) => {
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
     setPassword(e.target.value);
@@ -95,10 +87,9 @@ const MyProfileEditDetail = () => {
 
   const onChageNickname = (e) => {
     const nicknameRegex = /^(?=.*[a-zA-Z0-9ㄱ-ㅎ가-힣])[a-zA-Z0-9ㄱ-ㅎ가-힣]{2,10}$/;
-    const updatedNickname = e.target.value;
-    setNickname(updatedNickname);
+    setNickname(e.target.value);
 
-    if (!nicknameRegex.test(updatedNickname)) {
+    if (!nicknameRegex.test(nickname)) {
       setNicknameMsg(
         "영문자 대/소 + 숫자 + 한글 조합으로 2~10자의 닉네임을 입력하세요."
       );
@@ -111,8 +102,9 @@ const MyProfileEditDetail = () => {
 
   const onChagePhone = (e) => {
     const telRegex = /^\d{2,3}-\d{3,4}-\d{4}$/;
-    setPhone(e.target.value);
-    if (!telRegex.test(phone)) {
+    const newPhone = e.target.value;
+    setPhone(newPhone);
+    if (!telRegex.test(newPhone)) {
       setPhoneMsg("'-'를 포함하여 전화번호 10-11자리를 입력하세요");
       setIsPhone(false);
     } else {
@@ -362,6 +354,7 @@ const MyProfileEditDetail = () => {
       </>
     )}
   </div>
+  <Footer/>
 </>
   );
 };
