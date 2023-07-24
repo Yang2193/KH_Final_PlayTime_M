@@ -338,6 +338,10 @@ const PostDetailPage = () => {
   };
 
   const handleSubmitComment = async () => {
+    if (comment.trim() === "") {
+      return;
+    }
+
     try {
       const newComment = {
         commentContent: comment,
@@ -357,6 +361,7 @@ const PostDetailPage = () => {
       console.log(error);
     }
   };
+
 
   const handleCommentMenu = (commentId) => {
     const loggedInUserId = localStorage.getItem("userId");
