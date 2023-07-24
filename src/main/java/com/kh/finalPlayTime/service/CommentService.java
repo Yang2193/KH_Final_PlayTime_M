@@ -1,16 +1,11 @@
     package com.kh.finalPlayTime.service;
 
     import com.kh.finalPlayTime.dto.CommentDto;
-    import com.kh.finalPlayTime.dto.PostDto;
     import com.kh.finalPlayTime.entity.Comment;
     import com.kh.finalPlayTime.entity.MemberInfo;
     import com.kh.finalPlayTime.entity.Post;
     import com.kh.finalPlayTime.repository.CommentRepository;
-    import com.kh.finalPlayTime.repository.PostRepository;
     import lombok.RequiredArgsConstructor;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.security.core.Authentication;
-    import org.springframework.security.core.context.SecurityContextHolder;
     import org.springframework.stereotype.Service;
 
     import javax.transaction.Transactional;
@@ -63,7 +58,6 @@
             if (optionalComment.isPresent()) {
                 Comment comment = optionalComment.get();
                 comment.setCommentContent(newContent);
-                comment.setCommentDate(LocalDateTime.now());
                 try {
                     commentRepository.save(comment);
                     return true; // 수정 성공
@@ -89,7 +83,7 @@
 
         // 게시물 ID로 댓글 리스트 조회
         public List<CommentDto> getCommentsByPostId(Long postId) {
-            List<Comment> comments = commentRepository.findByPostIdOrderByCommentDateDesc(postId);
+            List<Comment> comments = commentRepository.findByPostIdOrderByCommentDate(postId);
             List<CommentDto> commentDtoList = new ArrayList<>();
             CommentDto commentDto = null;
             for (Comment comment : comments) {

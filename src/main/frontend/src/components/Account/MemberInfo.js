@@ -8,7 +8,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #fafafa;
+  background-color: #ffffff;
 `;
 
 const SignUpForm = styled.div`

@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Header from "../Header";
 import Footer from "../Footer";
 import { toast, ToastContainer } from "react-toastify";
-//import imgX from "../../images/gray.png"
+import logoImg from "../../images/logo-black.png"
 
 
 
@@ -81,10 +81,9 @@ const MyReviewImage = styled.img`
   height: auto;
   margin-bottom: 10px;
   background-color: #f0f0f0;
-  height: 300px;
+  height: 200px;
 
   @media (max-width: 412px) {
-    height: 300px;
     width: 100%;
   }
 `;
@@ -193,7 +192,7 @@ const MyReview = () => {
                 {post.postImageUrl ? (
                   <MyReviewImage src={post.postImageUrl} alt="게시물 이미지" />
                 ) : (
-                  <MyReviewImage  alt="" />
+                  <MyReviewImage src={logoImg} alt="" />
                 )}
               </Link>
               <MyReviewContent>
@@ -203,9 +202,6 @@ const MyReview = () => {
                 >
                   <MyReviewTitle>{post.postTitle}</MyReviewTitle>
                 </Link>
-                <MyReviewDescription
-                  dangerouslySetInnerHTML={{ __html: post.postContent }}
-                ></MyReviewDescription>
                 <MyReviewDate>{formatWriteDate(post.postDate)}</MyReviewDate>
               </MyReviewContent>
               <MyReviewCloseButton onClick={() => deletePost(post.id)}>

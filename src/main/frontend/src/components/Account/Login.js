@@ -76,6 +76,7 @@ import Functions from "../../utils/Functions";
             Functions.setAccessToken(accessToken);
             Functions.setRefreshToken(refreshToken);
             Functions.setTokenExpiresIn(expiresIn);
+            localStorage.setItem("userId", loginId);
             localStorage.setItem("isLogin", "TRUE");
             localStorage.setItem("loginValue", "DEFAULT");
           try {
