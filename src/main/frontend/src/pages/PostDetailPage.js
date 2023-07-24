@@ -78,7 +78,7 @@ const PostImage = styled.div`
   width: 100%;
 
   img {
-    width: 41%;
+    width: 80%;
     max-width: 80%;
     margin-right: 40px;
   }
@@ -86,6 +86,7 @@ const PostImage = styled.div`
     height: 50%;
   }
 `;
+
 
 const PostContent = styled.div`
    /* 원하는 최대 높이 설정 */
