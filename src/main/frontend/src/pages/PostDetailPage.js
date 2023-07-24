@@ -88,8 +88,9 @@ const PostImage = styled.div`
 `;
 
 const PostContent = styled.div`
-  max-height: 400px; /* 원하는 최대 높이 설정 */
-  overflow: hidden;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-bottom: 10px;
   word-break: break-word;
   .img{
     width: 100%;
@@ -105,7 +106,7 @@ const LoadingMessage = styled.div`
 `;
 
 const CommentSection = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
   height: ${(props) => props.height};
   transition: height 0.3s;
 `;
@@ -243,9 +244,10 @@ const C1 = styled.div`
 `;
 
 const PostD = styled.div`
-  display: ${(props) => (props.isAuthor ? "block" : "none")};
-  position: absolute;
-  right: 10px;
+  display: ${(props) => (props.isAuthor ? "flex" : "none")};
+  width :100%;
+  margin-top: 20px;
+  justify-content: flex-end;
   button {
     background-color: white;
     color: black;
