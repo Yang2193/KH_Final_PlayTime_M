@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AccountApi from "../../api/AccountApi";
 import '../../styles/Account.css';
 import MessageModal from "../../utils/MessageModal";
+import Functions from "../../utils/Functions";
 
   const Login = () => {
     const navigate = useNavigate();
@@ -68,12 +69,15 @@ import MessageModal from "../../utils/MessageModal";
       try {
         const response = await AccountApi.getToken(loginId, loginPw);
         if(response.status === 200) {
-          localStorage.setItem("accessToken", response.data.accessToken);
-          localStorage.setItem("refreshToken", response.data.refreshToken);
-          localStorage.setItem("userId", loginId);
-          localStorage.setItem("userPw", loginPw);
-          localStorage.setItem("isLogin", "TRUE");
-          localStorage.setItem("loginValue", "DEFAULT");
+            const accessToken = response.data.accessToken;
+            const refreshToken = response.data.refreshToken;
+            const expiresIn = response.data.tokenExpiresIn;
+
+            Functions.setAccessToken(accessToken);
+            Functions.setRefreshToken(refreshToken);
+            Functions.setTokenExpiresIn(expiresIn);
+            localStorage.setItem("isLogin", "TRUE");
+            localStorage.setItem("loginValue", "DEFAULT");
           try {
               const userInfo = await AccountApi.getUserInfo(localStorage.getItem("userId"));
               const userInfoData = JSON.stringify(userInfo.data);
@@ -92,7 +96,7 @@ import MessageModal from "../../utils/MessageModal";
 
     const onClickKakaoLogin = () => {
       const clientId = "088a7b267c39d0a11ec3904372ed9d33";
-      const redirectUri = "http://ticket-playtime/auth/kakao/callback";
+      const redirectUri = "http://ticket-playtime.xyz/auth/kakao/callback";
       const authorizeUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
       window.location.href = authorizeUrl;
     };
