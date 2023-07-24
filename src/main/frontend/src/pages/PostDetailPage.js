@@ -75,7 +75,7 @@ const PostImage = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
+  width: 60%;
 
   img {
     width: 80%;
