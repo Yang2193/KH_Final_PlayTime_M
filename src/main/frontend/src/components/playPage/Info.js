@@ -16,7 +16,7 @@ const All = styled.div`
         height: 810px;
     }
     @media (max-width:360px) {
-        height: 690px;
+        height: 795px;
     }
 `
 const FixData = styled.div`
@@ -32,10 +32,6 @@ const FixData = styled.div`
     }
     @media (max-width:412px) {
         height: 800px;
-    }
-    @media (max-width:360px) {
-        height: 720px;
-        width:360px;
     }
     h1{
         font-size: 1.5em;
@@ -66,7 +62,7 @@ const FixData = styled.div`
     }
     @media (max-width:360px) {
             width:360px;
-            height: 720px;
+            height: 800px;
     }
         img {
             margin-top: 80px;
@@ -85,7 +81,7 @@ const FixData = styled.div`
                 height: 400px;
         }
             @media (max-width:360px) {
-                height: 300px;
+                height: 350px;
                 top: 15px;
         }
     }
@@ -109,7 +105,7 @@ const FixData = styled.div`
            }
             @media (max-width:360px) {
                 font-size: 0.8em;
-                height: 500px;
+                height: 450px;
             }
         }
         .like{
@@ -121,6 +117,9 @@ const FixData = styled.div`
             }
             @media (max-width:412px) {
                 height: 15px;
+            }
+            @media (max-width:360px) {
+                height: 10px;
             }
         }
         .infoBox{
@@ -142,6 +141,9 @@ const FixData = styled.div`
                 margin-top: 20px;
                 width: 90%;
                 height: 320px;
+            }
+            @media (max-width:360px) {
+                height: 450px;
             }
             ul{
                 list-style: none;
@@ -176,9 +178,6 @@ const FixData = styled.div`
             height: 60px;
             align-items: end;
         }
-        @media (max-width:360px) {
-            height: 0px;
-        }
         .resBtn{
             width: 100%;
             height: 100%;
@@ -192,7 +191,7 @@ const FixData = styled.div`
             @media (max-width:412px) {
                 height: 45px;
             }
-            @media (max-width:412px) {
+            @media (max-width:360px) {
                 height: 40px;
             }
         }
