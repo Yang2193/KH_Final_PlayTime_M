@@ -299,7 +299,7 @@ const updateReview = async (id) =>{
             </p> :
             <p><Rating size={"20"} className='read' initialValue={review.olrRating} allowFraction readonly/></p>}
           {showInput && reviewId===review.id ? <textarea className='updateText' onChange={onUpContent} value={upContent}></textarea> : <p>{review.olrContent}</p>}
-          <p>{review.memberInfo.userId} <span>{(new Date(review.olrDate)).toLocaleString('ko')}</span></p>
+          <p>{review.memberInfo.userNickname} <span>{(new Date(review.olrDate)).toLocaleString('ko')}</span></p>
         </div>
       ))
       : <div className='empty'>관람후기를 등록해주세요</div>}
