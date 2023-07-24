@@ -84,7 +84,7 @@ const ListBox = styled.div`
     .menu p{
         margin: 0 20px;
     }
-`;
+`
 
 
 const MyPlayLike = () => {

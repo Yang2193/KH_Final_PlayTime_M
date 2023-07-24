@@ -5,6 +5,7 @@ import AccountApi from "../../api/AccountApi";
 import { Link } from 'react-router-dom';
 import Header from "../Header";
 import Footer from "../Footer";
+import MessageModal from "../../utils/MessageModal";
 
 
 const MyCommentContainer = styled.div`
@@ -78,7 +79,7 @@ const MyCommentPageTitle = styled.h2`
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
-  width: 100%
+  width: 768px;
 
 `;
 
@@ -114,8 +115,11 @@ const MyCommentEmptyMessage = styled.p`
 const MyComment = () => {
   const userId = localStorage.getItem('userId');
   const [commentList, setCommentList] = useState([]);
+  const [deleteMessage, setDeleteMessage] = useState(false);
 
-
+  const onClickClose = () => {
+    setDeleteMessage(false);
+}
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -139,7 +143,7 @@ const MyComment = () => {
     const myCommentList = async () => {
       try {
         const response = await AccountApi.getMemberComment(userId);
-        if (response && response.status === 200) {
+        if (response.status === 200) {
           setCommentList(response.data);
           console.log(response);
         }
@@ -203,7 +207,8 @@ const MyComment = () => {
                 <MyCommentDescription dangerouslySetInnerHTML={{ __html: cl.commentContent }}></MyCommentDescription>
                 <MyCommentDate>{formatWriteDate(cl.commentDate)}</MyCommentDate>
               </MyCommentContent>
-              <MyCommentCloseButton onClick={() => handleDeleteComment(cl.id)}>✕</MyCommentCloseButton>
+              <MyCommentCloseButton onClick={() => setDeleteMessage(true)}>✕</MyCommentCloseButton>
+              {deleteMessage && (<MessageModal open={deleteMessage} confirm={() => handleDeleteComment(cl.id)} close={onClickClose} type="modalType" header="댓글 삭제">작성 했던 댓글을 삭제하시겠습니까?</MessageModal>)}
             </MyCommentCard>
           ))
         )}

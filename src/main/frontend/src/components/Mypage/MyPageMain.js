@@ -6,12 +6,13 @@ import profile from "../../images/mypageicon2.png";
 
 const MenuBlock = styled.div`
     text-align: center;
+    width: 768px;
     position: relative;
     transform: translate(-50%, -50%);
     top: 250px;
     left: 50%;
     @media (max-width:768px) {
-        width: 100%;
+        width: 768px;
         height: auto;
     }
     @media (max-width:412px) {

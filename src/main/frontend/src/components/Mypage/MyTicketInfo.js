@@ -75,7 +75,7 @@ const ListBox = styled.div`
     .menu p{
         margin: 0 20px;
     }
-`;
+`
 const MyTicketPageTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;

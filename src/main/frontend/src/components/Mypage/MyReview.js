@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Header from "../Header";
 import Footer from "../Footer";
 import { toast, ToastContainer } from "react-toastify";
+import MessageModal from "../../utils/MessageModal";
 import logoImg from "../../images/logo-black.png"
 
 
@@ -50,6 +51,7 @@ const MyReviewCard = styled.div`
 const MyReviewTitle = styled.h2`
 font-size: 24px;
 font-weight: bold;
+
 margin-bottom: 20px;
 text-align: center;
 
@@ -70,10 +72,9 @@ const MyReviewPageTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  width: 768px;
   text-align: center;
-  @media (max-width: 412px) {
 
-  }
 `;
 
 const MyReviewImage = styled.img`
@@ -81,9 +82,10 @@ const MyReviewImage = styled.img`
   height: auto;
   margin-bottom: 10px;
   background-color: #f0f0f0;
-  height: 200px;
+  height: 300px;
 
   @media (max-width: 412px) {
+    height: 300px;
     width: 100%;
   }
 `;
@@ -106,6 +108,11 @@ const MyReview = () => {
   // 리뷰 내역 저장
   const [posts, setPosts] = useState([]);
 
+  const [deleteMessage, setDeleteMessage] = useState(false);
+
+  const onClickClose = () => {
+    setDeleteMessage(false);
+}
   const increaseViews = async (postId) => {
     try {
       await PostAPI.increasePostViews(postId);
@@ -131,9 +138,6 @@ const MyReview = () => {
     }
   };
   const deletePost = async (postId) => {
-    const confirmDelete = window.confirm("게시물을 삭제하시겠습니까?");
-
-    if (confirmDelete) {
       try {
         const response = await PostAPI.deletePost(postId);
         if (response.status === 200) {
@@ -147,7 +151,6 @@ const MyReview = () => {
         console.log(error);
       }
     }
-  };
 
   const isSameDay = (date1, date2) => {
     return (
@@ -175,11 +178,13 @@ const MyReview = () => {
   }, []);
 
   console.log(posts);
+
   return (
     <>
       <Header />
-      <MyReviewPageTitle>나의 후기</MyReviewPageTitle>
       <MyReviewContainer>
+      <MyReviewPageTitle>나의 후기</MyReviewPageTitle>
+
         {posts.length === 0 ? (
           <MyReviewEmptyMessage>게시물이 없습니다.</MyReviewEmptyMessage>
         ) : (
@@ -192,7 +197,7 @@ const MyReview = () => {
                 {post.postImageUrl ? (
                   <MyReviewImage src={post.postImageUrl} alt="게시물 이미지" />
                 ) : (
-                  <MyReviewImage src={logoImg} alt="" />
+                  <MyReviewImage  alt="" />
                 )}
               </Link>
               <MyReviewContent>
@@ -202,11 +207,15 @@ const MyReview = () => {
                 >
                   <MyReviewTitle>{post.postTitle}</MyReviewTitle>
                 </Link>
+                <MyReviewDescription
+                  dangerouslySetInnerHTML={{ __html: post.postContent }}
+                ></MyReviewDescription>
                 <MyReviewDate>{formatWriteDate(post.postDate)}</MyReviewDate>
               </MyReviewContent>
-              <MyReviewCloseButton onClick={() => deletePost(post.id)}>
+              <MyReviewCloseButton onClick={()=>setDeleteMessage(true)}>
                 삭제
               </MyReviewCloseButton>
+              {deleteMessage && (<MessageModal open={deleteMessage} confirm={()=>deletePost(post.id)} close={onClickClose} type="modalType" header="리뷰 삭제">작성 했던 리뷰를 삭제하시겠습니까?</MessageModal>)}
             </MyReviewCard>
           ))
         )}
