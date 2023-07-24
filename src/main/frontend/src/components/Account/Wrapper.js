@@ -2,13 +2,16 @@ import styled from "styled-components";
 
 export const ParentWrapper = styled.div`
     width: ${props => props.width}%;
-    margin: 0 auto;
+    margin: 5% auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
     position: relative;
+
+    @media (max-width: 412px){
+        width: 70%;
 `
 
 export const InnerWrapper = styled.div`

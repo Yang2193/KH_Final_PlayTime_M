@@ -210,7 +210,7 @@ const MyProfileEditDetail = () => {
         {userInfo ? (
           <>
           <div className="mypage-pic-box">
-                <div className="mypage-pic-delete">
+                <div className="mypage-default-pic-delete">
                   <label>
                   <button className="mypage-pic-del-btn" onClick={handleDeleteImage}><img  src={xmark} alt="Delete Profile"/></button>
                   </label>
