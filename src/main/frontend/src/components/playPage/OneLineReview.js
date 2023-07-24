@@ -261,9 +261,10 @@ const updateReview = async (id) =>{
     const currentPageData = reviews.slice(offset, offset + ITEMS_PAGE);
   return (
     <OneCss>
-        {reviews.length > 0 && ( // Add this condition to check if reviews has items
+        {reviews.length > 0 ?
         <div className='average'>한줄평 ({reviews.length}) <span>{(reviews.reduce((total, review) => total + review.olrRating, 0) / reviews.length).toFixed(1)} / 5.0</span> </div>
-      )}
+        :<div className='average'>한줄평 (0) <span> 0 / 5.0</span> </div>
+      }
         <div className='addReview'>
         <div className='ratingBox'>
           <Rating
