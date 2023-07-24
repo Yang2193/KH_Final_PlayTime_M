@@ -118,9 +118,6 @@ const FixData = styled.div`
             @media (max-width:412px) {
                 height: 15px;
             }
-            @media (max-width:360px) {
-                height: 10px;
-            }
         }
         .infoBox{
             position: relative;
