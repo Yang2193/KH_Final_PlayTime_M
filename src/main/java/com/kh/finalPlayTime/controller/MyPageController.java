@@ -49,9 +49,6 @@ public class MyPageController {
     public ResponseEntity<List<PostDto>> getMemberPost(@RequestBody Map<String, String> getMemberPostData) {
         String userId = getMemberPostData.get("userId");
         List<PostDto> memberPosts = postService.getMemberPosts(userId);
-        if (memberPosts.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
         return ResponseEntity.ok(memberPosts);
     }
 
@@ -60,9 +57,6 @@ public class MyPageController {
         String userId = getMemberCommentData.get("userId");
         System.out.println(userId);
         List<CommentDto> memberComments = commentService.getMemberCommentUserId(userId);
-        if(memberComments.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
         return ResponseEntity.ok(memberComments);
     }
 
