@@ -76,9 +76,16 @@ const PostAPI = {
 
   // 댓글 수정
   updateComment: async (commentId, updatedComment) => {
+    try {
+    Functions.setAuthorizationHeader();
     return await axios.post(`/comments/${commentId}`, updatedComment);
-  },
-//ㅅㅈ
+  } catch(error){
+    await Functions.handleApiError(error);  // api 에러 401을 받으면 로컬에 저장된 리프레쉬 토큰을 보내 액세스 토큰을 재발급 받는 axios 요청을 보내는 함수(await 필수)
+    return await axios.get(`/comments/${commentId}`, updatedComment); // 요청 재실행
+}
+},
+
+
 // 댓글 신고
 reportComment: async (commentId, reportReason, nickname, postId,userId) => {
   const reportData = {
