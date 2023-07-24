@@ -11,7 +11,7 @@ const AgreementWrapper = styled.div`
 `;
 
 const AgreementTitle = styled.h3`
-  color: #3B74EC;
+  color: #990A2C;
   font-size: 0.8rem;
   margin: 0;
 `;

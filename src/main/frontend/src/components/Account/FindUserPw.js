@@ -65,13 +65,13 @@ return (
         <h2>패스워드 찾기</h2>
             <div className="loginMain">
                 <div className="loginSmallBox">
-                <input type="text" value={pwUserId} className="loginInput" placeholder="User Id" onChange={onChangePwUserId} onKeyUp={handleOnKeyPress}/>
+                <input type="text" value={pwUserId} className="loginInput" placeholder="사용자 아이디를 입력하세요." onChange={onChangePwUserId} onKeyUp={handleOnKeyPress}/>
                 </div>
                 <div className="loginSmallBox">
-                <input type="text" value={pwUserName} className="loginInput" placeholder="User Name" onChange={onChangePwUserName} onKeyUp={handleOnKeyPress}/>
+                <input type="text" value={pwUserName} className="loginInput" placeholder="사용자 이름을 입력하세요." onChange={onChangePwUserName} onKeyUp={handleOnKeyPress}/>
                 </div>
                 <div className="loginSmallBox">
-                <input type="text" value={pwUserEmail} className="loginInput" placeholder="User Email" onChange={onChangePwUserEmail} onKeyUp={handleOnKeyPress}/>
+                <input type="text" value={pwUserEmail} className="loginInput" placeholder="사용자 이메일을 입력하세요." onChange={onChangePwUserEmail} onKeyUp={handleOnKeyPress}/>
                 </div>
                 <div className="IdPwdSearchButtonBox">
                 <Link to="/login" className="FindIdPageLoginButton">로그인</Link>

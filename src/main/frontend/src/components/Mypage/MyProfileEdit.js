@@ -99,8 +99,8 @@ const MyProfileEdit = () => {
 
   //팝업창
   const [isAllCheckModalOpen, setIsAllCheckModalOpen] = useState(false);
-  const [authSuccessModal, setAuthSuccessModal] = useState(false);
   const [authFailModal, setAuthFailModal] = useState(false);
+  const [passwordFailModal, setPasswordFailModal] = useState(false);
 
   // 유효성 검사
   const [isAuth, setIsAuth] = useState(false);
@@ -108,8 +108,8 @@ const MyProfileEdit = () => {
   //모달창 닫기
   const onClickClose = () => {
       setIsAllCheckModalOpen(false);
-      setAuthSuccessModal(false);
       setAuthFailModal(false);
+      setPasswordFailModal(false);
   }
 
   // 인증번호 받기 버튼을 누를 때의 상태 저장
@@ -132,7 +132,6 @@ const MyProfileEdit = () => {
 
   const onClickIsAuth = async() => {
     if(localStorage.getItem("authCode") === inputAuth) {
-        setAuthSuccessModal(true);
         setIsAuth(true);
         navigate("/mypage/profile_edit/info")
     } else {
@@ -144,11 +143,10 @@ const MyProfileEdit = () => {
     try {
       const response = await AccountApi.checkMemberPw(userInfo.userId, inputAuth);
       if (response.data) {
-        setAuthSuccessModal(true);
         setIsAuth(true);
         navigate("/mypage/profile_edit/info");
       } else {
-        setAuthFailModal(true);
+        setPasswordFailModal(true);
       }
     } catch (e) {
       console.log(e);
@@ -193,8 +191,8 @@ const MyProfileEdit = () => {
       </div>
     )}
     </MenuBlock>
-    {authSuccessModal && (<MessageModal open={authSuccessModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 완료">이메일 인증이 완료되었습니다.</MessageModal>)}
     {authFailModal && (<MessageModal open={authFailModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 실패">이메일 인증이 실패하였습니다.</MessageModal>)}
+    {passwordFailModal && (<MessageModal open={passwordFailModal} confirm={onClickClose} close={onClickClose} type="modalType" header="인증 실패">패스워드 인증이 실패하였습니다.</MessageModal>)}
     </>
   );
 };

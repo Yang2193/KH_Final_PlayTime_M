@@ -11,10 +11,6 @@
   margin : 2% auto;
 }
 
-.mypage-container form{
-  display : block;
-  height : 100%;
-}
 
 .mypage input{
   display : block;
@@ -74,6 +70,7 @@ label{
     "pic-box nickname-sns-box";
   grid-area: profile-box;
 }
+
 .mypage-pic-box {
   display: grid;
   grid-template-columns: 100%;
@@ -271,6 +268,12 @@ label{
   margin-top: 20px;
 }
 
+.mypage-save-box .mypage-buttons {
+  button + button {
+    margin-left: 10px; /* 원하는 간격 크기로 조정 */
+  }
+}
+
 .mypage-bye-btn{
   cursor : pointer;
 }
@@ -386,4 +389,20 @@ label{
   .mypage-container{
     width : 50%;
   }
+}
+
+.mypage-bye-btn {
+  background-color: white;
+  color: #7E7B7B;
+}
+
+/* 수정 버튼 스타일 */
+.mypage-save-btn {
+  background-color: white;
+  color: #7E7B7B;
+}
+
+/* 버튼들을 감싸는 div 요소에 스타일 적용 */
+.mypage-buttons {
+  display: flex;
 }

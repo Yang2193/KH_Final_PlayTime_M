@@ -19,6 +19,10 @@ const ListBox = styled.div`
             height: 80px;
         }
     }
+    @media (max-width: 412px) {
+       font-size : 60%;
+       top: 5%;
+  }
 
     .bar{
         width: 100%;
@@ -35,12 +39,12 @@ const ListBox = styled.div`
     thead, tbody{
         width : 100%
     }
-    
+
     thead th{
         background-color: #990A2C;
         color: #fff;
     }
-    
+
     tbody td{
         border-bottom: 1px dotted #999;
     }
@@ -50,10 +54,14 @@ const ListBox = styled.div`
         text-align: center;
         font-size: 1rem;
         padding: 10px 0;
+        cursor: pointer;
 
         @media (max-width: 768px) {
         font-size: 0.8rem;
         }
+        @media (max-width: 412px) {
+       font-size : 0.6rem;
+  }
     }
 
     .img-thumb{
@@ -63,11 +71,11 @@ const ListBox = styled.div`
             border: 1px solid #b9b9b9;
             vertical-align: middle;
         }
-                    
+
     .menu p{
         margin: 0 20px;
     }
-`
+`;
 const MyTicketPageTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
@@ -78,7 +86,7 @@ const MyTicketPageTitle = styled.h2`
 
 const MyTicketInfo = () => {
     const userInfoString = localStorage.getItem("userInfo");
-  const userInfo = JSON.parse(userInfoString);
+    const userInfo = JSON.parse(userInfoString);
     const [buyList, setBuyList] = useState([]);
     const nav = useNavigate();
 
@@ -103,13 +111,44 @@ const MyTicketInfo = () => {
         nav("/info");
     }
 
+    const isSameDay = (date1, date2) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  };
+
+    const formatWriteDate = (date) => {
+    const currentDate = new Date();
+    const writeDate = new Date(date);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+
+    if (isSameDay(currentDate, writeDate)) {
+      const formattedTime = writeDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      return `오늘 ${formattedTime}`;
+    } else {
+      const formattedDate = writeDate.toLocaleDateString("ko", options);
+      return formattedDate;
+    }
+  };
+
     return (
         <>
         <Header/>
-        <MyTicketPageTitle>{userInfo.userNickname}님의 구매내역</MyTicketPageTitle>
         <ListBox>
-        <table className="buyListTable">
+        <MyTicketPageTitle>{userInfo.userNickname}님의 구매내역</MyTicketPageTitle>
+        <table>
           <thead>
+            <tr>
+              <th colSpan={2}>상품명</th>
+              <th>장소</th>
+              <th>구매일자</th>
+              <th>상세정보</th>
+            </tr>
           </thead>
           <tbody>
             {buyList.map((bl) => (
@@ -117,10 +156,7 @@ const MyTicketInfo = () => {
                 <td className="image"><img src={bl.playInfo.imageUrl} alt="image1" className="img-thumb"/></td>
                 <td className="title">{bl.playInfo.title}</td>
                 <td className="location">{bl.playInfo.theaterName}</td>
-                <td className="reserveDate">{bl.reserveDate}</td>
-                <td className="time">{bl.time}</td>
-                <td className="seeDate">{bl.seeDate}</td>
-                <td className="seatInfo">{bl.seatInfo}</td>
+                <td className="reserveDate">{formatWriteDate(bl.reserveDate)}</td>
                 <td className="ticket">
                     <Link to={`/ticket/${bl.id}`}>티켓 확인</Link>
                 </td>

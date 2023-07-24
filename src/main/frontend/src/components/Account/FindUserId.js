@@ -61,10 +61,10 @@ export const FindUserId = () => {
             <h2>아이디 찾기</h2>
             <div className="loginMain">
               <div className="loginSmallBox">
-                <input type="text" value={idUserName} className="loginInput" placeholder="User Name" onChange={onChangeIdUserName} onKeyUp={handleOnKeyPress}/>
+                <input type="text" value={idUserName} className="loginInput" placeholder="사용자 이름을 입력하세요." onChange={onChangeIdUserName} onKeyUp={handleOnKeyPress}/>
               </div>
               <div className="loginSmallBox">
-                <input type="text" value={idUserEmail} className="loginInput" placeholder="User Email" onChange={onChangeIdUserEmail} onKeyUp={handleOnKeyPress}/>
+                <input type="text" value={idUserEmail} className="loginInput" placeholder="사용자 이메일을 입력하세요." onChange={onChangeIdUserEmail} onKeyUp={handleOnKeyPress}/>
               </div>
               <div className="IdPwdSearchButtonBox">
                 <Link to="/login" className="FindIdPageLoginButton">로그인</Link>

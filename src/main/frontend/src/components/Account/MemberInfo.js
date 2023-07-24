@@ -51,6 +51,17 @@ const SignUpForm = styled.div`
     color: red;
   }
 `;
+
+const MoveDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button + button {
+    margin-left: 10px; /* 원하는 간격 크기로 조정 */
+  }
+
+`;
 const MemberInfo = () => {
     const navigate = useNavigate();
 
@@ -290,50 +301,47 @@ const MemberInfo = () => {
                         <div>
                             <div>
                                 <i></i>
-                                <input type="text" placeholder="User ID" value={inputId} onChange={onChangeUserId} className={isId ? 'focused-id' : ''}/>
+                                <input type="text" placeholder="아이디를 입력하세요." value={inputId} onChange={onChangeUserId} className={isId ? 'focused-id' : ''}/>
                                 <button onClick={onClickIdCheck}>중복확인</button>
                             </div>
                             <div>
                                 {isId.length > 0 && <span className={`message ${isId ? '' : 'error'}`}>{idError}</span>}
                             </div>
                             <div>
-                                {/* <button onClick={onClickIdCheck}>중복 확인</button> */}
-                            </div>
-                            <div>
                                 <i></i>
-                                <input type="password" placeholder="Password" value={inputPw} onChange={onChangeUserPw} className={isPw && (inputPw === inputPwCk) ? 'focused-pw' : ''}/>
+                                <input type="password" placeholder="비밀번호를 입력하세요." value={inputPw} onChange={onChangeUserPw} className={isPw && (inputPw === inputPwCk) ? 'focused-pw' : ''}/>
                             </div>
                             <div>
                                 {inputPw.length > 0 && <span className={`message ${isPw ? '' : 'error'}`}>{pwError}</span>}
                             </div>
                             <div>
                                 <i></i>
-                                <input type="password" placeholder="Confirm password" value={inputPwCk} onChange={onChangeUserPwCk} className={isPw && (inputPw === inputPwCk) ? 'focused-pw' : ''}/>
+                                <input type="password" placeholder="비밀번호를 재입력 하세요." value={inputPwCk} onChange={onChangeUserPwCk} className={isPw && (inputPw === inputPwCk) ? 'focused-pw' : ''}/>
                             </div>
                             <div>
                                 {inputPwCk.length > 0 && <span className={`message ${inputPwCk === inputPw ? '' : 'error'}`}>{pwCkError}</span>}
                             </div>
                             <div>
                                 <i></i>
-                                <input type="text" placeholder="User Nickname" value={inputNickname} onChange={onChangeSignUserNickname} className={isNickname ? 'focused-nickname' : ''}/>
+                                <input type="text" placeholder="닉네임을 입력하세요." value={inputNickname} onChange={onChangeSignUserNickname} className={isNickname ? 'focused-nickname' : ''}/>
                             </div>
                             <div>
                                 <i></i>
-                                <input type="text" placeholder="User name" value={inputName} onChange={onChangeSignUserName} className={isName ? 'focused-name' : ''}/>
+                                <input type="text" placeholder="이름을 입력하세요." value={inputName} onChange={onChangeSignUserName} className={isName ? 'focused-name' : ''}/>
                             </div>
                             <div>
                                 {inputName.length > 0 && <span className={`message ${isName ? '' : 'error'}`}>{nameError}</span>}
                             </div>
                             <div>
                                 <i></i>
-                                <input type="text" placeholder="User phone" value={inputPhone} onChange={onChangeSignUserTel} className={isPhone ? 'focused-tel' : ''}/>
+                                <input type="text" placeholder="'-'를 포함하여 전화번호를 입력하세요." value={inputPhone} onChange={onChangeSignUserTel} className={isPhone ? 'focused-tel' : ''}/>
                             </div>
                             <div>
                                 {inputPhone.length > 0 && <span className={`message ${isPhone ? '' : 'error'}`}>{phoneError}</span>}
                             </div>
                             <div>
                                 <i></i>
-                                <input type="email" placeholder="Email" value={inputEmail} onChange={onChangeUserEmail} className={isEmail ? 'focused-email' : ''}/>
+                                <input type="email" placeholder="이메일을 입력하세요." value={inputEmail} onChange={onChangeUserEmail} className={isEmail ? 'focused-email' : ''}/>
                                 <button onClick={onClickEmailAuth} disabled={!isId || !isPw || !isNickname || !isName || !isPhone || !isEmail}>인증번호 받기</button>
                             </div>
                             <div>
@@ -343,10 +351,10 @@ const MemberInfo = () => {
                             <div>
                                 {inputEmail.length > 0 && <span className={`message ${isEmail ? '' : 'error'}`}>{emailError}</span>}
                             </div>
-                            <div>
+                            <MoveDiv>
                                 <button onClick={onClickPre}>이전</button>
                                 <button onClick={onClickSignUp}>다음</button>
-                            </div>
+                            </MoveDiv>
                         </div>
                     </div>
                 </SignUpForm>
