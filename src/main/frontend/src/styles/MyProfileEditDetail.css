@@ -90,6 +90,20 @@ label{
   position: relative;
 }
 
+.mypage-default-pic-delete {
+    grid-area: pic-delete;
+    text-align: end;
+    padding-right: 20%;
+    position: relative;
+    margin-left: 40%;
+  }
+
+  .mypage-default-pic-delete img {
+    cursor: pointer;
+    height: 10px;
+    width: 10px;
+  }
+
 .mypage-pic-del-btn {
   position: absolute;
   top: 0;
@@ -351,6 +365,20 @@ label{
   .mypage-title{
     margin-left: 0;
   }
+
+  .mypage-default-pic-delete {
+      grid-area: pic-delete;
+      text-align: end;
+      padding-right: 20%;
+      position: relative;
+      margin-left: 30%;
+    }
+
+    .mypage-default-pic-delete img {
+      cursor: pointer;
+      height: 10px;
+      width: 10px;
+    }
 }
 
 @media (min-width:363px) and (max-width: 768px){
