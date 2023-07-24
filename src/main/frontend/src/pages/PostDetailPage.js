@@ -69,18 +69,23 @@ const PostInfoItem = styled.span`
   color: ${(props) => (props.userId ? "#000" : "#888")};
   font-weight: ${(props) => (props.userId ? "bold" : "normal")};
 `;
+const PostImageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width : 100%;
+  align-items: center;
 
+`;
 const PostImage = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 60%;
+  width: 70%;
 
   img {
     width: 80%;
     max-width: 80%;
-    margin-right: 40px;
   }
   @media (max-width: 412px) {
     height: 50%;
@@ -447,11 +452,13 @@ const PostDetailPage = () => {
               <PostInfoItem>조회수: {post.postViews}</PostInfoItem>
             </PostInfo>
           </PostHeader>
-          <PostImage>
+          <PostImageBox>
             {imageUrls.map((imageUrl, index) => (
+            <PostImage>
               <img key={index} src={imageUrl} alt={``} />
+             </PostImage>
             ))}
-          </PostImage>
+          </PostImageBox>
           <PostContent
             dangerouslySetInnerHTML={{ __html: post.postContent }}
           ></PostContent>
