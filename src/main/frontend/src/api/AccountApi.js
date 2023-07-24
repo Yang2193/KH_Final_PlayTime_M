@@ -97,10 +97,10 @@ const AccountApi = {
             };
             try {
                 Functions.setAuthorizationHeader();
-                return await axios.post(Domain + "/auth/mypageEmailAuth", mypageEmailAuthcmd);
+                return await axios.post("/auth/mypageEmailAuth", mypageEmailAuthcmd);
             } catch(error) {
             await Functions.handleApiError(error);
-            return await axios.post(Domain + "/auth/mypageEmailAuth", mypageEmailAuthcmd);
+            return await axios.post("/auth/mypageEmailAuth", mypageEmailAuthcmd);
             }
         },
 
