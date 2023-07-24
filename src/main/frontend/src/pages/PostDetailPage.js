@@ -384,19 +384,14 @@ const PostDetailPage = () => {
     }
   };
 
-
   const handleUpdateComment = async () => {
     try {
       const updatedCommentContent = prompt(
         "댓글을 수정하세요",
-        comments.find((comment) => comment.id === selectedCommentId).commentContent
+        comments.find((comment) => comment.id === selectedCommentId)
+          .commentContent
       );
 
-      if (!updatedCommentContent) {
-        return; // 수정 취소 시 또는 빈 값을 입력했을 때 처리
-      }
-
-      // 댓글 수정 API 호출
       const response = await PostAPI.updateComment(
         selectedCommentId,
         updatedCommentContent
@@ -404,6 +399,7 @@ const PostDetailPage = () => {
 
       if (response.status === 200) {
         toast.success("댓글이 수정되었습니다.");
+        console.log(response.data);
         const updatedComments = comments.map((comment) => {
           if (comment.id === selectedCommentId) {
             return {
@@ -421,7 +417,6 @@ const PostDetailPage = () => {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     const commentSection = document.getElementById("commentSection");
@@ -529,7 +524,8 @@ const PostDetailPage = () => {
                       )}
                     </CommentBox>
 
-                    <C1>{decodeURIComponent(comment.commentContent)}</C1>
+                    <C1>{decodeURIComponent(comment.commentContent).replace(/=/g, '')}</C1>
+
 
 
                     {comment.id === selectedCommentId && isCommentAuthor && (
