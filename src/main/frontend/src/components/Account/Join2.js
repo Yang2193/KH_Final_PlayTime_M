@@ -7,7 +7,6 @@ import MemberInfo from "./MemberInfo";
 const Join2 = () => {
     return (
         <>
-        <JoinTitle>회원가입</JoinTitle>
         <MemberInfo />
         </>
     )
