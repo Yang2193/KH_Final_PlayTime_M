@@ -11,6 +11,7 @@ const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
+  text-align: left;
 `;
 
 const Heading = styled.h2`
@@ -21,6 +22,12 @@ const Heading = styled.h2`
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
+`;
+
+const Label2 = styled.a`
+  margin-left: 0 auto;
+  margin-bottom: 10px;
+
 `;
 
 const Input = styled.input`
@@ -110,7 +117,7 @@ const PostUpload = () => {
       <Container>
         <Heading>게시물 등록</Heading>
         <div>
-          <Label>
+          <Label2>
             제목
             <Input
               type="text"
@@ -118,13 +125,13 @@ const PostUpload = () => {
               value={postData.postTitle}
               onChange={handleInputChange}
             />
-          </Label>
+          </Label2>
         </div>
         <div>
-          <Label>
+          <Label2>
             이미지
             <ImageUploader onChange={handleImageChange} />
-          </Label>
+          </Label2>
         </div>
         <div>
           <Label>

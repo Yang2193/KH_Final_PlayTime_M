@@ -35,6 +35,7 @@ const DropzoneContainer = styled.div`
 
   p {
     margin: 0;
+    height: 50px;
     font-size: 14px;
     color: ${(props) => (props.isDragActive ? '#888' : '#333')};
   }
@@ -55,11 +56,12 @@ const ImageUploader = ({ onChange }) => {
 
     // Wait for all the uploads to finish
     Promise.all(uploadPromises).then((downloadURLs) => {
-      console.log('All files uploaded successfully!');
+      console.log('모든 파일이 성공적으로 업로드되었습니다!');
       setUrls(downloadURLs);
       onChange(downloadURLs);
     });
   };
+
 
   const onDrop = (acceptedFiles) => {
     setFiles([...files, ...acceptedFiles]);
@@ -69,7 +71,7 @@ const ImageUploader = ({ onChange }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div>
+        <div>
       <DropzoneContainer {...getRootProps()} isDragActive={isDragActive}>
         <input {...getInputProps()} />
         {isDragActive ? (
@@ -78,7 +80,7 @@ const ImageUploader = ({ onChange }) => {
           <p>파일을 드래그하거나 클릭하여 선택하세요.</p>
         )}
       </DropzoneContainer>
-      {/* <UploadButton onClick={() => handleUpload(files)}>Upload</UploadButton> */}
+
       <UploadImg>
         {urls.map((url, index) => (
           <img key={index} src={url} alt={`uploaded-${index}`} />
