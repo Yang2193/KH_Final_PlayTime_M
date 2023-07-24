@@ -72,8 +72,8 @@ const MyReviewPageTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-  width: 768px;
   text-align: center;
+  width: 100%;
 
 `;
 
@@ -82,10 +82,9 @@ const MyReviewImage = styled.img`
   height: auto;
   margin-bottom: 10px;
   background-color: #f0f0f0;
-  height: 300px;
+  height: 200px;
 
   @media (max-width: 412px) {
-    height: 300px;
     width: 100%;
   }
 `;
@@ -197,7 +196,7 @@ const MyReview = () => {
                 {post.postImageUrl ? (
                   <MyReviewImage src={post.postImageUrl} alt="게시물 이미지" />
                 ) : (
-                  <MyReviewImage  alt="" />
+                  <MyReviewImage src={logoImg} alt="기본 이미지" />
                 )}
               </Link>
               <MyReviewContent>
@@ -205,11 +204,8 @@ const MyReview = () => {
                   to={`/post/${post.id}`}
                   onClick={() => increaseViews(post.id)}
                 >
-                  <MyReviewTitle>{post.postTitle}</MyReviewTitle>
+                  <MyReviewTitle>{post.postTitle.length > 6 ? post.postTitle.slice(0, 6) + "..." : post.postTitle}</MyReviewTitle>
                 </Link>
-                <MyReviewDescription
-                  dangerouslySetInnerHTML={{ __html: post.postContent }}
-                ></MyReviewDescription>
                 <MyReviewDate>{formatWriteDate(post.postDate)}</MyReviewDate>
               </MyReviewContent>
               <MyReviewCloseButton onClick={()=>setDeleteMessage(true)}>
