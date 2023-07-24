@@ -88,9 +88,8 @@ const PostImage = styled.div`
 `;
 
 const PostContent = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
-  margin-bottom: 10px;
+  max-height: 400px; /* 원하는 최대 높이 설정 */
+  overflow: hidden;
   word-break: break-word;
   .img{
     width: 100%;
@@ -106,14 +105,13 @@ const LoadingMessage = styled.div`
 `;
 
 const CommentSection = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
   height: ${(props) => props.height};
   transition: height 0.3s;
 `;
 
 const CommentInputWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
@@ -245,10 +243,9 @@ const C1 = styled.div`
 `;
 
 const PostD = styled.div`
-  display: ${(props) => (props.isAuthor ? "flex" : "none")};
-  width :100%;
-  margin-top: 20px;
-  justify-content: flex-end;
+  display: ${(props) => (props.isAuthor ? "block" : "none")};
+  position: absolute;
+  right: 10px;
   button {
     background-color: white;
     color: black;
@@ -386,33 +383,27 @@ const PostDetailPage = () => {
       console.log(error);
     }
   };
-
   const handleUpdateComment = async () => {
     try {
-      const updatedCommentContent = prompt(
-        "댓글을 수정하세요",
-        comments.find((comment) => comment.id === selectedCommentId)
-          .commentContent
-      );
+      const currentComment = comments.find((comment) => comment.id === selectedCommentId);
+      const updatedCommentContent = prompt("댓글을 수정하세요", currentComment.commentContent);
 
-      const response = await PostAPI.updateComment(
-        selectedCommentId,
-        updatedCommentContent
-      );
+      // 프롬프트에서 취소되거나 입력값이 비어있지 않은 경우에만 댓글 수정을 시도합니다.
+      if (updatedCommentContent !== null && updatedCommentContent !== "") {
+        const response = await PostAPI.updateComment(selectedCommentId, updatedCommentContent);
 
-      if (response.status === 200) {
-        toast.success("댓글이 수정되었습니다.");
-        console.log(response.data);
-        const updatedComments = comments.map((comment) => {
-          if (comment.id === selectedCommentId) {
-            return {
-              ...comment,
-              commentContent: updatedCommentContent,
-            };
-          }
-          return comment;
-        });
-        setComments(updatedComments);
+        if (response.status === 200) {
+          toast.success("댓글이 수정되었습니다.");
+          console.log(response.data);
+          const updatedComments = comments.map((comment) =>
+            comment.id === selectedCommentId ? { ...comment, commentContent: updatedCommentContent } : comment
+          );
+          setComments(updatedComments);
+          setShowCommentMenu(false);
+          setSelectedCommentId("");
+        }
+      } else {
+        // 프롬프트에서 취소하거나 입력값이 비어있는 경우
         setShowCommentMenu(false);
         setSelectedCommentId("");
       }
@@ -420,6 +411,7 @@ const PostDetailPage = () => {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     const commentSection = document.getElementById("commentSection");
