@@ -394,7 +394,7 @@ const PostDetailPage = () => {
   const handleUpdateComment = async () => {
     try {
       const currentComment = comments.find((comment) => comment.id === selectedCommentId);
-      const updatedCommentContent = prompt("댓글을 수정하세요", currentComment.commentContent);
+      const updatedCommentContent = prompt("댓글을 수정하세요", decodeURIComponent(currentComment.commentContent).replace(/=/g, ''));
 
       // 프롬프트에서 취소되거나 입력값이 비어있지 않은 경우에만 댓글 수정을 시도합니다.
       if (updatedCommentContent !== null && updatedCommentContent !== "") {

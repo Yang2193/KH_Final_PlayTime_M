@@ -39,6 +39,11 @@ const Input = styled.input`
   font-size: 16px;
   border: 1px solid #ccc;
 `;
+  const Label2 = styled.a`
+  margin-left: 0 auto;
+  margin-bottom: 10px;
+
+`;
 
 const Button = styled.button`
   padding: 10px 20px;
@@ -144,7 +149,7 @@ const PostUpdate = () => {
         <Heading>게시물 수정</Heading>
 
         <div>
-          <Label>
+          <Label2>
             제목
             <Input
               type="text"
@@ -152,7 +157,7 @@ const PostUpdate = () => {
               value={postData.postTitle}
               onChange={handleInputChange}
             />
-          </Label>
+          </Label2>
         </div>
 
         <ImageUploaderImg>
@@ -166,7 +171,7 @@ const PostUpdate = () => {
         </ImageUploaderImg>
 
         <div>
-          <Label>
+          <Label2>
             내용
             <MyEditor
               name="postContent"
@@ -174,7 +179,7 @@ const PostUpdate = () => {
               onChange={handleEditorChange}
               className="myTextarea"
             />
-          </Label>
+          </Label2>
         </div>
 
         <Button onClick={handleUpdate}>수정하기</Button>
@@ -182,5 +187,5 @@ const PostUpdate = () => {
     </>
   );
 };
-//
+
 export default PostUpdate;
