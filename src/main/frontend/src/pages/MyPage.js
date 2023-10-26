@@ -7,6 +7,7 @@ const Mypage = () => {
 
     return (
         <>
+        {/*  깃 커밋 */}
         <Header/>
         <MyPageMain/>
         <Footer/>
